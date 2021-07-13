@@ -1,10 +1,9 @@
 class Qt < Formula
   desc "Cross-platform application and UI framework"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.1/6.1.0/single/qt-everywhere-src-6.1.0.tar.xz"
-  sha256 "326a710b08b0973bb4f5306a786548d8b8dd656db75ce9f3f85ea32680d3c88a"
+  url "https://download.qt.io/official_releases/qt/6.1/6.1.1/single/qt-everywhere-src-6.1.1.tar.xz"
+  sha256 "6ac937aae4c7b5a3eac90ea4d13f31ded9f78ebc93007bb919fae65c58c808c3"
   license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
-  revision 1
   head "https://code.qt.io/qt/qt5.git", branch: "dev"
 
   # The first-party website doesn't make version information readily available,
@@ -15,10 +14,10 @@ class Qt < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "338330d35e7a444cf05719a568a9d2b7bf48c49607affc0d3e9966dd2d298af9"
-    sha256 cellar: :any, big_sur:       "adf38093a18c7c076383cda0471d2261938e09933fc3e1bbd93792dbf4533300"
-    sha256 cellar: :any, catalina:      "7f324783cd85a429b7d0e2c95c1d534d7b968651f673bcef5711c9e22cded52b"
-    sha256 cellar: :any, mojave:        "9ba1bbcde8afb46c441a1f3c92e6847df5c6083c73d61491b1b76d9c75a8048a"
+    sha256 cellar: :any, arm64_big_sur: "49063d24b2e11d21ed2062f7722299d3db01ed755fbe68467769403a393f91bd"
+    sha256 cellar: :any, big_sur:       "e662f1d81ddf33b58ea69ac67aa64ece963e19867ed3f96b494210c736b2d06c"
+    sha256 cellar: :any, catalina:      "7f9f46123093efd89eaec0879994993e5e5c156dd0cb0d2717b972eec49b31d3"
+    sha256 cellar: :any, mojave:        "d52b2b2dc6971206ef3b37194325fc7935abf577b6cc5479e2da3177da768fcb"
   end
 
   depends_on "cmake"      => [:build, :test]
@@ -73,26 +72,6 @@ class Qt < Formula
     depends_on "xcb-util-wm"
     depends_on "zstd"
     depends_on "wayland"
-  end
-
-  resource "qtimageformats" do
-    url "https://download.qt.io/official_releases/additional_libraries/6.0/6.0.3/qtimageformats-everywhere-src-6.0.3.tar.xz"
-    sha256 "327580b5a5b9a8d75e869c0eaa7ff34881bbde4e4ccc51d07a59e96054136837"
-  end
-
-  # TODO: remove them after 6.1.1
-  # macdeployqt: Fix plugin resolution bugs for non-standard installs
-  patch do
-    url "https://code.qt.io/cgit/qt/qttools.git/patch/?id=03abcbabbd4caa11048d19d95b23f165cd7a5361"
-    sha256 "b219a0e782b30b6942eed8ad5b0a5cf3be3dae08542a999e7c6f162cca24c4db"
-    directory "qttools"
-  end
-
-  # macdeployqt: Fix bug parsing otool output when deploying plugins
-  patch do
-    url "https://code.qt.io/cgit/qt/qttools.git/patch/?id=7f3bcf85f1041e7e56dba37593dcd80f2054c221"
-    sha256 "c34f4ef4d0047c7b60ec7ea40847bbfc3f8fa9a63a2f5ea9a38199caffdc7647"
-    directory "qttools"
   end
 
   def install

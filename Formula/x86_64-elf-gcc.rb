@@ -5,13 +5,13 @@ class X8664ElfGcc < Formula
   mirror "https://ftpmirror.gnu.org/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
   sha256 "4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
+  revision 1
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "85d3c71f6a3a7bd55f14ada1d9ccb10aa655f4938d0a1fc634cceff499860292"
-    sha256 big_sur:       "c5e485f635596a59826e07708ccc497cc950503a4711fe83faf9aafa5ebeb914"
-    sha256 catalina:      "1a38b6d35a0f39653d753981acc9c256ab2eed8a2c2d5aeafbb392365deebed5"
-    sha256 mojave:        "b420339f7f513a1d3df6f296558f1667e0bac2623d7ff6dc857efb9702d86c34"
+    sha256 arm64_big_sur: "4905572ad0661c23ac76b67d1a0bd3e049931358de5ab6d0974cd8909248e375"
+    sha256 big_sur:       "21b189008c08d63297dff0ab7b5afbeae535931567706d0feb3a98c03dcfcbbd"
+    sha256 catalina:      "121efc9cc9c15bdd9ed53c6a1cf581030798d57578b1fe67e2db443172725276"
+    sha256 mojave:        "054a23c8f3273ce7cce09539f38dcf17f4261b16f63f5dc4eca3873d2d419edf"
   end
 
   depends_on "gmp"
@@ -29,10 +29,11 @@ class X8664ElfGcc < Formula
   end
 
   def install
+    target = "x86_64-elf"
     mkdir "x86_64-elf-gcc-build" do
-      system "../configure", "--target=x86_64-elf",
+      system "../configure", "--target=#{target}",
                              "--prefix=#{prefix}",
-                             "--infodir=#{info}/x86_64-elf-gcc",
+                             "--infodir=#{info}/#{target}",
                              "--disable-nls",
                              "--without-isl",
                              "--without-headers",

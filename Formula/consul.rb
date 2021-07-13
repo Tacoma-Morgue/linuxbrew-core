@@ -1,8 +1,8 @@
 class Consul < Formula
   desc "Tool for service discovery, monitoring and configuration"
   homepage "https://www.consul.io"
-  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.9.6.tar.gz"
-  sha256 "6e3c59057d43e9c614cde19499ef70d49e93f1978eb918022721abee7bc19ed8"
+  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.10.0.tar.gz"
+  sha256 "971acdd8b180b95d9ace9a29bd6f954d14719b56c7c5a47eeef66aa278b1c1e3"
   license "MPL-2.0"
   head "https://github.com/hashicorp/consul.git"
 
@@ -12,12 +12,11 @@ class Consul < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "93d26413de8d34ef62d48c26001e3cc9877ec53f08b32751d13f1f7d64bdd84f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "4363d22cedf3fd80695c920272f6162efb8115cd991206193d12dcbda4bbe3a1"
-    sha256 cellar: :any_skip_relocation, catalina:      "b09c0cc0d6eadccb2fd92ed30a81319cef6ec2c8e7e83b86de1d0db74c12f032"
-    sha256 cellar: :any_skip_relocation, mojave:        "cc9eff66d8f762f3d774aeff553aa5a9e33d054a11ab0a02cfde8d0c7ef61749"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e4425f2acb53b717e946aa2f256cfce60cd7cff5967b096b21306599aca00c85"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7a3369f9f96d35fbfa18d04c3e9e38c82cbb79e6bd0d58dd14bf65e282f510af"
+    sha256 cellar: :any_skip_relocation, big_sur:       "428501ad054c955587c9630f611ad317c45c07c20981e70bc746a4dab427c554"
+    sha256 cellar: :any_skip_relocation, catalina:      "63138480100a43016bbdd31daf45aa179bff8a80b2175bd606934b640dede838"
+    sha256 cellar: :any_skip_relocation, mojave:        "bdab7d79a9f4198e2ae4328687ee10815100ed47346bed66738316745fd8b8a2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d46b0dd344a720dbfdba6b65e55fc89156c4a0d1d544b40d74dda0ab03bc7d67" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -26,40 +25,12 @@ class Consul < Formula
     system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
-  plist_options manual: "consul agent -dev -bind 127.0.0.1"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <dict>
-            <key>SuccessfulExit</key>
-            <false/>
-          </dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/consul</string>
-            <string>agent</string>
-            <string>-dev</string>
-            <string>-bind</string>
-            <string>127.0.0.1</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/consul.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/consul.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"consul", "agent", "-dev", "-bind", "127.0.0.1"]
+    keep_alive true
+    error_log_path var/"log/consul.log"
+    log_path var/"log/consul.log"
+    working_dir var
   end
 
   test do

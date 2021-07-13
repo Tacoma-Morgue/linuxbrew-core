@@ -1,11 +1,11 @@
 class Devspace < Formula
   desc "CLI helps develop/deploy/debug apps with Docker and k8s"
-  homepage "https://devspace.cloud/docs"
-  url "https://github.com/devspace-cloud/devspace.git",
-      tag:      "v5.14.0",
-      revision: "b814db5ba766d7c43077ee44f073119b41848e6a"
+  homepage "https://devspace.sh/"
+  url "https://github.com/loft-sh/devspace.git",
+      tag:      "v5.14.3",
+      revision: "affdf137c5695833a7135bd58313aa8a28d92d00"
   license "Apache-2.0"
-  head "https://github.com/devspace-cloud/devspace.git"
+  head "https://github.com/loft-sh/devspace.git"
 
   livecheck do
     url :stable
@@ -13,11 +13,11 @@ class Devspace < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "050103873ed0883f751ecfd29e7b72e1f29b7304f0ede7f69d4206289c534325"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9d791c564bab4232f27487bb1e10543bd5090763847660c66cb0c0c06f43e957"
-    sha256 cellar: :any_skip_relocation, catalina:      "fa979d3d63d940f32a93e602684158fadab8287af6e2d8de64db554935ea91de"
-    sha256 cellar: :any_skip_relocation, mojave:        "ea7aa4470ccf5c6d4953cadfe8fc2596eda0ca9d682733c2468e7dfc4846d179"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e3ca15714d409005e29a643105b6ce984103006d1e524186bd8921b2edb872a5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b4cfa8ca0bc7abe6d20a3e0cf0000f489ae654600241dd5d03bcbfd46ff6eea3"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5f9adc24d3fc4d403371955e7c37d44225aa68af2de778ac2198fffdbecb0123"
+    sha256 cellar: :any_skip_relocation, catalina:      "3a85a0c3230852815108d028ac253f2027a09e6523a26e3003fac8c44cd1fbce"
+    sha256 cellar: :any_skip_relocation, mojave:        "38316f539c230bc4b4e23a6a72d9626ddbd902e4b8ed7e9e9786e7494de70430"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c1298492a9676535c6f6bd4e0f409b2ae6947003f544372f19389062b67ee7d4" # linuxbrew-core
   end
 
   depends_on "go" => :build

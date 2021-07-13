@@ -13,7 +13,7 @@ class SwiProlog < Formula
 
   bottle do
     rebuild 1
-    sha256 x86_64_linux: "12ecb163975e72690071c6011e3c7e50b6460ddc493a8c6ae8900aa96969b985"
+    sha256 x86_64_linux: "12ecb163975e72690071c6011e3c7e50b6460ddc493a8c6ae8900aa96969b985" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -30,19 +30,21 @@ class SwiProlog < Formula
 
   def install
     mkdir "build" do
-      cc_args = %w[
-        -DCMAKE_C_COMPILER=/usr/bin/gcc
-        -DCMAKE_CXX_COMPILER=/usr/bin/g++
-      ]
       system "cmake", "..", *std_cmake_args,
                       "-DSWIPL_PACKAGES_JAVA=OFF",
                       "-DSWIPL_PACKAGES_X=OFF",
-                      "-DCMAKE_INSTALL_PREFIX=#{libexec}",
-                      *cc_args
+                      "-DCMAKE_INSTALL_PREFIX=#{libexec}"
       system "make", "install"
     end
 
     bin.write_exec_script Dir["#{libexec}/bin/*"]
+
+    on_linux do
+      inreplace "libexec/lib/swipl/bin/x86_64-linux/swipl-ld",
+        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
+      inreplace "libexec/lib/swipl/lib/x86_64-linux/libswipl.so.#{version}",
+        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
+    end
   end
 
   test do

@@ -8,12 +8,12 @@ class Sdl2Ttf < Formula
 
   livecheck do
     url :homepage
-    regex(/SDL2_ttf[._-]v?(\d+(?:\.\d+)*)/i)
+    regex(/href=.*?SDL2_ttf[._-]v?(\d+(?:\.\d+)*)\.t/i)
   end
 
   bottle do
     rebuild 2
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "92820c9099c3d6e4fbf1c3f1a8b609ef3e476bcb9e993d0b5f070b97479e65fe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "92820c9099c3d6e4fbf1c3f1a8b609ef3e476bcb9e993d0b5f070b97479e65fe" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build

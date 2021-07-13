@@ -11,7 +11,7 @@ class Collectd < Formula
     sha256 big_sur:       "73233ee8e731722660a1098db2a72ae276508b8b09475f101f50a8d5ddc49251"
     sha256 catalina:      "33f0fa042a98883dbf363865a66d64fd53e2eaebc330829257e2d5c87c7b5a4d"
     sha256 mojave:        "a38f5912b4ed2b48e37e7285e0dd6e4f97d31799e5e7c47f438cddd7806a1252"
-    sha256 x86_64_linux:  "d0c594e92bcf27f42d32784a20ae7e53f635d3f53f3cb7ebe4992f7d3704a2b9"
+    sha256 x86_64_linux:  "d0c594e92bcf27f42d32784a20ae7e53f635d3f53f3cb7ebe4992f7d3704a2b9" # linuxbrew-core
   end
 
   head do
@@ -46,34 +46,11 @@ class Collectd < Formula
     system "make", "install"
   end
 
-  plist_options manual: "#{HOMEBREW_PREFIX}/sbin/collectd -f -C #{HOMEBREW_PREFIX}/etc/collectd.conf"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <true/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{sbin}/collectd</string>
-            <string>-f</string>
-            <string>-C</string>
-            <string>#{etc}/collectd.conf</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/collectd.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/collectd.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_sbin/"collectd", "-f", "-C", etc/"collectd.conf"]
+    keep_alive true
+    error_log_path var/"log/collectd.log"
+    log_path var/"log/collectd.log"
   end
 
   test do

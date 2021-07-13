@@ -8,12 +8,17 @@ class GstDevtools < Formula
   license "LGPL-2.1-or-later"
   head "https://gitlab.freedesktop.org/gstreamer/gst-devtools.git"
 
+  livecheck do
+    url "https://gstreamer.freedesktop.org/src/gst-devtools/"
+    regex(/href=.*?gst-devtools[._-]v?(\d+\.\d*[02468](?:\.\d+)*)\.t/i)
+  end
+
   bottle do
     sha256 arm64_big_sur: "8eb42ba8a37c3148ddb08bac4f6da532079cfd2b48f7a60fee705ba553eaa533"
     sha256 big_sur:       "c9112da83d65e0993e5b5ce4a87ae72e85093c57ad21c7b99e52a69cc36a8b1a"
     sha256 catalina:      "b01a80a014c19658e7a3d8b3a8f54db3f98bec9314ba887690b632a28b492fbb"
     sha256 mojave:        "4537802ab817fc7b4c74f9968363bec97aafdabc8439935fc905dc46dd473a60"
-    sha256 x86_64_linux:  "0633ad7ef716442e317e80e9c258a2103b5c1b698ec164497911d283d63783d5"
+    sha256 x86_64_linux:  "0633ad7ef716442e317e80e9c258a2103b5c1b698ec164497911d283d63783d5" # linuxbrew-core
   end
 
   depends_on "gobject-introspection" => :build

@@ -1,8 +1,8 @@
 class DyldHeaders < Formula
   desc "Header files for the dynamic linker"
   homepage "https://opensource.apple.com/"
-  url "https://opensource.apple.com/tarballs/dyld/dyld-851.27.tar.gz"
-  sha256 "f0ac5a6611a5665b9745a0a1b1b7b516866c647b8f6361e18af9f671a85d8f27"
+  url "https://opensource.apple.com/tarballs/dyld/dyld-852.tar.gz"
+  sha256 "a97edb9c74f3ccb3084f7076c8da07248d609d79a4ba30fb39b8692a7d309a97"
   license "APSL-2.0"
 
   livecheck do
@@ -11,7 +11,7 @@ class DyldHeaders < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "030bc735c39f496f111c071ac3d0f2b5fc73e03e2d969ac30a6a8ef3362e9148"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "90dbbbc915962b9c063da9a85b993c4266eddf80c1c36ff69917e9ca49424afb" # linuxbrew-core
   end
 
   keg_only :provided_by_macos

@@ -4,13 +4,14 @@ class Repo < Formula
   desc "Repository tool for Android development"
   homepage "https://source.android.com/source/developing.html"
   url "https://gerrit.googlesource.com/git-repo.git",
-      tag:      "v2.15.4",
-      revision: "e253b43e17de114f1efafa9a3e3929f23115ae99"
+      tag:      "v2.16",
+      revision: "784e16f3aa941ca3564d823cc686017a161621a1"
   license "Apache-2.0"
   version_scheme 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "c6ff34d698d15e35420dad15a60593a9ca4d70ddbd8ef9732d6d40bf5baa70a1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "d60183ceadfdc0ea1df63a76f43446ddc88f1968a8b5aa58f59a4e95bbe090aa" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, all:          "d60183ceadfdc0ea1df63a76f43446ddc88f1968a8b5aa58f59a4e95bbe090aa"
   end
 
   depends_on "python@3.9"

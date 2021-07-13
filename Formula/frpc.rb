@@ -11,7 +11,7 @@ class Frpc < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "20b4e8843b481938cb47faab1110bd49727833d52fcee089631ccdb2b8b2ff22"
     sha256 cellar: :any_skip_relocation, catalina:      "20b4e8843b481938cb47faab1110bd49727833d52fcee089631ccdb2b8b2ff22"
     sha256 cellar: :any_skip_relocation, mojave:        "20b4e8843b481938cb47faab1110bd49727833d52fcee089631ccdb2b8b2ff22"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2b2640f8fc515ceb3f7cba3829528ca24660e6712178b1856c057dd3f90271a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2b2640f8fc515ceb3f7cba3829528ca24660e6712178b1856c057dd3f90271a" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -26,31 +26,11 @@ class Frpc < Formula
     etc.install "conf/frpc_full.ini" => "frp/frpc_full.ini"
   end
 
-  plist_options manual: "frpc -c #{HOMEBREW_PREFIX}/etc/frp/frpc.ini"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>KeepAlive</key>
-          <true/>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/frpc</string>
-            <string>-c</string>
-            <string>#{etc}/frp/frpc.ini</string>
-          </array>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/frpc.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/frpc.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"frpc", "-c", etc/"frp/frpc.ini"]
+    keep_alive true
+    error_log_path var/"log/frpc.log"
+    log_path var/"log/frpc.log"
   end
 
   test do

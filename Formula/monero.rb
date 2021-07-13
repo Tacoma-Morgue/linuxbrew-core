@@ -18,7 +18,7 @@ class Monero < Formula
     sha256 cellar: :any,                 big_sur:       "f552779fb0f41d5ce12ee4cebe58d58859237fdece35c25f9a71268f87920d22"
     sha256 cellar: :any,                 catalina:      "fe9009da078f04dd65f204298fb58c6c4ba6e195307cc64bf0443f6184fbd5b9"
     sha256 cellar: :any,                 mojave:        "9efd453269f2dea7bff2061320e2f0db8a4f45ba804187439b77c1eb4098323f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "25e4f4303f4fed8476d26ee63ab2c30ae8131eafabbfeee4f49fd006f2a4da35"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "25e4f4303f4fed8476d26ee63ab2c30ae8131eafabbfeee4f49fd006f2a4da35" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -71,11 +71,11 @@ class Monero < Formula
 
   test do
     cmd = "yes '' | #{bin}/monero-wallet-cli --restore-deterministic-wallet " \
-      "--password brew-test --restore-height 1 --generate-new-wallet wallet " \
-      "--electrum-seed 'baptism cousin whole exquisite bobsled fuselage left " \
-      "scoop emerge puzzled diet reinvest basin feast nautical upon mullet " \
-      "ponies sixteen refer enhanced maul aztec bemused basin'" \
-      "--command address"
+          "--password brew-test --restore-height 1 --generate-new-wallet wallet " \
+          "--electrum-seed 'baptism cousin whole exquisite bobsled fuselage left " \
+          "scoop emerge puzzled diet reinvest basin feast nautical upon mullet " \
+          "ponies sixteen refer enhanced maul aztec bemused basin'" \
+          "--command address"
     address = "4BDtRc8Ym9wGzx8vpkQQvpejxBNVpjEmVBebBPCT4XqvMxW3YaCALFraiQibejyMAxUXB5zqn4pVgHVm3JzhP2WzVAJDpHf"
     assert_equal address, shell_output(cmd).lines.last.split[1]
   end

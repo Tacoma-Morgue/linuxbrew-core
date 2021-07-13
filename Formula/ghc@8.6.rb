@@ -3,7 +3,11 @@ class GhcAT86 < Formula
   homepage "https://haskell.org/ghc/"
   url "https://downloads.haskell.org/~ghc/8.6.5/ghc-8.6.5-src.tar.xz"
   sha256 "4d4aa1e96f4001b934ac6193ab09af5d6172f41f5a5d39d8e43393b9aafee361"
-  license "BSD-3-Clause"
+  # We bundle a static GMP so GHC inherits GMP's license
+  license all_of: [
+    "BSD-3-Clause",
+    any_of: ["LGPL-3.0-or-later", "GPL-2.0-or-later"],
+  ]
   revision OS.mac? ? 2 : 3
 
   # Cellar should be :any_skip_relocation on Linux
@@ -12,7 +16,7 @@ class GhcAT86 < Formula
     sha256 cellar: :any_skip_relocation, catalina:     "af21e24b89361083a6cd5a27268e0470cdbf2e8616d1d95355df603f58f4e30d"
     sha256 cellar: :any_skip_relocation, mojave:       "ccbe2725d127cc1ddd2142294fd62981d6cd7ab110f56b1faa2560c28276b822"
     sha256 cellar: :any_skip_relocation, high_sierra:  "67a54e9d669e51b8018d064b771d31079421b777b03077dc7f02949ecdf8b0c0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "382d25318739a865f74e28cb01f04ad27b77e8d7790c2669e09f561a87905c6a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "382d25318739a865f74e28cb01f04ad27b77e8d7790c2669e09f561a87905c6a" # linuxbrew-core
   end
 
   keg_only :versioned_formula

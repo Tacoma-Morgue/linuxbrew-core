@@ -2,7 +2,6 @@ class Luv < Formula
   desc "Bare libuv bindings for lua"
   homepage "https://github.com/luvit/luv"
   url "https://github.com/luvit/luv/archive/1.41.0-0.tar.gz"
-  version "1.41.0-0"
   sha256 "13382bc5e896f6247c0e8f7b7cbc12c99388b9a858118a8dc5477f5b7a977c8e"
   license "Apache-2.0"
   head "https://github.com/luvit/luv.git"
@@ -12,7 +11,7 @@ class Luv < Formula
     sha256 cellar: :any,                 big_sur:       "08713383f4168d0104f123d1cad78bdeb843f26527a7d68c74aba555883c5b60"
     sha256 cellar: :any,                 catalina:      "b3c644231c6c5d55f82770cf8d0db7649347ec28dc430f6e983f17b9c19febc9"
     sha256 cellar: :any,                 mojave:        "a6cb63c24bba31847e55d04c4426eb84c6eaf24efa38ed55c7d0dd3ff800b32f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "94eb6923ecc3bf66bf55ca93d21d31b74ea806ab383ac2edc977b9e88fc09c1e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "94eb6923ecc3bf66bf55ca93d21d31b74ea806ab383ac2edc977b9e88fc09c1e" # linuxbrew-core
   end
 
   depends_on "cmake" => :build

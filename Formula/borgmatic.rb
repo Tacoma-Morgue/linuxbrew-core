@@ -3,16 +3,16 @@ class Borgmatic < Formula
 
   desc "Simple wrapper script for the Borg backup software"
   homepage "https://torsion.org/borgmatic/"
-  url "https://files.pythonhosted.org/packages/8f/cd/89d3ab645bd7c20a06907bc4b91fe05f6f1f24cfc1ba030f32a47576f707/borgmatic-1.5.14.tar.gz"
-  sha256 "4c574f456a16481ef4c669b46cb93178efe0afc55bd999886d6843ab868e655e"
+  url "https://files.pythonhosted.org/packages/58/c7/8d75eac3887ac8571063d78faade3d18bed122d3a5d3fe067890f67e6565/borgmatic-1.5.15.tar.gz"
+  sha256 "a9c9857bc9c1b3aa4a5b6c2d55e511acfdad9457a958a6de695402d5bb3ca74e"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a29956cf400d77ad6381da7d599bba960c11352794e1e03a2cbdf61c6857ff46"
-    sha256 cellar: :any_skip_relocation, big_sur:       "7bb1a14bb3ea3fbc14fa072e51ca52521fac5ff949faeab111af55ee33fc8201"
-    sha256 cellar: :any_skip_relocation, catalina:      "3e1e9652345ad5b66f466e10dedbeb65af617fc606cdab4a632763a947dae594"
-    sha256 cellar: :any_skip_relocation, mojave:        "2d17b29840168864e552838c28ec6b95a425529b4f0e05cd34c535e74644a317"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cc388490df7e009e61093f3cc8a4b2d5bd4ccbb6f41b8cb0a06dec05446e325b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3fe5dbf21e39d468257befd8f146cd843469ffd031a2b6fd6fd165b4f7ba59b6"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c35931b5e7983743fd545907e6d4065de862ae9f428fc4e22ee87bb271d4d5ec"
+    sha256 cellar: :any_skip_relocation, catalina:      "38e334ec6fe1821117806f341ddf1e3ec1affa409ebf19f093cb0a027f53984f"
+    sha256 cellar: :any_skip_relocation, mojave:        "a4056c309605b57e950d4082e049fd9a7142da1cb6387b6a6aab0955ed972551"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b1855f8f0d8ef47484f052f526bf6d0b3ed054bcafcc638a38be6d2f320e010" # linuxbrew-core
   end
 
   depends_on "libyaml"
@@ -59,8 +59,8 @@ class Borgmatic < Formula
   end
 
   resource "ruamel.yaml" do
-    url "https://files.pythonhosted.org/packages/fd/6b/b83bdc8fb9aad62f6469117874e7c11b64d94ba9e8557f73ca1f28c2df7d/ruamel.yaml-0.17.7.tar.gz"
-    sha256 "5c3fa739bbedd2f23769656784e671c6335d17a5bf163c3c3901d8663c0af287"
+    url "https://files.pythonhosted.org/packages/ea/7f/4bcd7276603b4324ac12839a949b3e58f03cda1d87218c89a8a1efe31c1a/ruamel.yaml-0.17.9.tar.gz"
+    sha256 "374373b4743aee9f6d9f40bea600fe020a7ac7ae36b838b4a6a93f72b584a14c"
   end
 
   resource "ruamel.yaml.clib" do

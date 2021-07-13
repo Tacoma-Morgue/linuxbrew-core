@@ -1,14 +1,9 @@
 class SdlTtf < Formula
   desc "Library for using TrueType fonts in SDL applications"
-  homepage "https://www.libsdl.org/projects/SDL_ttf/"
+  homepage "https://www.libsdl.org/projects/SDL_ttf/release-1.2.html"
   url "https://www.libsdl.org/projects/SDL_ttf/release/SDL_ttf-2.0.11.tar.gz"
   sha256 "724cd895ecf4da319a3ef164892b72078bd92632a5d812111261cde248ebcdb7"
   revision 1
-
-  livecheck do
-    url "https://www.libsdl.org/projects/SDL_ttf/release/"
-    regex(/href=.*?SDL_ttf[._-]v?(\d+(?:\.\d+)+)\.t/i)
-  end
 
   bottle do
     sha256 cellar: :any, arm64_big_sur: "5e82bcaa6cc1cb3ec449c957678e71f23681f7bc998e16b3f39dd39baf5cd8ad"
@@ -19,8 +14,11 @@ class SdlTtf < Formula
     sha256 cellar: :any, sierra:        "22972859bc6ab2f2a6fd8a4cf5394e647336e4b83d982b02e7015ceb7799e59a"
     sha256 cellar: :any, el_capitan:    "981960db1d2539b57bc42deb12ab59e163214d881612c1fffea72e4927e1c82a"
     sha256 cellar: :any, yosemite:      "cea0e7f2cb248778bc3af4cab3f3ddd7469d4b24d72780891d2cd54dbc9d7216"
-    sha256 cellar: :any, x86_64_linux:  "69a109b9c2030506f1d667c6f57080cb5287470d731d4d4cb2e89c16739ff284"
+    sha256 cellar: :any, x86_64_linux:  "69a109b9c2030506f1d667c6f57080cb5287470d731d4d4cb2e89c16739ff284" # linuxbrew-core
   end
+
+  # SDL 1.2 is deprecated, unsupported, and not recommended for new projects.
+  deprecate! date: "2013-08-17", because: :deprecated_upstream
 
   depends_on "pkg-config" => :build
   depends_on "freetype"

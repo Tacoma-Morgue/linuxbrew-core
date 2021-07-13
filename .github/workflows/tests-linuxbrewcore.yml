@@ -1,7 +1,8 @@
 name: GitHub Actions CI
 on:
   push:
-    branches: master
+    branches:
+      - master
   pull_request:
     paths-ignore:
       - "Formula/patchelf.rb"
@@ -17,8 +18,10 @@ jobs:
     if: github.repository == 'Homebrew/linuxbrew-core' && ! contains(github.event.pull_request.labels.*.name, 'self-hosted-ci')
     runs-on: ubuntu-latest
     outputs:
-      run-tests: ${{ steps.check-labels.outputs.result }}
-      skip-arm-tests: ${{ steps.check-arm-labels.outputs.result }}
+      syntax-only: ${{ steps.check-labels.outputs.syntax-only }}
+      force-arm: ${{ steps.check-labels.outputs.force-arm }}
+      test-bot-fail-fast: ${{ steps.check-labels.outputs.test-bot-fail-fast }}
+      test-bot-skip-recursive-dependents: ${{ steps.check-labels.outputs.test-bot-skip-recursive-dependents }}
     env:
       HOMEBREW_FORCE_HOMEBREW_ON_LINUX: 1
     steps:
@@ -61,6 +64,12 @@ jobs:
           mkdir ~/bottles
           cd ~/bottles
           brew test-bot --only-json-tab --only-formulae --fail-fast --keep-old
+
+      - name: Output brew bottle result
+        if: always()
+        run: |
+          cat ~/bottles/bottle_output.txt
+          rm ~/bottles/bottle_output.txt
 
       - name: Upload logs
         if: failure()

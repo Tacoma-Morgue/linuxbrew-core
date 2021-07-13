@@ -16,7 +16,7 @@ class Dnsmasq < Formula
     sha256 big_sur:       "d277d696e1432881e4bbbc0d68443fbdec125d0dd83c9041d5d58bcab0acae5e"
     sha256 catalina:      "945ab265756b63a2040d5bdcc4f8c2c24e379d60ed2e21249b77eade885630ff"
     sha256 mojave:        "6054ac54814f919df6733c9f8180444b3b199321cbb0616b5ae084afa0ceaf66"
-    sha256 x86_64_linux:  "1d73f8523a27c90ba0634122bf108405523deb5ddd4b0754fcdee94341d28190"
+    sha256 x86_64_linux:  "1d73f8523a27c90ba0634122bf108405523deb5ddd4b0754fcdee94341d28190" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build
@@ -61,30 +61,9 @@ class Dnsmasq < Formula
 
   plist_options startup: true
 
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_sbin}/dnsmasq</string>
-            <string>--keep-in-foreground</string>
-            <string>-C</string>
-            <string>#{etc}/dnsmasq.conf</string>
-            <string>-7</string>
-            <string>#{etc}/dnsmasq.d,*.conf</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>KeepAlive</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_sbin/"dnsmasq", "--keep-in-foreground", "-C", etc/"dnsmasq.conf", "-7", etc/"dnsmasq.d,*.conf"]
+    keep_alive true
   end
 
   test do

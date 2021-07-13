@@ -12,7 +12,7 @@ class Gupnp < Formula
     sha256 cellar: :any, big_sur:       "2e6e2cf75b268a9b15ba5ab0218feb821b8fcfd3484b0392d1a61fbfb7b4024f"
     sha256 cellar: :any, catalina:      "ad1eb9712b22a8cf129e2b1e655da5024904fbb4d9d05ac4642a74a169437e44"
     sha256 cellar: :any, mojave:        "7a4029599f45eba6591d4dc62cfb4327e38ad97cd95f846ebc603b217d0e8939"
-    sha256               x86_64_linux:  "512d9187f456dad0cbf8121c386d9b48df7c51108634767a63d6a54a3b3e6d93"
+    sha256               x86_64_linux:  "512d9187f456dad0cbf8121c386d9b48df7c51108634767a63d6a54a3b3e6d93" # linuxbrew-core
   end
 
   depends_on "docbook-xsl" => :build
@@ -63,7 +63,9 @@ class Gupnp < Formula
     EOS
 
     libxml2 = "-I#{MacOS.sdk_path}/usr/include/libxml2"
-    libxml2 = "-I#{Formula["libxml2"].include}/libxml2" unless OS.mac?
+    on_linux do
+      libxml2 = "-I#{Formula["libxml2"].include}/libxml2"
+    end
 
     system ENV.cc, testpath/"test.c", "-I#{include}/gupnp-1.2", "-L#{lib}", "-lgupnp-1.2",
            "-I#{Formula["gssdp"].opt_include}/gssdp-1.2",

@@ -3,14 +3,17 @@ class Global < Formula
 
   desc "Source code tag system"
   homepage "https://www.gnu.org/software/global/"
-  url "https://ftp.gnu.org/gnu/global/global-6.6.6.tar.gz"
-  mirror "https://ftpmirror.gnu.org/global/global-6.6.6.tar.gz"
-  sha256 "758078afff98d4c051c58785c7ada3ed1977fabb77f8897ff657b71cc62d4d5d"
+  url "https://ftp.gnu.org/gnu/global/global-6.6.7.tar.gz"
+  mirror "https://ftpmirror.gnu.org/global/global-6.6.7.tar.gz"
+  sha256 "69a0f77f53827c5568176c1d382166df361e74263a047f0b3058aa2f2ad58a3c"
   license "GPL-3.0-or-later"
 
   bottle do
-    rebuild 1
-    sha256 x86_64_linux: "482b59c0832b0b70b24833bcd56f60c50e08646a0fa5229b4c21605f7a4bc3d8"
+    sha256 arm64_big_sur: "ffba636507257bfb9dffd90dc114f1ad3528edf724beae0d200e3b5817f642bf"
+    sha256 big_sur:       "598cb4071a8d708c46becd27983443b6c14259c797d8a61718b0f1bb9094ae6f"
+    sha256 catalina:      "c476c6bee46e116a6dbe93754221132f8cc1cfbdb88d10c08d38b65c4e77b460"
+    sha256 mojave:        "37c6a139a405bbd869bcd8175e20a0e488ce0176646a0dbbfed3d9ede030977f"
+    sha256 x86_64_linux:  "646dbc4c4529115bdb731329eceac00824d6a1cc4d0566dc8e9a745d8e6bbf5b" # linuxbrew-core
   end
 
   head do

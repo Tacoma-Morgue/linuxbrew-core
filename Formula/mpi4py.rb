@@ -11,7 +11,7 @@ class Mpi4py < Formula
     sha256 cellar: :any, catalina:      "c6163dd690053dc5adcca25c63c54c5feb34d46248685e3d448ef673e907de36"
     sha256 cellar: :any, mojave:        "e3bec47030124ee25c7d8d0bc31f24f6c317e81da4878e008ae8bb4cb26fb017"
     sha256 cellar: :any, high_sierra:   "3c73ed25e9e29e5232bfe258147ebe87dd78ae5d295d4de6a1ec4f93475635a6"
-    sha256 cellar: :any, x86_64_linux:  "0e21df60d261097e377d1a30a08234d3931dabd064f9a7e005bfe24735a8e295"
+    sha256 cellar: :any, x86_64_linux:  "0e21df60d261097e377d1a30a08234d3931dabd064f9a7e005bfe24735a8e295" # linuxbrew-core
   end
 
   depends_on "cython" => :build
@@ -29,20 +29,15 @@ class Mpi4py < Formula
   end
 
   test do
-    system Formula["python@3.9"].opt_bin/"python3",
-           "-c", "import mpi4py"
-    system Formula["python@3.9"].opt_bin/"python3",
-           "-c", "import mpi4py.MPI"
-    system Formula["python@3.9"].opt_bin/"python3",
-           "-c", "import mpi4py.futures"
+    python = Formula["python@3.9"].opt_bin/"python3"
 
-    # Somehow our Azure CI only has two CPU cores available.
-    cpu_cores = (ENV["HOMEBREW_GITHUB_ACTIONS"] ? 2 : 4).to_s
+    system python, "-c", "import mpi4py"
+    system python, "-c", "import mpi4py.MPI"
+    system python, "-c", "import mpi4py.futures"
 
-    system "mpiexec", "-n", cpu_cores, "#{Formula["python@3.9"].opt_bin}/python3",
-           "-m", "mpi4py.run", "-m", "mpi4py.bench", "helloworld"
-    system "mpiexec", "-n", cpu_cores, "#{Formula["python@3.9"].opt_bin}/python3",
-           "-m", "mpi4py.run", "-m", "mpi4py.bench", "ringtest",
-           "-l", "10", "-n", "1024"
+    system "mpiexec", "-n", ENV.make_jobs,
+           python, "-m", "mpi4py.run", "-m", "mpi4py.bench", "helloworld"
+    system "mpiexec", "-n", ENV.make_jobs,
+           python, "-m", "mpi4py.run", "-m", "mpi4py.bench", "ringtest", "-l", "10", "-n", "1024"
   end
 end

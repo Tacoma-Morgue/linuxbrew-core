@@ -8,6 +8,12 @@
 # To be explicit: we will never accept changes to this file adding people from outside the Homebrew GitHub
 # organisation. If you are not a Homebrew maintainer: you do not personally "own" or "maintain" any formulae.
 
+CODEOWNERS            @MikeMcQuaid
+CONTRIBUTING.md       @MikeMcQuaid
+tap_migrations.json   @MikeMcQuaid
+.github/              @MikeMcQuaid @dawidd6
+cmd/                  @MikeMcQuaid
+
 LICENSE.txt           @Homebrew/plc @MikeMcQuaid
 
 audit_exceptions/permitted_formula_license_mismatches.json   @Homebrew/plc

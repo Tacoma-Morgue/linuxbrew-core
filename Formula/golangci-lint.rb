@@ -2,17 +2,17 @@ class GolangciLint < Formula
   desc "Fast linters runner for Go"
   homepage "https://golangci-lint.run/"
   url "https://github.com/golangci/golangci-lint.git",
-      tag:      "v1.40.1",
-      revision: "625445b1f559dc0a09bc9345dc39d50b64ec18bc"
+      tag:      "v1.41.1",
+      revision: "a20748098fb3cb4b69f6b6ebb7809e7741122ef8"
   license "GPL-3.0-only"
   head "https://github.com/golangci/golangci-lint.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "99f5940cc7009547c836731a5e355a48c48ec4b4db4c1981de917e5180d762bf"
-    sha256 cellar: :any_skip_relocation, big_sur:       "aa674d9c79c61a7ed07c456e4de5bc3134bd052515f0a2eb74bc41dd8ab73053"
-    sha256 cellar: :any_skip_relocation, catalina:      "a43381bd424f7d8e354f6f4f1f46b61540dbca823c876f4ab14a455a80e2cd3a"
-    sha256 cellar: :any_skip_relocation, mojave:        "adf0d30778c4d687259fed2d1fae5b0bd8750403ba47247706c130d373544341"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7910f03a627963ae9127fb49f847e036e08fd45d6914330c4866328da85536ef"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2e4cbe31f0eb6524e6e3613d3eaf16963d74481c6209cea3f494d360c03341c5"
+    sha256 cellar: :any_skip_relocation, big_sur:       "febec79eb5eca7fe1f7163cbf8631d9dca96e850cf2be6c804eb90d24e3e0eaf"
+    sha256 cellar: :any_skip_relocation, catalina:      "7ffb50b08181cb637274e66cbb9d6eb6e687ad25e40a785d7b530d27f797159d"
+    sha256 cellar: :any_skip_relocation, mojave:        "d84d56b784ee0f6a711be75ce3488848eb8511c02aaa29769680a11b29c09998"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4299a55fb00edca1fdd47bc98a9999a6ad1deec4bdec72f9cd6f576c27e62afa" # linuxbrew-core
   end
 
   depends_on "go"
@@ -25,7 +25,7 @@ class GolangciLint < Formula
       -X main.date=#{Time.now.utc.rfc3339}
     ].join(" ")
 
-    system "go", "build", *std_go_args, "-ldflags", ldflags, "./cmd/golangci-lint"
+    system "go", "build", *std_go_args(ldflags: ldflags), "./cmd/golangci-lint"
 
     output = Utils.safe_popen_read("#{bin}/golangci-lint", "completion", "bash")
     (bash_completion/"golangci-lint").write output

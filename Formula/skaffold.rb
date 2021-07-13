@@ -2,17 +2,17 @@ class Skaffold < Formula
   desc "Easy and Repeatable Kubernetes Development"
   homepage "https://skaffold.dev/"
   url "https://github.com/GoogleContainerTools/skaffold.git",
-      tag:      "v1.26.0",
-      revision: "851bcab1a12274966a846cbb95b0cf364f45531c"
+      tag:      "v1.27.0",
+      revision: "1f46f249c832bb2a99e3285ad327647c95ff4bb9"
   license "Apache-2.0"
   head "https://github.com/GoogleContainerTools/skaffold.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7566111ef2db7367e11b6810d11e38c0f93047a703bdd84f4f45c566cc3b9435"
-    sha256 cellar: :any_skip_relocation, big_sur:       "75d176a1c964392659e698079ce98d4aef8bbfd1021fba53d474d37faf0734ca"
-    sha256 cellar: :any_skip_relocation, catalina:      "843793b86b449821cc549c6d34570e2621659b12bd957c0627ee02ae8103bf29"
-    sha256 cellar: :any_skip_relocation, mojave:        "f69975915448eb510495ca893b32a248211ebde8fa86f626099f421d510bdcaa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ddfe319c21d9306dffadc5081683e5c90441af0f0c07b6c3d0e4bb5cf77775cf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "73e501288d9935f39e57a5f186fddb5b8d21a4faf4cc6b926cf8b456ade52c1c"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4fc569cdecca8008ea3b5ff94e360e318e759ae5a64b4aed0d145d5f37888a72"
+    sha256 cellar: :any_skip_relocation, catalina:      "bfc37560c05d71dc0d9febdc950c03f84eeb20b01359a5ecc1b691017c9d3d0b"
+    sha256 cellar: :any_skip_relocation, mojave:        "cecd0f629aa60a7dba0855f1db97c317c4011c60a826a40f15d3bfe493f39fd1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ecc38e7582d6287c8917a7b91d6a4f32c71e44079a47bdbb71a42d4bfee2c4f" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -29,6 +29,6 @@ class Skaffold < Formula
   test do
     (testpath/"Dockerfile").write "FROM scratch"
     output = shell_output("#{bin}/skaffold init --analyze").chomp
-    assert_equal '{"dockerfiles":["Dockerfile"]}', output
+    assert_equal '{"builders":[{"name":"Docker","payload":{"path":"Dockerfile"}}]}', output
   end
 end

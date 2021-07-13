@@ -4,8 +4,8 @@ class Snapcraft < Formula
   desc "Package any app for every Linux desktop, server, cloud or device"
   homepage "https://snapcraft.io/"
   url "https://github.com/snapcore/snapcraft.git",
-      tag:      "4.8.1",
-      revision: "245631a94e912120d40b55a945acf0ffa0450bee"
+      tag:      "4.8.3",
+      revision: "2f05b212d939e69ccf08ae72108c936caaf6f088"
   license "GPL-3.0-only"
 
   livecheck do
@@ -14,10 +14,10 @@ class Snapcraft < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "9e5f0bf82b9a394685c85d74f364728fe76e6797ff69b54c1aa49fbe0a62afcc"
-    sha256 cellar: :any, big_sur:       "77848fa60d793288496681c269416dedc2a98e2b1c76f48dc2680b6f44a1f1ee"
-    sha256 cellar: :any, catalina:      "1a0c8507109e3e5f694dc44906697bb2ffe853bbd4d16e3ace4dcd2c8b01380d"
-    sha256 cellar: :any, mojave:        "489e6ce4c2bba17ff81bf2b99708f53aed52ccc6be1f6a4ea47bea63aa2858fa"
+    sha256 cellar: :any, arm64_big_sur: "24f002cb2c9c39a0898d72dacae4b3c64a98268c41a10448eaa0446ab45f28d4"
+    sha256 cellar: :any, big_sur:       "f00e73d4d5d28d70dbdc0972f5427f7d2dbb76d37109207bd685aa17de90b611"
+    sha256 cellar: :any, catalina:      "427eb46a6b43f7da4e45e726c958ea6ad937e845928b10c5ac347685f6a36421"
+    sha256 cellar: :any, mojave:        "1f711efb1de28dcf981f2cb787825614346c2a8e53db3b35a9984a22b28a49d7"
   end
 
   depends_on "rust" => :build
@@ -184,11 +184,6 @@ class Snapcraft < Formula
     sha256 "81b8cbe1519cdb79bed04910dd6fa4e181faf8c88dff1e1b987b5f7ab23a5b1a"
   end
 
-  resource "pysha3" do
-    url "https://files.pythonhosted.org/packages/73/bf/978d424ac6c9076d73b8fdc8ab8ad46f98af0c34669d736b1d83c758afee/pysha3-1.0.2.tar.gz"
-    sha256 "fe988e73f2ce6d947220624f04d467faf05f1bbdbc64b0a201296bb3af92739e"
-  end
-
   resource "pytz" do
     url "https://files.pythonhosted.org/packages/b0/61/eddc6eb2c682ea6fd97a7e1018a6294be80dba08fa28e7a3570148b4612d/pytz-2021.1.tar.gz"
     sha256 "83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"
@@ -282,13 +277,6 @@ class Snapcraft < Formula
   resource "zipp" do
     url "https://files.pythonhosted.org/packages/38/f9/4fa6df2753ded1bcc1ce2fdd8046f78bd240ff7647f5c9bcf547c0df77e3/zipp-3.4.1.tar.gz"
     sha256 "3607921face881ba3e026887d8150cca609d517579abe052ac81fc5aeffdbd76"
-  end
-
-  # Fix error on ARM due to missing architecture definition for 'arm64'
-  # Remove in the next release
-  patch do
-    url "https://github.com/snapcore/snapcraft/commit/61029a4a2ae36f5368a7108b5d99bc99ccac54c5.patch?full_index=1"
-    sha256 "0950b41e5e33ea9c1a40ac4d308d22d0e13adb44655a01f469973fcd1e7c9d91"
   end
 
   def install

@@ -11,10 +11,6 @@ class Druid < Formula
     regex(/href=.*?druid[._-]v?(\d+(?:\.\d+)+)-bin\.t/i)
   end
 
-  bottle do
-    sha256 cellar: :any_skip_relocation, all: "940f26607e9581be2c30405c32d9ccdf8034b36da7946adfd6af851d6e87947b"
-  end
-
   depends_on "zookeeper" => :test
   depends_on arch: :x86_64
   depends_on "openjdk@8"

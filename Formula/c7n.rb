@@ -3,8 +3,8 @@ class C7n < Formula
 
   desc "Rules engine for cloud security, cost optimization, and governance"
   homepage "https://github.com/cloud-custodian/cloud-custodian"
-  url "https://github.com/cloud-custodian/cloud-custodian/archive/0.9.11.0.tar.gz"
-  sha256 "6893497aea3d8c956f03588cec845f288d6c00db8caa3444c72c18aa8ae54d39"
+  url "https://github.com/cloud-custodian/cloud-custodian/archive/0.9.12.0.tar.gz"
+  sha256 "71c1417af2dc6e6373ecea654c88ec4c297bd82075fe02703737a86a34bcdc2c"
   license "Apache-2.0"
 
   livecheck do
@@ -13,11 +13,11 @@ class C7n < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2c8882d52e1eaabd2df446e7b6bbe91979fb8a6d110852d9c44ac3da976f2cb6"
-    sha256 cellar: :any_skip_relocation, big_sur:       "5b04c9aed7f6ea764ab0322fb0a6f3e7e58737a9f031a5cf7ad85cb408f834f0"
-    sha256 cellar: :any_skip_relocation, catalina:      "36dba24d4fc6d75b84c56f6e57af83843064dafae3b86e512b3a3c21c8e1e208"
-    sha256 cellar: :any_skip_relocation, mojave:        "96b4249641926857ee779ab8d00c37515b3ed61836688526737706ac379fbd9d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d2280a2efa3e1a603c90759aad1aec93bc71c15e22c2c96633f1f85216da6e0b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2e2241c18cab08267ad1edf542a01e7b9dbd388f1423148b1c6c25bd6fcdcf0d"
+    sha256 cellar: :any_skip_relocation, big_sur:       "7397f0c77fe711a05e308c6421245398258a54eee0e6ca518c3913f637232a73"
+    sha256 cellar: :any_skip_relocation, catalina:      "c6b867966434eedc878b9eba1954a00a99f719f0e6bc6af8ecdd0a429fb51d51"
+    sha256 cellar: :any_skip_relocation, mojave:        "92cf48c7bd3579a52af646610c467b038a94c9581b99101b7e8075843b797c0e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fd76348757c672ce6ff7d608205cf16a131f2b4f93855bb4a7393fabfe0a1991" # linuxbrew-core
   end
 
   depends_on "python-tabulate"

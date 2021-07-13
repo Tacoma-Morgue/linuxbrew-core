@@ -3,16 +3,16 @@ class Poetry < Formula
 
   desc "Python package management tool"
   homepage "https://python-poetry.org/"
-  url "https://files.pythonhosted.org/packages/97/75/e1d93257956f5be859b2f4ab0d9b8ee881fbb866d19010aa64dc9ff2b156/poetry-1.1.6.tar.gz"
-  sha256 "e7c58a50c14aebc18e7de9df64f1dad74b194f21b8e5257251449f0feb4784fa"
+  url "https://files.pythonhosted.org/packages/24/66/a4b8bf9c4a989f6c1c38824207f6f6882badee19a6c59cd86573ef49b5b7/poetry-1.1.7.tar.gz"
+  sha256 "3833c7b22411b8393e8e594fede94f0ef7a5260c19f51e272cce76512cffe6c8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "48b5e7b458e9cc95f3589596eca9e8efd24366c56bbe513373d97e329cc84c0f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3f412fc0cfb9d53d3797012a0e646435e9642694bcb18653c68a0ea53897b47a"
-    sha256 cellar: :any_skip_relocation, catalina:      "1067ae52e2a5734932564aee1f3d6d6c610fe6eb1ede7586208aeb534b709730"
-    sha256 cellar: :any_skip_relocation, mojave:        "60d1de7c1c6db5046e1e12d9e74c298c82e438278b073fe085d12aef53ebce06"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9f1ec93bd4d7ff6085828077b973ab1cff6502d7a215a8b3e0fa458021e1cbd0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c1a15909c2f95effcb17c629507c7eff3e5671f2b29f0708c277f96ac86028b3"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d9f551423a666a81c3f901c7e43b59fa81be1e5d76fb38c3730e65a93e7fe1f6"
+    sha256 cellar: :any_skip_relocation, catalina:      "a9f7bb8b75380c57454265a68b71c8fb00601884b503f2ee88331a28ba58a81d"
+    sha256 cellar: :any_skip_relocation, mojave:        "0239984d1a2d52a0666c09f92ffacd9e52be1e88b8d411178ca95b1bcdceb3da"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e49b152c8ece4a8bd8f9842011b3cbb873c65ec070f54364e35aa05f2b3c7da" # linuxbrew-core
   end
 
   depends_on "python@3.9"
@@ -33,8 +33,8 @@ class Poetry < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz"
-    sha256 "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
+    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
   resource "chardet" do
@@ -58,8 +58,8 @@ class Poetry < Formula
   end
 
   resource "distlib" do
-    url "https://files.pythonhosted.org/packages/2f/83/1eba07997b8ba58d92b3e51445d5bf36f9fba9cb8166bcae99b9c3464841/distlib-0.3.1.zip"
-    sha256 "edf6116872c863e1aa9d5bb7cb5e05a022c519a4594dc703843343a9ddd9bff1"
+    url "https://files.pythonhosted.org/packages/45/97/15fdbef466e12c890553cebb1d8b1995375202e30e0c83a1e51061556143/distlib-0.3.2.zip"
+    sha256 "106fef6dc37dd8c0e2c0a60d3fca3e77460a48907f335fa28420463a6f799736"
   end
 
   resource "filelock" do
@@ -78,8 +78,8 @@ class Poetry < Formula
   end
 
   resource "importlib-metadata" do
-    url "https://files.pythonhosted.org/packages/a0/d1/93d2dec161192f8ec90e9ef7fd31c26fe55d0226684e9dde35b1e2586def/importlib_metadata-3.10.1.tar.gz"
-    sha256 "c9356b657de65c53744046fa8f7358afe0714a1af7d570c00c3835c2d724a7c1"
+    url "https://files.pythonhosted.org/packages/1c/7f/fe573d2225d7e0ea4bd9e8673b2c7fc0b2b2b2f86b36f8c5fe75b77e59c4/importlib_metadata-4.5.0.tar.gz"
+    sha256 "b142cc1dd1342f31ff04bb7d022492b09920cb64fed867cd3ea6f80fe3ebd139"
   end
 
   resource "keyring" do
@@ -128,8 +128,8 @@ class Poetry < Formula
   end
 
   resource "pylev" do
-    url "https://files.pythonhosted.org/packages/cc/61/dab2081d3d86dcf0b9f5dcfb11b256d76cd14aad7ccdd7c8dd5e7f7e41a0/pylev-1.3.0.tar.gz"
-    sha256 "063910098161199b81e453025653ec53556c1be7165a9b7c50be2f4d57eae1c3"
+    url "https://files.pythonhosted.org/packages/11/f2/404d2bfa30fb4ee7c7a7435d593f9f698b25d191cafec69dd0c726f02f11/pylev-1.4.0.tar.gz"
+    sha256 "9e77e941042ad3a4cc305dcdf2b2dec1aec2fbe3dd9015d2698ad02b173006d1"
   end
 
   resource "pyparsing" do
@@ -153,28 +153,28 @@ class Poetry < Formula
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
-    sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
+    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
+    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "tomlkit" do
-    url "https://files.pythonhosted.org/packages/64/e0/6c8c96024d118cb029a97752e9a6d70bd06e4fd4c8b00fd9446ad6178f1d/tomlkit-0.7.0.tar.gz"
-    sha256 "ac57f29693fab3e309ea789252fcce3061e19110085aa31af5446ca749325618"
+    url "https://files.pythonhosted.org/packages/65/ed/7b7216101bc48627b630693b03392f33827901b81d4e1360a76515e3abc4/tomlkit-0.7.2.tar.gz"
+    sha256 "d7a454f319a7e9bd2e249f239168729327e4dd2d27b17dc68be264ad1ce36754"
   end
 
   resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/16/06/0f7367eafb692f73158e5c5cbca1aec798cdf78be5167f6415dd4205fa32/typing_extensions-3.7.4.3.tar.gz"
-    sha256 "99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"
+    url "https://files.pythonhosted.org/packages/aa/55/62e2d4934c282a60b4243a950c9dbfa01ae7cac0e8d6c0b5315b87432c81/typing_extensions-3.10.0.0.tar.gz"
+    sha256 "50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/cb/cf/871177f1fc795c6c10787bc0e1f27bb6cf7b81dbde399fd35860472cecbc/urllib3-1.26.4.tar.gz"
-    sha256 "e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
+    url "https://files.pythonhosted.org/packages/4f/5a/597ef5911cb8919efe4d86206aa8b2658616d676a7088f0825ca08bd7cb8/urllib3-1.26.6.tar.gz"
+    sha256 "f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
   end
 
   resource "virtualenv" do
-    url "https://files.pythonhosted.org/packages/f4/6d/bfcfff1709d05143e71337db4800b30dd9abf0c41972960c9e8984ab96f7/virtualenv-20.4.3.tar.gz"
-    sha256 "49ec4eb4c224c6f7dd81bb6d0a28a09ecae5894f4e593c89b0db0885f565a107"
+    url "https://files.pythonhosted.org/packages/7c/46/4d4c37b6d96eb06961f8b2f38f7df12bb1a4951ff1145ac5dead9977e674/virtualenv-20.4.7.tar.gz"
+    sha256 "14fdf849f80dbb29a4eb6caa9875d476ee2a5cf76a5f5415fa2f1606010ab467"
   end
 
   resource "webencodings" do

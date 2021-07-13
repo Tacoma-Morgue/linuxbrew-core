@@ -6,13 +6,14 @@ class Jupyterlab < Formula
   url "https://files.pythonhosted.org/packages/85/17/4c6b94f3e28f53acc2b18e6d234a6ce8d274ac52cc4e6870a096695b38e3/jupyterlab-3.0.16.tar.gz"
   sha256 "7ad4fbe1f6d38255869410fd151a8b15692a663ca97c0a8146b3f5c40e275c23"
   license "BSD-3-Clause"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "892d1f279e6534c4ed454072a0a11232acdfc50a4abcb877a4f62adb71334c09"
-    sha256 cellar: :any,                 big_sur:       "5b78baffd0e6bb4c787ec6758d73c41fdee7f1b438e28e117a2e915a8149d198"
-    sha256 cellar: :any,                 catalina:      "e09e5d4f8e6dd1016990d60aef943b4764541bd847ea89ecf4d8a0be3ba7a3c8"
-    sha256 cellar: :any,                 mojave:        "5cf8f4f25f661bb5e4f6f91263bf3d2436c599ed287a044c814c9a56b7fb2654"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "744312101192633ca04c3051b0e581f6686db19a745c3f5a77f83c2742f61948"
+    sha256 cellar: :any,                 arm64_big_sur: "c79b36e9458ccb28b3bf16f4cffa3d2d0fbed4339a66c625111eb5a8be704018"
+    sha256 cellar: :any,                 big_sur:       "30009b96b8f4e143eff49d021eede36a41fd5eb9578e04c74efd22a7a6ae188e"
+    sha256 cellar: :any,                 catalina:      "d8d522e89c2961d3756198711ef8d833edb96f5722071191b2d3838ca2bf6446"
+    sha256 cellar: :any,                 mojave:        "5e41d3bcf8a61b3e940ea74ff608273ad21c37a4a5eda9cf06cd8df50111694c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "557c959cb5ed920ce93893c58eef20e34dc05dd6a11dd6e466c5f8d85cbebcc0" # linuxbrew-core
   end
 
   depends_on "ipython"

@@ -1,17 +1,17 @@
 class Autorestic < Formula
   desc "High level CLI utility for restic"
   homepage "https://autorestic.vercel.app/"
-  url "https://github.com/cupcakearmy/autorestic/archive/v1.1.1.tar.gz"
-  sha256 "f1bbc4b64cf5a2ee2e738500109867e3dc77a2190cf847d18ceffc7d2831053b"
+  url "https://github.com/cupcakearmy/autorestic/archive/v1.1.2.tar.gz"
+  sha256 "6966ada5931743fabf9d1bfa225085faf4dd966b51baff0fd0811528a4a4832c"
   license "Apache-2.0"
   head "https://github.com/cupcakearmy/autorestic.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2cc1a51fdcc1e8ce9c6fbfbadc14aa97c2b3fc28907f9f23633fb4fc16bf668c"
-    sha256 cellar: :any_skip_relocation, big_sur:       "276d5de8b1fbcffb06aa1748d17771d94939b431bbe1748ccb8d932aac9c74d3"
-    sha256 cellar: :any_skip_relocation, catalina:      "dbb8deeb7b735202730220f2edfa4ce019ba52d07be44e80ce68351dc56cb96e"
-    sha256 cellar: :any_skip_relocation, mojave:        "ddc1d2cf89b9aeca14b66e3368b915224ff765ba6fba894e477acef29603ee74"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1463e539e77f1ade1d1ec43c60cb565bb4812e184385900df671e48a01fa8788"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9187de5a27f8fa2470dd1ddc78c6ffe93dfab21b7fb84643b06a19d6a0fb4239"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c9e20ede08dd2a7ad93b2c96189a3b052207db82654711d0c5909f22d4502802"
+    sha256 cellar: :any_skip_relocation, catalina:      "ee2966ee5111d262a073aa8af24a6cd751350561c15f21bdb4213a557450f1c2"
+    sha256 cellar: :any_skip_relocation, mojave:        "cc4b3027ef2546d01a4ef9ac5f62ebbdcaeff299583679a4d699f44308540130"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cfd72ea0638b698923b23c444a3080c82c96b65fea4ca6df4b25c671bcbbb59b" # linuxbrew-core
   end
 
   depends_on "go" => :build

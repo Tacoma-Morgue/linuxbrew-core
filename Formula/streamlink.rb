@@ -3,17 +3,17 @@ class Streamlink < Formula
 
   desc "CLI for extracting streams from various websites to a video player"
   homepage "https://streamlink.github.io/"
-  url "https://files.pythonhosted.org/packages/d8/82/d18ab1a39e58124099871aad6e459e7841028fe5f78d5867d559112570b8/streamlink-2.1.2.tar.gz"
-  sha256 "5e3be17673ed6b7da359a4636bd1e6961b4e58acb2dd7d219f9aaab377a4c84d"
+  url "https://files.pythonhosted.org/packages/81/0d/ffeb67b27301523859bdc0a186ea7a72cf92e779e3f1db5bb03742474412/streamlink-2.2.0.tar.gz"
+  sha256 "0f8e3d4d4eb530e4fe16e82a9d8919c0432d26e53af1dcce2a3dd2adbefbf109"
   license "BSD-2-Clause"
   head "https://github.com/streamlink/streamlink.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "feedfeab35c51fe7cf3e08aff3c51a8ab14825a65d8db95eafe1166970be227b"
-    sha256 cellar: :any_skip_relocation, big_sur:       "81fd84c142e7aacd900c8b3369ed1a611b3e4111a83f29608853be0df22b6b31"
-    sha256 cellar: :any_skip_relocation, catalina:      "85aae8da53cc745bc8b424515bb7c7207d909b1570d2a2953cb651b7296d7e54"
-    sha256 cellar: :any_skip_relocation, mojave:        "832556c3043e75865ef43c45704ea3f34d26048c3c239b3188a19e259faf0555"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d34c7fe814fd59cf5962939eac31fe8020425701128adc204d3cb1487e735226"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "87bfadd51f100d7f1914ecd59b0d35f8e3639d378808345c1d3519760520c5a4"
+    sha256 cellar: :any_skip_relocation, big_sur:       "706004ef9dff21ac210cf5a8c34e5eab8fcd86af347924a0199dd66042a6d46c"
+    sha256 cellar: :any_skip_relocation, catalina:      "d412c0d1ce032b198a80170db3d5de61bf5ecdaeb00585af5b057cdfaa6f5596"
+    sha256 cellar: :any_skip_relocation, mojave:        "19527f54378088eef2dc47db26944bb5342b4110b960eab96e71a0c04c286a35"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f9e9d1d59b60ecf35df4419b29d4a2ba4eb1889a30b21eb3bcf229d3b010116a" # linuxbrew-core
   end
 
   depends_on "python@3.9"
@@ -25,8 +25,8 @@ class Streamlink < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz"
-    sha256 "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
+    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
   resource "chardet" do
@@ -75,13 +75,13 @@ class Streamlink < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/cb/cf/871177f1fc795c6c10787bc0e1f27bb6cf7b81dbde399fd35860472cecbc/urllib3-1.26.4.tar.gz"
-    sha256 "e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
+    url "https://files.pythonhosted.org/packages/94/40/c396b5b212533716949a4d295f91a4c100d51ba95ea9e2d96b6b0517e5a5/urllib3-1.26.5.tar.gz"
+    sha256 "a7acd0977125325f516bda9735fa7142b909a8d01e8b2e4c8108d0984e6e0098"
   end
 
   resource "websocket-client" do
-    url "https://files.pythonhosted.org/packages/97/ab/f45394f0db306bdcdf78e7922e942117731023e31f44f4dd8bdd926c2391/websocket-client-1.0.0.tar.gz"
-    sha256 "5051b38a2f4c27fbd7ca077ebb23ec6965a626ded5a95637f36be1b35b6c4f81"
+    url "https://files.pythonhosted.org/packages/58/0d/af54f4732115a20c370f43f179523d189a5cb75711c60ba00b41e163a065/websocket-client-1.1.0.tar.gz"
+    sha256 "b68e4959d704768fa20e35c9d508c8dc2bbc041fd8d267c0d7345cffe2824568"
   end
 
   def install

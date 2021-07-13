@@ -1,8 +1,8 @@
 class Katago < Formula
   desc "Neural Network Go engine with no human-provided knowledge"
   homepage "https://github.com/lightvector/KataGo"
-  url "https://github.com/lightvector/KataGo/archive/v1.8.2.tar.gz"
-  sha256 "4a3ae33debb220d3bbfe302bdf8689ea82f1236fe3d2c8b2ec91d407bc0bac67"
+  url "https://github.com/lightvector/KataGo/archive/v1.9.1.tar.gz"
+  sha256 "4992ddca600d19630692b8fd468187d872274493d2db2eed5576b7b550895cda"
   license "MIT"
 
   livecheck do
@@ -11,10 +11,10 @@ class Katago < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "5fc123b94df821249122066d22b08bcb02e348f6e06ba48bbf20321a0c1147ad"
-    sha256 cellar: :any, big_sur:       "07abc11306ee69be6c355dff24d7ef8bd2b202657f69693ace8ead9c89afc8f1"
-    sha256 cellar: :any, catalina:      "9c0cf564eec57012ff01bd4a0b95d933e4430ddf6adf7b4cf04b5aea748f0b6a"
-    sha256 cellar: :any, mojave:        "3fa5d13812dd6aa7f3358fd250125f3b2a06df2ee609a1cdf52b5d1164e3a400"
+    sha256 cellar: :any, arm64_big_sur: "e959fd8773e9f01135e5a1573c02669594d8cd47f0ba05f990229610790df8fe"
+    sha256 cellar: :any, big_sur:       "bb76c2e9a26ffa268570a94764ec523c1f0a09800401b51609af457dc0c6569e"
+    sha256 cellar: :any, catalina:      "3121216dc8e50d68f3ba9398eeb89387ac7f8a25af0e200c576a536e6806e1ae"
+    sha256 cellar: :any, mojave:        "d683d128d4ecb2efb0e11b6d04bebb50c0157d2375bb1411007e81694cc4044c"
   end
 
   depends_on "cmake" => :build

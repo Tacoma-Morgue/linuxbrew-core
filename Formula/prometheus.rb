@@ -1,8 +1,8 @@
 class Prometheus < Formula
   desc "Service monitoring system and time series database"
   homepage "https://prometheus.io/"
-  url "https://github.com/prometheus/prometheus/archive/v2.27.1.tar.gz"
-  sha256 "90df7ed4b3a68e7cd0fe9fc8e94732aedecc2ed5f2828eb515507db64f024c2f"
+  url "https://github.com/prometheus/prometheus/archive/v2.28.1.tar.gz"
+  sha256 "6500dfe91f8d1ef8e7c064262a66773c2ac90d59a3dc9e3e480bbb29a78a3574"
   license "Apache-2.0"
 
   livecheck do
@@ -11,10 +11,11 @@ class Prometheus < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "190d3da187c5a6ba2fbdc5eb80d958abbab03ebedb6694df5ce371acaf69232f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b7d705f33fde8713e986e050a470b01e5bd1d9eb266813e1b48985df9a5caa8d"
-    sha256 cellar: :any_skip_relocation, catalina:      "4010a42f209a16e32bdce3331679839eafbc2e527f43ffe9429fc41d2ab9e88e"
-    sha256 cellar: :any_skip_relocation, mojave:        "acd45c1800b8c73e28e384bd2c36f749976ca7455270a415374b42ac240b4277"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a2d5ac471baa2ae32c717fd29732fa000f2f9b4f1e7a8bfd46bf00ac5858215a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "02059fadfd4236bb66937e2c0ed85efc157cedce2eec67c164ec3b9b57b0a3ef"
+    sha256 cellar: :any_skip_relocation, catalina:      "5f5dc533678eb06fb57f0b54bd7b635ce9f0532c2a7e847bf81cc358936e8d79"
+    sha256 cellar: :any_skip_relocation, mojave:        "28b262ada92adfcace530fb58c03842788028e499604e47e3c6223cb16e516ab"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1c4461fd7e7c93d2a4d4c96659405b7eb8915b8ebbb580a587a193d2dd48964d" # linuxbrew-core
   end
 
   depends_on "go" => :build

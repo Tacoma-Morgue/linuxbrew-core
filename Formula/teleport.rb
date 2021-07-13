@@ -1,8 +1,8 @@
 class Teleport < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://gravitational.com/teleport"
-  url "https://github.com/gravitational/teleport/archive/v6.2.3.tar.gz"
-  sha256 "3f116ed8ec6d23366bfc578d4ddfc5e43d6a8683300f6b1f53e57f4985ffc2f4"
+  url "https://github.com/gravitational/teleport/archive/v6.2.7.tar.gz"
+  sha256 "cd13a2085f6f6475d37eac81a5973890c56ef410432fe84453283fde6eb79a80"
   license "Apache-2.0"
   head "https://github.com/gravitational/teleport.git"
 
@@ -17,10 +17,10 @@ class Teleport < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b4c8108b4cc7e31d60fcb92487232290be9b14c6a8dcb0e59b8c7db180413b32"
-    sha256 cellar: :any_skip_relocation, big_sur:       "2fa2d0cccf0f3bc2ae711cb1269bfc61ce57e02fadc7a8158e87258aee5c5ff8"
-    sha256 cellar: :any_skip_relocation, catalina:      "3ea370c895d22e4f3e186052133ecd3c8616dcee775efb79e91ec2ec8eea47f4"
-    sha256 cellar: :any_skip_relocation, mojave:        "f34dad9004387dc832ab3c45fb1c31c99eb55ebadbb282804434489c2e292641"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "02063234d1b82f32911e02f1542732fe786ab16d576123e419b8468b06a41720"
+    sha256 cellar: :any_skip_relocation, big_sur:       "e5ba46d46053809b32eea9e695ddd4e1335c6cf84a520717b2b36c5c2e247f44"
+    sha256 cellar: :any_skip_relocation, catalina:      "8e072c6a15d16cfd667925c222a087bc5829f017f4261e1df17d5fd108887d35"
+    sha256 cellar: :any_skip_relocation, mojave:        "ef7cccb8afb6a6dfae9ef218dd01f99434f3c107001b99f1895f7e8aa55f3061"
   end
 
   depends_on "go" => :build
@@ -33,8 +33,8 @@ class Teleport < Formula
 
   # Keep this in sync with https://github.com/gravitational/teleport/tree/v#{version}
   resource "webassets" do
-    url "https://github.com/gravitational/webassets/archive/8c2812c169fa6bd5f31c13160bd93ef8b317bbc9.tar.gz"
-    sha256 "14445b0864d759347c1f53dc144a346b1974b8ded49031d7f0b7227f5d49d407"
+    url "https://github.com/gravitational/webassets/archive/5adea0140c19514f77b1327c4315f99ee77e8261.tar.gz"
+    sha256 "97e253e414430b6a3493502639640c76f272a931d3fcaf55d0a91fc77e3367dd"
   end
 
   def install

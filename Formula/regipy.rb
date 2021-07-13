@@ -3,30 +3,30 @@ class Regipy < Formula
 
   desc "Offline registry hive parsing tool"
   homepage "https://github.com/mkorman90/regipy"
-  url "https://files.pythonhosted.org/packages/45/e2/84730bc78f86a961e852203507acc808e335e8fbaf98ed868ed89b5f2bbd/regipy-1.9.0.tar.gz"
-  sha256 "b3e669d67214570429617f2eaef4411114d11500f92e6cbadff3135b9ddddde9"
+  url "https://files.pythonhosted.org/packages/68/d9/44a939a5e32e706d904cb7ebdc099964cdc4b677a3ebac6db2477f6ef908/regipy-1.9.3.tar.gz"
+  sha256 "86cdd32eb1148273fd0ac621ddb7dafc494b7f67cd4e9df27ed11a985464fc7a"
   license "MIT"
   head "https://github.com/mkorman90/regipy.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1cff55c51704cf0c431dcd1f73a9070a84e3ccbef9e1acce4063430b38af0186"
-    sha256 cellar: :any_skip_relocation, big_sur:       "f5db25db31fade41d191ab90c6d32f0f957b7df7dff2d037fe8af0174092e88a"
-    sha256 cellar: :any_skip_relocation, catalina:      "3356c4b5f74b617ebd64a91ce72fe6d02434cf68e82d41d328cc3f3bdd34f1ea"
-    sha256 cellar: :any_skip_relocation, mojave:        "1918914d8139c75785e9e30a0b905118d6d0255862a360a7117f3bc4c0bcf1b6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0e8b1c4887487fc015373570bf9ba5797e20ccf1dc25a646da3b01335be96fd9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7f91cc571ae419b6a56e10c3a649a53992362c7376f37e177b309130eabc682f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "f102e1bebbdce2d4c43782795827fe83c76d46480499838be7f0f699ce20c476"
+    sha256 cellar: :any_skip_relocation, catalina:      "40f37eaee0d0ac2142d97c17f070ac443fe72ac4d5cdd3008b3cbf04f84205c9"
+    sha256 cellar: :any_skip_relocation, mojave:        "32315d4acb3745ff42ec792575db3abd04c2ae3fabeeb36557b7038e1bce8752"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6d73afeec0bbc4ce2d4c2d2504ded9293e18eefef8f46361188406f4860cb03" # linuxbrew-core
   end
 
   depends_on "python-tabulate"
   depends_on "python@3.9"
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/f0/cb/80a4a274df7da7b8baf083249b0890a0579374c3d74b5ac0ee9291f912dc/attrs-20.3.0.tar.gz"
-    sha256 "832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"
+    url "https://files.pythonhosted.org/packages/ed/d6/3ebca4ca65157c12bd08a63e20ac0bdc21ac7f3694040711f9fd073c0ffb/attrs-21.2.0.tar.gz"
+    sha256 "ef6aaac3ca6cd92904cdd0d83f629a15f18053ec84e6432106f7a4d04ae4f5fb"
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/27/6f/be940c8b1f1d69daceeb0032fee6c34d7bd70e3e649ccac0951500b4720e/click-7.1.2.tar.gz"
-    sha256 "d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"
+    url "https://files.pythonhosted.org/packages/21/83/308a74ca1104fe1e3197d31693a7a2db67c2d4e668f20f43a2fca491f9f7/click-8.0.1.tar.gz"
+    sha256 "8c04c11192119b1ef78ea049e0a6f0463e4c48ef00a30160c704337586f3ad7a"
   end
 
   resource "construct" do
@@ -55,8 +55,8 @@ class Regipy < Formula
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/ef/58/60cc1e9af5714d1b86062f6dc00c5dd6973c902da6259f930b9c6e7a3430/tqdm-4.59.0.tar.gz"
-    sha256 "d666ae29164da3e517fcf125e41d4fe96e5bb375cd87ff9763f6b38b5592fe33"
+    url "https://files.pythonhosted.org/packages/0d/dd/78f7e080d3bfc87fc19bed54513b430659d38efb2d9ea6e3ad815a665a02/tqdm-4.61.2.tar.gz"
+    sha256 "8bb94db0d4468fea27d004a0f1d1c02da3cdedc00fe491c0de986b76a04d6b0a"
   end
 
   resource "test_hive" do

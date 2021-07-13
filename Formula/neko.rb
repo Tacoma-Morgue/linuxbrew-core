@@ -4,16 +4,15 @@ class Neko < Formula
   url "https://github.com/HaxeFoundation/neko/archive/v2-3-0/neko-2.3.0.tar.gz"
   sha256 "850e7e317bdaf24ed652efeff89c1cb21380ca19f20e68a296c84f6bad4ee995"
   license "MIT"
-  revision 4
+  revision 5
   head "https://github.com/HaxeFoundation/neko.git"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_big_sur: "ece8bc64b6653a08e64d1641bb8ce38ab2c1b9652953ae4ab4ade96c7cbbbce4"
-    sha256 cellar: :any,                 big_sur:       "b709a1c46fd41c3d0f2e09ef65624e5e286408c885b8eb773806533d251c5550"
-    sha256 cellar: :any,                 catalina:      "3c3942cb5d805125d765c401688fb8dc8a66047d21e1e9e10522ecd94de58c21"
-    sha256 cellar: :any,                 mojave:        "6fbefe32d592b7fe197ea6e2e891b9da0d2d34ead8e5a44306714d16c4b40042"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "137575e065207e056fc975a729896f9e3ac96b174ca7aa06c1202793856cf8f5"
+    sha256                               arm64_big_sur: "af5741505f1dfa04a3b0db4c0f4597349feaf689ec71398080d390b8249bd4b7"
+    sha256                               big_sur:       "79ecc848456fd01be73b516bc07e164dd11b33a905a0d73b8f931c190d7cc12b"
+    sha256                               catalina:      "7573817ae88731e28e66548ec3986dd1406acb225a9c6a5b8747274b94b11123"
+    sha256                               mojave:        "730fdace26e12cb7d348e61ed1b2799cefa196f78ea6cff8e3acefb27c20d779"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ba1d0fd261668ff4653839e1cdbb49a61b05671775a9abab8af297edb385b57a" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -23,16 +22,17 @@ class Neko < Formula
   depends_on "mbedtls"
   depends_on "openssl@1.1"
   depends_on "pcre"
-  unless OS.mac?
+
+  uses_from_macos "sqlite"
+  uses_from_macos "zlib"
+
+  on_linux do
     depends_on "apr"
     depends_on "apr-util"
     depends_on "httpd"
     # On mac, neko uses carbon. On Linux it uses gtk2
     depends_on "gtk+"
   end
-
-  uses_from_macos "sqlite"
-  uses_from_macos "zlib"
 
   # Don't redefine MSG_NOSIGNAL -- https://github.com/HaxeFoundation/neko/pull/217
   patch do
@@ -70,12 +70,6 @@ class Neko < Formula
 
   def install
     args = std_cmake_args
-    unless OS.mac?
-      args << "-DAPR_LIBRARY=#{Formula["apr"].libexec}/lib"
-      args << "-DAPR_INCLUDE_DIR=#{Formula["apr"].libexec}/include/apr-1"
-      args << "-DAPRUTIL_LIBRARY=#{Formula["apr-util"].libexec}/lib"
-      args << "-DAPRUTIL_INCLUDE_DIR=#{Formula["apr-util"].libexec}/include/apr-1"
-    end
     inreplace "libs/mysql/CMakeLists.txt",
               %r{https://downloads.mariadb.org/f/},
               "https://downloads.mariadb.com/Connectors/c/"
@@ -87,6 +81,14 @@ class Neko < Formula
     inreplace "libs/mysql/CMakeLists.txt",
               "-Wno-dev",
               "-Wno-dev -DICONV_LIBRARIES=-liconv -DICONV_INCLUDE_DIR= -DWITH_EXTERNAL_ZLIB=1"
+
+    args = std_cmake_args
+    on_linux do
+      args << "-DAPR_LIBRARY=#{Formula["apr"].libexec}/lib"
+      args << "-DAPR_INCLUDE_DIR=#{Formula["apr"].libexec}/include/apr-1"
+      args << "-DAPRUTIL_LIBRARY=#{Formula["apr-util"].libexec}/lib"
+      args << "-DAPRUTIL_INCLUDE_DIR=#{Formula["apr-util"].libexec}/include/apr-1"
+    end
 
     # Let cmake download its own copy of MariaDBConnector during build and statically link it.
     # It is because there is no easy way to define we just need any one of mariadb, mariadb-connector-c,

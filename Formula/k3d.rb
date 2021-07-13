@@ -1,8 +1,8 @@
 class K3d < Formula
   desc "Little helper to run Rancher Lab's k3s in Docker"
   homepage "https://k3d.io"
-  url "https://github.com/rancher/k3d/archive/v4.4.4.tar.gz"
-  sha256 "da680e58a86ff5291aa6b269b8d02f3b591610ff68cc3f46be29280c7975efd3"
+  url "https://github.com/rancher/k3d/archive/v4.4.7.tar.gz"
+  sha256 "036685d39397c89c946057ac2e333f157ac460f5251413f1db8629cb7462b58a"
   license "MIT"
 
   livecheck do
@@ -11,11 +11,11 @@ class K3d < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4b07b0034c923b8a79d981facc2568562bb97c6095140c0cf4e7157476faae9d"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b18fc787ae363c081ae88e6a11fe0f1d8dedf1e704bf2182ae84cf4fb7dd3803"
-    sha256 cellar: :any_skip_relocation, catalina:      "b9c0f0fdcde9d98bebb1a636ec886f08998305e5ba8cebe672b7886f9baf5ef3"
-    sha256 cellar: :any_skip_relocation, mojave:        "7b09ef709b2b39ac1208ff42bfd2a435e1ec0a0e43960fd1887fff84a0ed1866"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "52e8903016c6f6dfb187dd58ad40ee4e31ec39dc5345cdb411a96796dd6f5370"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d68babfb2e3258b8d9859d502427a433312a8dd7d2262d707bb225abb76318b8"
+    sha256 cellar: :any_skip_relocation, big_sur:       "ffcaa4fc81f9f667301178f3c649785586af8befa82b39de9deffcbbbb175ea1"
+    sha256 cellar: :any_skip_relocation, catalina:      "c6cdc867a38476d3dd11a3aa863cc08a38889551bcea8e3fdcde1e4e310c32fa"
+    sha256 cellar: :any_skip_relocation, mojave:        "4bcf06a1c690c414ff71b5624c6d505021cd88f2908e07ab4caa1306dd0a3b03"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5a85f8499530980e40c301dd177d76530b27b88b0769306517e3740c0fcda00b" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -24,7 +24,7 @@ class K3d < Formula
     system "go", "build",
            "-mod", "vendor",
            "-ldflags", "-s -w -X github.com/rancher/k3d/v#{version.major}/version.Version=v#{version}"\
-           " -X github.com/rancher/k3d/v#{version.major}/version.K3sVersion=latest",
+                       " -X github.com/rancher/k3d/v#{version.major}/version.K3sVersion=latest",
            "-trimpath", "-o", bin/"k3d"
 
     # Install bash completion

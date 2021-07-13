@@ -1,17 +1,17 @@
 class Mpd < Formula
   desc "Music Player Daemon"
   homepage "https://www.musicpd.org/"
-  url "https://www.musicpd.org/download/mpd/0.22/mpd-0.22.8.tar.xz"
-  sha256 "9617ed08c9ffafcf5f925819251f6b90df3f4f73cf2838c41033e1962104286d"
+  url "https://www.musicpd.org/download/mpd/0.22/mpd-0.22.9.tar.xz"
+  sha256 "f937403297c2240bd4a569f4b937ee7ab17398a5284ba9df4d6d4c3a0512bc64"
   license "GPL-2.0-or-later"
   head "https://github.com/MusicPlayerDaemon/MPD.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "246e858d3140b39ef7c628ea4ec26da926519e7f933dc59298797a67ee8f9d8e"
-    sha256 cellar: :any, big_sur:       "7c8bbe79789bc8c2b870cd1adc36364f01fbb240465c976e6f7049b4740439e4"
-    sha256 cellar: :any, catalina:      "294a0ac898cbb3a3885e923b6bf618d52c9735585f93a22f766d4e709f090a14"
-    sha256 cellar: :any, mojave:        "0e0291c0e5a514f57d079e704d83f1fb975cd142b2d2ad151e91bca764a1fddd"
-    sha256               x86_64_linux:  "3a4937ab0faa5ab75b53ef2ef355d763839db67fa0c87c1cb3ab02af3d5e957a"
+    sha256 cellar: :any, arm64_big_sur: "289ca04c3caee3ac8bfbbe69c8fe55cae264f07d61986c737523e2766f538438"
+    sha256 cellar: :any, big_sur:       "20fc058208f1afbb9c82d091c4631200dc831fef03b883d6890cd980873824c3"
+    sha256 cellar: :any, catalina:      "1a8e909305eb50fe397c702d95d2226ca936132759f0fe7408e9e60cb79d08bd"
+    sha256 cellar: :any, mojave:        "28875232919ed08ec59ad07391ba3d317e4f71311964ed4446511eb52e327a96"
+    sha256               x86_64_linux:  "7df8326c2f5df41f6cb2ca8e9886dbf151a25c43ca1a597bccad565c041e01be" # linuxbrew-core
   end
 
   depends_on "boost" => :build

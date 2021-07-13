@@ -16,7 +16,7 @@ class GccAT5 < Formula
   # gcc is designed to be portable.
   bottle do
     sha256 cellar: :any, high_sierra:  "dcc9059b725fd7c87842287bbedf60a28745417652d42a300dcd944e15986f36"
-    sha256               x86_64_linux: "cd94b6bc2189df7861c2c32c480f777984865dbab4107f493188feda5a05b80d"
+    sha256               x86_64_linux: "cd94b6bc2189df7861c2c32c480f777984865dbab4107f493188feda5a05b80d" # linuxbrew-core
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -39,10 +39,6 @@ class GccAT5 < Formula
 
   # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
   cxxstdlib_check :skip
-
-  def version_suffix
-    version.major.to_s
-  end
 
   # Fix build with Xcode 9
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82091
@@ -73,6 +69,10 @@ class GccAT5 < Formula
     end
   end
 
+  def version_suffix
+    version.major.to_s
+  end
+
   def install
     # GCC will suffer build errors if forced to use a particular linker.
     ENV.delete "LD"
@@ -95,7 +95,6 @@ class GccAT5 < Formula
       "--with-mpfr=#{Formula["mpfr"].opt_prefix}",
       "--with-mpc=#{Formula["libmpc"].opt_prefix}",
       "--with-isl=#{Formula["isl@0.18"].opt_prefix}",
-      "--with-system-zlib",
       "--enable-libstdcxx-time=yes",
       "--enable-stage1-checking",
       "--enable-checking=release",
@@ -107,10 +106,26 @@ class GccAT5 < Formula
       "--disable-nls",
       "--with-pkgversion=Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip,
       "--with-bugurl=#{tap.issues_url}",
-      "--enable-multilib",
     ]
 
-    unless OS.mac?
+    on_macos do
+      args << "--build=x86_64-apple-darwin#{OS.kernel_version}"
+      args << "--enable-multilib"
+      args << "--with-system-zlib"
+
+      # System headers may not be in /usr/include
+      sdk = MacOS.sdk_path_if_needed
+      if sdk
+        args << "--with-native-system-header-dir=/usr/include"
+        args << "--with-sysroot=#{sdk}"
+      end
+
+      # Ensure correct install names when linking against libgcc_s;
+      # see discussion in https://github.com/Homebrew/homebrew/pull/34303
+      inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
+    end
+
+    on_linux do
       # Fix cc1: error while loading shared libraries: libisl.so.15
       args << "--with-boot-ldflags=-static-libstdc++ -static-libgcc #{ENV["LDFLAGS"]}"
       args << "--disable-multilib"
@@ -126,37 +141,21 @@ class GccAT5 < Formula
       ln_s Utils.safe_popen_read(ENV.cc, "-print-file-name=libgcc_s.so.1").strip, lib
     end
 
-    # Fix Linux error: gnu/stubs-32.h: No such file or directory.
-    if OS.mac?
-      args << "--build=x86_64-apple-darwin#{OS.kernel_version}"
-      args << "--enable-multilib"
-
-      # System headers may not be in /usr/include
-      sdk = MacOS.sdk_path_if_needed
-      if sdk
-        args << "--with-native-system-header-dir=/usr/include"
-        args << "--with-sysroot=#{sdk}"
-      end
-
-      # Avoid reference to sed shim
-      args << "SED=/usr/bin/sed"
-
-      # Ensure correct install names when linking against libgcc_s;
-      # see discussion in https://github.com/Homebrew/homebrew/pull/34303
-      inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
-    end
-
     mkdir "build" do
       system "../configure", *args
       system "make", "bootstrap"
 
-      # At this point `make check` could be invoked to run the testsuite. The
-      # deja-gnu and autogen formulae must be installed in order to do this.
-      system "make", OS.mac? ? "install" : "install-strip"
+      on_macos do
+        system "make", "install"
+      end
+
+      on_linux do
+        system "make", "install-strip"
+      end
 
       # Add symlinks for libgcc, libgomp, libquadmath and libstdc++ so that bottles
       # built in CI can find these libraries when using brewed gcc@5
-      unless OS.mac?
+      on_linux do
         lib.install_symlink lib/"gcc/#{version_suffix}/libgcc_s.so"
         lib.install_symlink lib/"gcc/#{version_suffix}/libgcc_s.a"
         lib.install_symlink lib/"gcc/#{version_suffix}/libgcc_s.so.1"
@@ -187,7 +186,7 @@ class GccAT5 < Formula
   end
 
   def post_install
-    unless OS.mac?
+    on_linux do
       gcc = "#{bin}/gcc-#{version_suffix}"
       libgcc = Pathname.new(Utils.safe_popen_read(gcc, "-print-libgcc-file-name")).parent
       raise "command failed: #{gcc} -print-libgcc-file-name" if $CHILD_STATUS.exitstatus.nonzero?

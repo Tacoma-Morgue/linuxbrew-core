@@ -2,17 +2,17 @@ class Bazelisk < Formula
   desc "User-friendly launcher for Bazel"
   homepage "https://github.com/bazelbuild/bazelisk/"
   url "https://github.com/bazelbuild/bazelisk.git",
-      tag:      "v1.9.0",
-      revision: "1b471ee0935ebf91744bac1d7a51b72007167ddc"
+      tag:      "v1.10.0",
+      revision: "7c8d878a372975279629b5bf70f791d167b803aa"
   license "Apache-2.0"
   head "https://github.com/bazelbuild/bazelisk.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "516e65154591eb845b36666219782c5c6b384e5e13d143ea0a4e33e29fde4ba6"
-    sha256 cellar: :any_skip_relocation, big_sur:       "35e01853fe87cbf9b034b3e04b3f84a8e0634625f76a9ee01c022ff46e4a395d"
-    sha256 cellar: :any_skip_relocation, catalina:      "3ebb8cdd8eaf5a8977ad328340b1ee408f67729cf91cb6dc856bcd4801850b75"
-    sha256 cellar: :any_skip_relocation, mojave:        "cd3141d86b7b78d9404664e2fd00174a800c14db2e98ff9bad8b9f85bd543593"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "89b4e240475ad32f1efe8c728218e261fbcebaa13cf5cfbc0be6d00cb79c3d82"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "0e543a426db30c40fb9c236b619601c3ded5cc324a0d62b1a6ec0184349a2907"
+    sha256 cellar: :any_skip_relocation, big_sur:       "66ae0a8419a07ea0fb0ac2b95095c1a408105e65dd3ea8f19842307199d15ac3"
+    sha256 cellar: :any_skip_relocation, catalina:      "375df43fa2a16db3d4c9ffad1d3697fe1dd85c56d494dfc453d9ccca2e147eb1"
+    sha256 cellar: :any_skip_relocation, mojave:        "c1029a4d5cbc14c3fc653a6d9d936b01e565f62d9d3358f09101966d4ebcd69f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf60c12cfa46da794c1bf40a7bfe3c72044fce7f6ab6083be8e889b107f69336" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -25,7 +25,7 @@ class Bazelisk < Formula
   end
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-X main.BazeliskVersion=#{version}"
+    system "go", "build", *std_go_args(ldflags: "-s -w -X main.BazeliskVersion=#{version}")
 
     bin.install_symlink "bazelisk" => "bazel"
 

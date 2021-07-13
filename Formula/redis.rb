@@ -16,7 +16,7 @@ class Redis < Formula
     sha256 cellar: :any,                 big_sur:       "358fa4d16ce86681ad8a738ea97bcae82528f410a2ae5867350358e03109a715"
     sha256 cellar: :any,                 catalina:      "37ae1b9a121da9058048d2d439d6bcf1854752126d0d9895e0b908e3505deed7"
     sha256 cellar: :any,                 mojave:        "ecea2980c852e3af9f5b82c1c96c5180ef32f04efaf9c428b25c4b2d6dbffe1f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6d7f5090873433e893f511365effcf100898ae2a6b6f4e82f027cda37d5e8cfd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6d7f5090873433e893f511365effcf100898ae2a6b6f4e82f027cda37d5e8cfd" # linuxbrew-core
   end
 
   depends_on "openssl@1.1"
@@ -37,38 +37,12 @@ class Redis < Formula
     etc.install "sentinel.conf" => "redis-sentinel.conf"
   end
 
-  plist_options manual: "redis-server #{HOMEBREW_PREFIX}/etc/redis.conf"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <dict>
-            <key>SuccessfulExit</key>
-            <false/>
-          </dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/redis-server</string>
-            <string>#{etc}/redis.conf</string>
-            <string>--daemonize no</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/redis.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/redis.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"redis-server", etc/"redis.conf"]
+    keep_alive true
+    error_log_path var/"log/redis.log"
+    log_path var/"log/redis.log"
+    working_dir var
   end
 
   test do

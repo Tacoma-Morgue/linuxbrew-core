@@ -2,8 +2,8 @@ class Glooctl < Formula
   desc "Envoy-Powered API Gateway"
   homepage "https://docs.solo.io/gloo/latest/"
   url "https://github.com/solo-io/gloo.git",
-      tag:      "v1.7.11",
-      revision: "09f446650f206c3fba4890fec6a5e39255a13c2f"
+      tag:      "v1.8.0",
+      revision: "bf7ef0f71db21234038f5573b8be8b995d47ea26"
   license "Apache-2.0"
   head "https://github.com/solo-io/gloo.git"
 
@@ -13,11 +13,11 @@ class Glooctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "cc070a3571b88036b1d26336c4da6fff04a6f2ade47343dd9519bccb470a7e08"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c04869804774aa3a60c0072dc24652a7f44e403121065782e892b7440f17331f"
-    sha256 cellar: :any_skip_relocation, catalina:      "d14cba572901858949a25d2c8f54da768765daaaf4e77388eef37747aa9511a6"
-    sha256 cellar: :any_skip_relocation, mojave:        "e9e57b2e317b3e727458706c21bf367650158dcc265808c5f5a7b482c2a30fe5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "680dc28eccb6eb789ff2b2f8fcec91b507058ab304c7a886bee0516b596da37d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5dcbfcb98690ff6a31f15e1a0786ae95bdbe7ede763b92fd8a9fa6e9b0c87c36"
+    sha256 cellar: :any_skip_relocation, big_sur:       "cc36ae85d62bb31a8d6e1ef6811545fec19853a1b4066d1d82ce85751a671830"
+    sha256 cellar: :any_skip_relocation, catalina:      "93b6411cd5592288c03c5fc807a733b42f080b0939ed8e202fde309728578dfa"
+    sha256 cellar: :any_skip_relocation, mojave:        "97f3abd6ffe238c190d3f9580c42fe18c127dabed19fce2b3dbc15be0c8f3719"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9cad3e7ab2f405ba245197dc2376655e0b1acba4d5259961b8fa57c52349c6c2" # linuxbrew-core
   end
 
   depends_on "go" => :build

@@ -15,7 +15,7 @@ class Dovecot < Formula
     sha256 big_sur:       "e2e2f8de6497655aaa4f3500e7daf815039ae7d5f4ab665a24479a93f0268f4f"
     sha256 catalina:      "5e8f0e607c4ae4db5333adcba429c19c4292ad72512ee05a574ec412df1a066a"
     sha256 mojave:        "23d56aa20b37f916b2942a2183529b9520072593439bb132c21dd82c91ca4d11"
-    sha256 x86_64_linux:  "f70fa088146cb0a055886eb78bcf7246a5760ca94bc9c178a4df3d5bd09850a9"
+    sha256 x86_64_linux:  "f70fa088146cb0a055886eb78bcf7246a5760ca94bc9c178a4df3d5bd09850a9" # linuxbrew-core
   end
 
   depends_on "openssl@1.1"
@@ -71,40 +71,11 @@ class Dovecot < Formula
 
   plist_options startup: true
 
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>KeepAlive</key>
-          <false/>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_sbin}/dovecot</string>
-            <string>-F</string>
-          </array>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/dovecot/dovecot.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/dovecot/dovecot.log</string>
-          <key>SoftResourceLimits</key>
-          <dict>
-          <key>NumberOfFiles</key>
-          <integer>1000</integer>
-          </dict>
-          <key>HardResourceLimits</key>
-          <dict>
-          <key>NumberOfFiles</key>
-          <integer>1024</integer>
-          </dict>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_sbin/"dovecot", "-F"]
+    environment_variables PATH: std_service_path_env
+    error_log_path var/"log/dovecot/dovecot.log"
+    log_path var/"log/dovecot/dovecot.log"
   end
 
   test do

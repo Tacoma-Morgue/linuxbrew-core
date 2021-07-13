@@ -5,13 +5,14 @@ class I386ElfGdb < Formula
   mirror "https://ftpmirror.gnu.org/gdb/gdb-10.2.tar.xz"
   sha256 "aaa1223d534c9b700a8bec952d9748ee1977513f178727e1bee520ee000b4f29"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://sourceware.org/git/binutils-gdb.git"
 
   bottle do
-    sha256 arm64_big_sur: "8cc38881798d7b26dad770c66c6bf26c93620e02680d6b8b65ddde52671c1659"
-    sha256 big_sur:       "11ec64249911b86ac27e03a3c06a764169a08342f76dfa52e2823850aa6fad39"
-    sha256 catalina:      "4442baf056206209f1c8c15d114059b7eede9fb79ec9ad6656ae6dd5321b1a45"
-    sha256 mojave:        "c73aa00e7257fac37ccad2199ac971e0ed97b1d68e868220d1dfc0dca431288a"
+    sha256 arm64_big_sur: "b4c91d248b5ba7d765c277903ac03f1f3d35a77079ae3acbdba8768a9dcb4c55"
+    sha256 big_sur:       "dbf60ac8e71d01328d134cb1eaa47cd734dd612cd67cc7b730d56afc138ea969"
+    sha256 catalina:      "4ca5521aab0566367e9a72767225d08667efb40e609c0b8e9e4ff7464f755052"
+    sha256 mojave:        "85a64a23e61b011e32cff2c56e7915f32a8d8d669be09e4698b431412e8ea7b0"
   end
 
   depends_on "i686-elf-gcc" => :test
@@ -29,10 +30,14 @@ class I386ElfGdb < Formula
   end
 
   def install
+    target = "i386-elf"
     args = %W[
-      --target=i386-elf
+      --target=#{target}
       --prefix=#{prefix}
-      --datarootdir=#{share}/i386-elf-gdb
+      --datarootdir=#{share}/#{target}
+      --includedir=#{include}/#{target}
+      --infodir=#{info}/#{target}
+      --mandir=#{man}
       --disable-debug
       --disable-dependency-tracking
       --with-lzma
@@ -48,8 +53,6 @@ class I386ElfGdb < Formula
       # Don't install bfd or opcodes, as they are provided by binutils
       system "make", "install-gdb"
     end
-
-    mv include/"gdb", include/"i386-elf-gdb"
   end
 
   test do

@@ -16,7 +16,7 @@ class DnscryptProxy < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "9a58ee4594cc5daa6f82bba96abb581fcad384f6704b11c9c79e17607ad6ca04"
     sha256 cellar: :any_skip_relocation, catalina:      "8e32c49eb1a77f48be69ab8acfa172d1573761e96d0136bc847df6c84f7d8166"
     sha256 cellar: :any_skip_relocation, mojave:        "e8c973c0eb72df8b7cb0850c5a7d1d7ced8d811247fc497a631cee612d46e9d0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56f28cb47ed9002ebd53a7eb70c71713517bf19e5bbc92da8b72a3015c88c49c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56f28cb47ed9002ebd53a7eb70c71713517bf19e5bbc92da8b72a3015c88c49c" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -56,33 +56,9 @@ class DnscryptProxy < Formula
 
   plist_options startup: true
 
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>KeepAlive</key>
-          <true/>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_sbin}/dnscrypt-proxy</string>
-            <string>-config</string>
-            <string>#{etc}/dnscrypt-proxy.toml</string>
-          </array>
-          <key>UserName</key>
-          <string>root</string>
-          <key>StandardErrorPath</key>
-          <string>/dev/null</string>
-          <key>StandardOutPath</key>
-          <string>/dev/null</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_sbin/"dnscrypt-proxy", "-config", etc/"dnscrypt-proxy.toml"]
+    keep_alive true
   end
 
   test do

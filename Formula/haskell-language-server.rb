@@ -1,10 +1,9 @@
 class HaskellLanguageServer < Formula
   desc "Integration point for ghcide and haskell-ide-engine. One IDE to rule them all"
   homepage "https://github.com/haskell/haskell-language-server"
-  url "https://github.com/haskell/haskell-language-server/archive/1.1.0.tar.gz"
-  sha256 "1d2bab12dcf6ef5f14fe4159e2d1f76b00de75fa9af51846b7ad861fa1daadb2"
+  url "https://github.com/haskell/haskell-language-server/archive/1.2.0.tar.gz"
+  sha256 "8931fd95bf28300d3f18675b0f03aac9bda172becb67eaa8ef1f62e6d1c6238e"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/haskell/haskell-language-server.git"
 
   # we need :github_latest here because otherwise
@@ -15,18 +14,17 @@ class HaskellLanguageServer < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d4469d0540ea72012e40881286e3479f067a2367e9eea8401e1405523dd22f60"
-    sha256 cellar: :any_skip_relocation, big_sur:       "cfb60a5fff37ea3f94be9ec63168319ef40fafa10558a365b7a8be4e0fe74d76"
-    sha256 cellar: :any_skip_relocation, catalina:      "9a7335c96c9b5f75d8ab0d1229d8031794a066c4a429163f5e952d2f7a77a2f2"
-    sha256 cellar: :any_skip_relocation, mojave:        "5e4337b8fbceb61242f96e7b120fd30d1d7b1cfc19e017d1aa922e08137f4e00"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9c926682b049060c9b8d9e25a735c1ea8c93383d2a4fd9fd65c5e19e9829f0d6"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4a928bee470e56e53de6d646b446e9a5b2bff37f3a341a943aca17a209a84a6b"
+    sha256 cellar: :any_skip_relocation, catalina:      "087f6635ecca491fa12c35366d1af246c36b164374122584545aed31309f0f2a"
+    sha256 cellar: :any_skip_relocation, mojave:        "7310f2a818c8789a53874c51ba80915788a37173df09a393834d056c594e6b52"
   end
 
   depends_on "cabal-install" => [:build, :test]
   depends_on "ghc" => [:build, :test]
 
-  if Hardware::CPU.arm?
-    depends_on "llvm" => :build
-  else
+  if Hardware::CPU.intel?
     depends_on "ghc@8.6" => [:build, :test]
     depends_on "ghc@8.8" => [:build, :test]
   end
@@ -44,8 +42,10 @@ class HaskellLanguageServer < Formula
     ghcs.each do |ghc|
       system "cabal", "v2-install", "-w", ghc.bin/"ghc", *std_cabal_v2_args
 
-      bin.install bin/"haskell-language-server" => "haskell-language-server-#{ghc.version.major_minor}"
-      rm bin/"haskell-language-server-wrapper" unless ghc == newest_ghc
+      hls = "haskell-language-server"
+      bin.install bin/hls => "#{hls}-#{ghc.version}"
+      bin.install_symlink "#{hls}-#{ghc.version}" => "#{hls}-#{ghc.version.major_minor}"
+      rm bin/"#{hls}-wrapper" unless ghc == newest_ghc
     end
   end
 

@@ -46,17 +46,12 @@ class Sdl < Formula
     end
   end
 
-  livecheck do
-    url "https://www.libsdl.org/release/"
-    regex(/href=.*?SDL[._-]v?(\d+(?:\.\d+)+)\.t/i)
-  end
-
   bottle do
     sha256 cellar: :any, arm64_big_sur: "c3fda7b3047ffff537ba6f2a5711fd03f50fa776546d7788f42a4df325944fcf"
     sha256 cellar: :any, big_sur:       "d97aac056338f24b09ff065d8a80c6f5e9b6e16aed93003764054f6703093ecd"
     sha256 cellar: :any, catalina:      "060c0297dd0af2e289196aa196341ece04f3ab4a3458d173e74f2a3865046a8f"
     sha256 cellar: :any, mojave:        "683450f850acbc501144207d237d28a9c3d0af86533065db7bf7b23ae2d1f6e5"
-    sha256 cellar: :any, x86_64_linux:  "4a6198502c14a42ebc32f031119055578a5aec41be4363f21a054773c8d01c6a"
+    sha256 cellar: :any, x86_64_linux:  "4a6198502c14a42ebc32f031119055578a5aec41be4363f21a054773c8d01c6a" # linuxbrew-core
   end
 
   head do
@@ -66,6 +61,9 @@ class Sdl < Formula
     depends_on "automake" => :build
     depends_on "libtool" => :build
   end
+
+  # SDL 1.2 is deprecated, unsupported, and not recommended for new projects.
+  deprecate! date: "2013-08-17", because: :deprecated_upstream
 
   def install
     # we have to do this because most build scripts assume that all sdl modules

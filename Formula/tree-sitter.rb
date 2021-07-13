@@ -3,40 +3,46 @@ require "language/node"
 class TreeSitter < Formula
   desc "Parser generator tool and incremental parsing library"
   homepage "https://tree-sitter.github.io/"
-  url "https://github.com/tree-sitter/tree-sitter/archive/v0.19.5.tar.gz"
-  sha256 "953edda5a21423cbfd916dbb1b1552a12f7ab649728846b5a1fb49483672e82b"
+  url "https://github.com/tree-sitter/tree-sitter/archive/v0.20.0.tar.gz"
+  sha256 "4a8070b9de17c3b8096181fe8530320ab3e8cca685d8bee6a3e8d164b5fb47da"
   license "MIT"
   head "https://github.com/tree-sitter/tree-sitter.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "0603c56e132ccd652a5eb07ebf951315590aa970e4d8a8571f884ac02ddf614f"
-    sha256 cellar: :any, big_sur:       "613460d86e0ed0472d024a0f9cf2fabb7da11f2487e96f00d1a9030f1bb29a55"
-    sha256 cellar: :any, catalina:      "5fe4891129581e6e910a6a4a6e9d57a163a0a06a25db66e84db65a367144a6e9"
-    sha256 cellar: :any, mojave:        "d76b4f8b94b91201d2e95de5254964ea4ca66421f3e801947a5bff31ddd6baf8"
+    sha256 cellar: :any,                 arm64_big_sur: "cde3ebc240632b22ebb43e06e5a01016f1e90e77e740ef3df0ce0bfcc9d5d3ca"
+    sha256 cellar: :any,                 big_sur:       "5b790b15e898a45d27aadd9e513f46aef3c0de96dce110eced8ffc4bef37af37"
+    sha256 cellar: :any,                 catalina:      "11d66cc7ce50df263c5acae45b334520c7a3314422da3c7050ff9c511f860196"
+    sha256 cellar: :any,                 mojave:        "1bf537d6e22c72586f41cc75cb0f9a496243c5daab3f406f4849e69851ba09fd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "499a78502e2603a9a5d1c158ce9ee2c434bbac2e446b24cc2cc90c0f8daab2d5" # linuxbrew-core
   end
 
-  depends_on "emscripten" => [:build, :test]
   depends_on "node" => [:build, :test]
   depends_on "rust" => :build
 
+  on_macos { depends_on "emscripten" => [:build, :test] }
+
   def install
-    system "make"
+    system "make", "AMALGAMATED=1"
     system "make", "install", "PREFIX=#{prefix}"
 
-    # NOTE: This step needs to be done *before* `cargo install`
-    cd "lib/binding_web" do
-      system "npm", "install", *Language::Node.local_npm_install_args
+    on_macos do
+      # NOTE: This step needs to be done *before* `cargo install`
+      cd "lib/binding_web" do
+        system "npm", "install", *Language::Node.local_npm_install_args
+      end
+      system "script/build-wasm"
     end
-    system "script/build-wasm"
 
     cd "cli" do
       system "cargo", "install", *std_cargo_args
     end
 
-    # Install the wasm module into the prefix.
-    # NOTE: This step needs to be done *after* `cargo install`.
-    %w[tree-sitter.js tree-sitter-web.d.ts tree-sitter.wasm package.json].each do |file|
-      (lib/"binding_web").install "lib/binding_web/#{file}"
+    on_macos do
+      # Install the wasm module into the prefix.
+      # NOTE: This step needs to be done *after* `cargo install`.
+      %w[tree-sitter.js tree-sitter-web.d.ts tree-sitter.wasm package.json].each do |file|
+        (lib/"binding_web").install "lib/binding_web/#{file}"
+      end
     end
   end
 
@@ -102,8 +108,10 @@ class TreeSitter < Formula
     system ENV.cc, "test_program.c", "-L#{lib}", "-ltree-sitter", "-o", "test_program"
     assert_equal "tree creation failed", shell_output("./test_program")
 
-    # test `tree-sitter build-wasm`
-    ENV.delete "CPATH"
-    system bin/"tree-sitter", "build-wasm"
+    on_macos do
+      # test `tree-sitter build-wasm`
+      ENV.delete "CPATH"
+      system bin/"tree-sitter", "build-wasm"
+    end
   end
 end

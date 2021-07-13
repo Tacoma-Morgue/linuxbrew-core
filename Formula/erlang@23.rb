@@ -2,9 +2,10 @@ class ErlangAT23 < Formula
   desc "Programming language for highly scalable real-time systems"
   homepage "https://www.erlang.org/"
   # Download tarball from GitHub; it is served faster than the official tarball.
-  url "https://github.com/erlang/otp/releases/download/OTP-23.3.4.3/otp_src_23.3.4.3.tar.gz"
-  sha256 "3040d0ce8f36212b01ba8ae19e49c510e7f5a2d1f5c3cec3c465dd20eb642e2a"
+  url "https://github.com/erlang/otp/releases/download/OTP-23.3.4.4/otp_src_23.3.4.4.tar.gz"
+  sha256 "2d5940762890223ab51e73716ac4f72ed0fd0bad5c3766235b9c47224359682b"
   license "Apache-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -12,10 +13,10 @@ class ErlangAT23 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "70122fb4af719f50e51d2cd9e88296f86dc3aa39b016527774cc78c18e5ba7cd"
-    sha256 cellar: :any, big_sur:       "d2bbc434fc0aa6ac1c0cb5eeea400d00a8269496a1d0af9d7c76e4ef85c794e9"
-    sha256 cellar: :any, catalina:      "4bedb1ab3a83c7a4ae9a53a69c4e0c7ebb69f815c667cc01537c61595096cbe5"
-    sha256 cellar: :any, mojave:        "707b3bdd70b637142c0ceb615d89bc33919f2aeeb8547ba392ba36aec8c2ad78"
+    sha256 cellar: :any, arm64_big_sur: "a637e5f79c9044862ae31ec31892ae3f7392e21683d11fa82967045e93cae50c"
+    sha256 cellar: :any, big_sur:       "ebfddf1ed04af0541bd57f52aa2fab4951f82852e8e5ec6472e3b7734ea6a0f4"
+    sha256 cellar: :any, catalina:      "df37a5d8509d154f20ccb4856bb8fa8d9bb91a418948bf0208cca9c47a22e44d"
+    sha256 cellar: :any, mojave:        "82b619110c73c957da0ecbd7fb5114f6d4c70ac7729a649f57584c8ba20fc3bf"
   end
 
   keg_only :versioned_formula

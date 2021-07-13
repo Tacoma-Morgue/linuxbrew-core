@@ -4,6 +4,11 @@ class Hardlink < Formula
   url "https://jak-linux.org/projects/hardlink/hardlink_0.3.0.tar.xz"
   sha256 "e8c93dfcb24aeb44a75281ed73757cb862cc63b225d565db1c270af9dbb7300f"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?hardlink[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any, arm64_big_sur: "fe5acfbc7a123db425beb0257ca23f4286b3260bd76b81027ee7528cc05bfdfd"
     sha256 cellar: :any, big_sur:       "1c2d9bd0578affd02e5b3ea25f09167665f555b652254cea27aabf1b704bf294"
@@ -13,14 +18,12 @@ class Hardlink < Formula
     sha256 cellar: :any, sierra:        "56ac75c51db6d7e19efe41eef24aa6646cdc126a113f5aacadd5f80043efc0d5"
     sha256 cellar: :any, el_capitan:    "d8b6e2d26d8f49a207c5082a97f1e5c31b35041bcfbc17a217a1c2ad4ff68551"
     sha256 cellar: :any, yosemite:      "36c30ed90a3d2b9d2d4d07cb182c2838dfba276a05c22d022a42e16043e86f02"
-    sha256 cellar: :any, x86_64_linux:  "10427db60f2e993fa3cc0711b493bffff4da377b29d11564a8df1c520cd85372"
+    sha256 cellar: :any, x86_64_linux:  "10427db60f2e993fa3cc0711b493bffff4da377b29d11564a8df1c520cd85372" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build
   depends_on "gnu-getopt"
   depends_on "pcre"
-
-  conflicts_with "util-linux", because: "both install `hardlink` binaries"
 
   def install
     # xattr syscalls are provided by glibc

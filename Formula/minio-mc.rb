@@ -2,9 +2,9 @@ class MinioMc < Formula
   desc "Replacement for ls, cp and other commands for object storage"
   homepage "https://github.com/minio/mc"
   url "https://github.com/minio/mc.git",
-      tag:      "RELEASE.2021-06-08T01-29-37Z",
-      revision: "c8d9eee2b4e4984a934656eaf6d3f8de0899450b"
-  version "20210608012937"
+      tag:      "RELEASE.2021-06-13T17-48-22Z",
+      revision: "2c52cdf27c7bbd57b52f954eb50d4ca353d62f9d"
+  version "20210613174822"
   license "AGPL-3.0-or-later"
   head "https://github.com/minio/mc.git"
 
@@ -17,11 +17,11 @@ class MinioMc < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "cb5c45c26f5f31fcd8cb950b4c99978af3b9aae77de2d7fcfbf31d38e5066658"
-    sha256 cellar: :any_skip_relocation, big_sur:       "76e87277688b6d8b5ade176e502222e78ec7939cc963f1c62014a3c0ba339a66"
-    sha256 cellar: :any_skip_relocation, catalina:      "e7d898b23268a293f6feaed29bdd0a75014178a9b04f0d1bf9d491d41d56c9ee"
-    sha256 cellar: :any_skip_relocation, mojave:        "5b3307a9656145f2b75fe82eb3fbfdb06ba4daac05ee923184a1ca3da10de419"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dfe0b85c2fca5941714a1a987d611d48bbeeed6f78e2f0e5cb975971974518b5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8ece8574c71cc3e7fdb2a79a8c8a5ba1f4b0b105c88f1d73efd28e90588fceb5"
+    sha256 cellar: :any_skip_relocation, big_sur:       "7cf812e53b0587908e74c3a53dd65db3a38248b410086ffe98291b32cc5d4786"
+    sha256 cellar: :any_skip_relocation, catalina:      "07244335869eca58ae410e1630f7c17ea3f5c4e4380640d437f345c6fe9d63b3"
+    sha256 cellar: :any_skip_relocation, mojave:        "2e6e5e2580cb2588f859a3b22fcedbd7a0aa736ec10b8270e57c12e1fb6e3450"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3ec5ce9272ee14a3fd1811af136f7958e7b81210209560a2dc5352d70de91f1b" # linuxbrew-core
   end
 
   depends_on "go" => :build

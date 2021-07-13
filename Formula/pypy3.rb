@@ -1,8 +1,8 @@
 class Pypy3 < Formula
   desc "Implementation of Python 3 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy3.7-v7.3.4-src.tar.bz2"
-  sha256 "74d3c1e79f3fc7d384ffb32d3d2a95c2d5f61b81091eccce12ac76030d96ad08"
+  url "https://downloads.python.org/pypy/pypy3.7-v7.3.5-src.tar.bz2"
+  sha256 "d920fe409a9ecad9d074aa8568ca5f3ed3581be66f66e5d8988b7ec66e6d99a2"
   license "MIT"
   head "https://foss.heptapod.net/pypy/pypy", using: :hg, branch: "py3.7"
 
@@ -12,9 +12,9 @@ class Pypy3 < Formula
   end
 
   bottle do
-    sha256 big_sur:  "5c75fdfbe4b07c5b71710d78c9385588e8e47834668944ddfb8035482e27464b"
-    sha256 catalina: "8563d2632d5715059ed80f55072373dbcf300760a1eb0b84606aa61c61c16e8f"
-    sha256 mojave:   "9788f01a03f858049a94376dcc657e1e8dd07b40c3e528acfee7f72384de8d2c"
+    sha256 big_sur:  "d4418b56638adb2209c97f87dd338ea6e53e1457fc83ef7999e3c4e9315e4572"
+    sha256 catalina: "25b53534dfd782e1c7027bc9161bdad7517fd8ab7b5c497f6e29564f90ee1098"
+    sha256 mojave:   "8fee0f7ea2aa52ada5ef590167670110a3fc459dcac60de4142eb5c0ac684a40"
   end
 
   depends_on "pkg-config" => :build
@@ -32,13 +32,13 @@ class Pypy3 < Formula
   uses_from_macos "zlib"
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/94/75/05e1d69c61c4dfaf65ad12785cd18bedc1e0129976c55914d6aea59c7da8/setuptools-54.2.0.tar.gz"
-    sha256 "aa9c24fb83a9116b8d425e53bec24c7bfdbffc313c2159f9ed036d4a6dd32d7d"
+    url "https://files.pythonhosted.org/packages/cf/79/1a19c2f792da00cbead7b6caa176afdddf517522cb9163ce39576025b050/setuptools-57.1.0.tar.gz"
+    sha256 "cfca9c97e7eebbc8abe18d5e5e962a08dcad55bb63afddd82d681de4d22a597b"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/b7/2d/ad02de84a4c9fd3b1958dc9fb72764de1aa2605a9d7e943837be6ad82337/pip-21.0.1.tar.gz"
-    sha256 "99bbde183ec5ec037318e774b0d8ae0a64352fe53b2c7fd630be1d07e94f41e5"
+    url "https://files.pythonhosted.org/packages/4d/0c/3b63fe024414a8a48661cf04f0993d4b2b8ef92daed45636474c018cd5b7/pip-21.1.3.tar.gz"
+    sha256 "b5b1eb91b36894bd01b8e5a56a422c2f3838573da0b0a1c63a096bb454e3b23f"
   end
 
   def install

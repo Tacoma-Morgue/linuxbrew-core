@@ -1,13 +1,16 @@
 class Tbb < Formula
   desc "Rich and complete approach to parallelism in C++"
   homepage "https://github.com/oneapi-src/oneTBB"
-  url "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.2.0.tar.gz"
-  sha256 "cee20b0a71d977416f3e3b4ec643ee4f38cedeb2a9ff015303431dd9d8d79854"
+  url "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.3.0.tar.gz"
+  sha256 "8f616561603695bbb83871875d2c6051ea28f8187dbe59299961369904d1d49e"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "ba72825f50e15920519d42f3486448b3801b3c9de30dd0914d776032ffa42c04"
+    sha256 cellar: :any,                 arm64_big_sur: "0b38fba5657af959e0e2392daa9163309c51b469e7db92c5b70f535c554ab63a"
+    sha256 cellar: :any,                 big_sur:       "18d284f2fa0792ab119b10260eebc9a87fd00dc68cf0fdcd70ee00d6d7af5570"
+    sha256 cellar: :any,                 catalina:      "953989fa59711ea79f8690ae08a79a4a7722325fa36445ddffaf11c6729e25ee"
+    sha256 cellar: :any,                 mojave:        "e2c2e8c35d0df2fc1659c59c0b501b0e2420c43a6d8afe629c9f49afa1bae236"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d8ccd0cc8bb309b3e7c1e8f1d0d034f0cdf11a9d1551aaf6328194702a9842e8" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -88,17 +91,14 @@ end
 
 __END__
 diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
-index da4f4f93..6c95bcde 100644
+index 1d2b05f..81ba8de 100644
 --- a/python/CMakeLists.txt
 +++ b/python/CMakeLists.txt
-@@ -49,8 +49,8 @@ add_test(NAME python_test
+@@ -49,7 +49,7 @@ add_test(NAME python_test
                   -DPYTHON_MODULE_BUILD_PATH=${PYTHON_BUILD_WORK_DIR}/build
                   -P ${PROJECT_SOURCE_DIR}/cmake/python/test_launcher.cmake)
 
--install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BUILD_WORK_DIR}/build/lib/
--        DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BUILD_WORK_DIR}/build/
 +install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BUILD_WORK_DIR}/
-+        DESTINATION .
+         DESTINATION .
          COMPONENT tbb4py)
-
- if (UNIX AND NOT APPLE)

@@ -95,7 +95,6 @@ class Octave < Formula
             "--enable-link-all-dependencies",
             "--enable-shared",
             "--disable-static",
-            "--disable-docs",
             "--with-hdf5-includedir=#{Formula["hdf5"].opt_include}",
             "--with-hdf5-libdir=#{Formula["hdf5"].opt_lib}",
             "--with-java-homedir=#{Formula["openjdk"].opt_prefix}",
@@ -104,7 +103,7 @@ class Octave < Formula
             "--with-portaudio",
             "--with-sndfile"]
 
-    unless OS.mac?
+    on_linux do
       # Explicitly specify aclocal and automake without versions
       args << "ACLOCAL=aclocal"
       args << "AUTOMAKE=automake"
@@ -112,12 +111,14 @@ class Octave < Formula
       # Mesa OpenGL location must be supplied by LDFLAGS on Linux
       args << "LDFLAGS=-L#{Formula["mesa"].opt_lib} -L#{Formula["mesa-glu"].opt_lib}"
 
+      # Docs building is broken on Linux
+      args << "--disable-docs"
+
       # Need to regenerate aclocal.m4 so that it will work with brewed automake
       system "aclocal"
     end
 
     system "./configure", *args
-
     system "make", "all"
 
     # Avoid revision bumps whenever fftw's, gcc's or OpenBLAS' Cellar paths change

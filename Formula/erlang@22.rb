@@ -5,6 +5,7 @@ class ErlangAT22 < Formula
   url "https://github.com/erlang/otp/releases/download/OTP-22.3.4.20/otp_src_22.3.4.20.tar.gz"
   sha256 "43289f20a7038b6835615a1f68a6e32b9aeec6db38cdb7c97adf78d048d74079"
   license "Apache-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -12,11 +13,11 @@ class ErlangAT22 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "bc0d156048890a61fb4700ed63f3aa4a9044fe8210e05d5f1d183c1e0a0fc6a4"
-    sha256 cellar: :any,                 big_sur:       "a672a846a5223b8f7fe8b37e906bb328fbf86212cb57a35542a44c19a2f03d6e"
-    sha256 cellar: :any,                 catalina:      "8fee4999da6690c83dc44b2f2a39026309a695d514a58ceb49fa80c62e5b238c"
-    sha256 cellar: :any,                 mojave:        "820a6698e8a740c0a5b92b04a67030aaa465d2e84b905194d29a71aa3a1f5260"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "eea5f49d6def329eacdd4ad6b5dc01b3a68d25b1201095f841e172ade9d4cd95"
+    sha256 cellar: :any,                 arm64_big_sur: "bf9e22eb6c20285d33d208ef2097efa88bacf01da8447e4cc0a59ef0de70e8ed"
+    sha256 cellar: :any,                 big_sur:       "cfba73ed8488d94e9f8ca6f9b36fd9f0bbd2d2399b382a33202ffcd70743b9c4"
+    sha256 cellar: :any,                 catalina:      "89beffd9e5522bc326988a12ac254a9255f767f47df92a8dd5f952a3a0843d53"
+    sha256 cellar: :any,                 mojave:        "62dbe9073c0354474c8e1a52ca24a84c96cac266066ce0d1b386b40863342e6c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2486f5eaa04c8bd863847f77c9999b0feaea7e995dca8ff82da5616807aadb89" # linuxbrew-core
   end
 
   keg_only :versioned_formula

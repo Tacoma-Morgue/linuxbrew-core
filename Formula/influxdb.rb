@@ -1,9 +1,11 @@
 class Influxdb < Formula
   desc "Time series, events, and metrics database"
   homepage "https://influxdata.com/time-series-platform/influxdb/"
-  url "https://github.com/influxdata/influxdb/archive/v2.0.7.tar.gz"
-  sha256 "8b0ac2b5b2f8c4a78bf5eef5111576dd3beb1a7596c20ec6ccc4bb15026dec8e"
+  url "https://github.com/influxdata/influxdb.git",
+      tag:      "v2.0.7",
+      revision: "2a45f0c0375a7d5615835afa6f81a53444df9cea"
   license "MIT"
+  revision 2
   head "https://github.com/influxdata/influxdb.git"
 
   # The regex below omits a rogue `v9.9.9` tag that breaks version comparison.
@@ -13,10 +15,10 @@ class Influxdb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5a3f13018e62fedf8be455e9ab107ffcefe389fb2cc413616313916b6ae5c191"
-    sha256 cellar: :any_skip_relocation, big_sur:       "1743eabe01d8b83324a122c3924aec0fa3df10fe95662a57c1c01f95de1241c0"
-    sha256 cellar: :any_skip_relocation, catalina:      "f05b7fc3b7968b88ed86009e965ddaa63236987247e5c0e5c049015b8d4d2b35"
-    sha256 cellar: :any_skip_relocation, mojave:        "757e3bb54d32c90e98dd6e612c3621b719b77e2b08649f14f0b0f772b455dde2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c61b51f445a245622aa88758fb4fefa61d8c23e0d01860273dba9c30e3648759"
+    sha256 cellar: :any_skip_relocation, big_sur:       "aa01e8b516ec70cfa0e7ff88dfba05b119388801169aa0f025d716ef3e7a2ed1"
+    sha256 cellar: :any_skip_relocation, catalina:      "29faac45df752b3ae7eaf3270591d613b42b5febd91be652c7340fbbcaba072b"
+    sha256 cellar: :any_skip_relocation, mojave:        "5740adbc10167d950cb7fc000856e5ae402154415c0e61bcb230a9dec1dce1e1"
   end
 
   depends_on "bazaar" => :build
@@ -54,9 +56,18 @@ class Influxdb < Formula
     system "make", "generate"
 
     # Build the CLI and server.
-    ldflags = "-s -w -X main.version=#{version}"
-    system "go", "build", *std_go_args(ldflags: ldflags), "-o", bin/"influx", "./cmd/influx"
-    system "go", "build", *std_go_args(ldflags: ldflags), "-tags", "assets", "-o", bin/"influxd", "./cmd/influxd"
+    ldflags = %W[
+      -s
+      -w
+      -X main.version=#{version}
+      -X main.commit=#{Utils.git_short_head(length: 10)}
+      -X main.date=#{Time.at(ENV["SOURCE_DATE_EPOCH"].to_i).utc.iso8601}
+    ].join(" ")
+
+    system "go", "build", *std_go_args(ldflags: ldflags),
+           "-o", bin/"influx", "./cmd/influx"
+    system "go", "build", *std_go_args(ldflags: ldflags),
+           "-tags", "assets", "-o", bin/"influxd", "./cmd/influxd"
 
     data = var/"lib/influxdb2"
     data.mkpath

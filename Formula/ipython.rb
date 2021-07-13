@@ -3,28 +3,28 @@ class Ipython < Formula
 
   desc "Interactive computing in Python"
   homepage "https://ipython.org/"
-  url "https://files.pythonhosted.org/packages/59/4a/06f4527f0b47d80f0f86c17e14ee0bf0fedd7028a63a4f81c314f53c6636/ipython-7.24.1.tar.gz"
-  sha256 "9bc24a99f5d19721fb8a2d1408908e9c0520a17fff2233ffe82620847f17f1b6"
+  url "https://files.pythonhosted.org/packages/73/fe/0250e9e85629f7eba7182490364174e50c48d1eac98bc5e81f993cf1a11e/ipython-7.25.0.tar.gz"
+  sha256 "54bbd1fe3882457aaf28ae060a5ccdef97f212a741754e420028d4ec5c2291dc"
   license "BSD-3-Clause"
   head "https://github.com/ipython/ipython.git"
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "e191f71469af937d456af527b67d7bfed0ad2276d06d18c502cde92c72579b77"
-    sha256 cellar: :any,                 big_sur:       "4dd869fd620c5aba119a0aadc87fbd9064bf09f27dd8d0ed55555c51f7347d9d"
-    sha256 cellar: :any,                 catalina:      "de64e19bd947525bac4051ae3eea11f6401345e322390cc0f51f0618a8b7c477"
-    sha256 cellar: :any,                 mojave:        "390c1159a4fc90429887be58020d114bedd179d6840a228e156ac35bf9952743"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c60aa82d97b6ea4488d2b6470b309c1c6d57cce71e2259e0b569468e6b730401"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "41896d9958a84aad343e09cd769d87ed34e44af446723afa5b375e926b1ae614"
+    sha256 cellar: :any,                 big_sur:       "2afedad750d6a2da248f4b9404179a4373e9ed02f0f62aafa3f85fd3b250a9f1"
+    sha256 cellar: :any,                 catalina:      "5a3cfa0026e00cfe945de6b4ff13263d224aef153dcd93fdb544c9358a0bdb6f"
+    sha256 cellar: :any,                 mojave:        "1309a31faf75575c91cf6ed8c5a34f504515d03774cea6af64ac1713a218f917"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9a0bd3d403db0a003bc25a6095999e73bc55915926b9749d3b7ccfbf34ab2d80" # linuxbrew-core
   end
 
   depends_on "python@3.9"
+  depends_on "six"
   depends_on "zeromq"
 
   # use resources from ipykernel (which includes ipython)
   resource "appnope" do
-    on_macos do
-      url "https://files.pythonhosted.org/packages/e9/bc/2d2c567fe5ac1924f35df879dbf529dd7e7cabd94745dc9d89024a934e76/appnope-0.1.2.tar.gz"
-      sha256 "dd83cd4b5b460958838f6eb3000c660b1f9caf2a5b1de4264e941512f603258a"
-    end
+    url "https://files.pythonhosted.org/packages/e9/bc/2d2c567fe5ac1924f35df879dbf529dd7e7cabd94745dc9d89024a934e76/appnope-0.1.2.tar.gz"
+    sha256 "dd83cd4b5b460958838f6eb3000c660b1f9caf2a5b1de4264e941512f603258a"
   end
 
   resource "backcall" do
@@ -88,8 +88,8 @@ class Ipython < Formula
   end
 
   resource "prompt-toolkit" do
-    url "https://files.pythonhosted.org/packages/f7/e0/47738dadee0ec15ffbfa926f01586db2397201e0af3e06a0e669adfd6f2f/prompt_toolkit-3.0.18.tar.gz"
-    sha256 "e1b4f11b9336a28fa11810bc623c357420f69dfdb6d2dac41ca2c21a55c033bc"
+    url "https://files.pythonhosted.org/packages/88/4b/2c0f9e2b52297bdeede91c8917c51575b125006da5d0485521fa2b1e0b75/prompt_toolkit-3.0.19.tar.gz"
+    sha256 "08360ee3a3148bdb5163621709ee322ec34fc4375099afa4bbf751e9b7b7fa4f"
   end
 
   resource "ptyprocess" do
@@ -110,11 +110,6 @@ class Ipython < Formula
   resource "pyzmq" do
     url "https://files.pythonhosted.org/packages/99/3b/69360102db726741053d1446cbe9f7f06df7e2a6d5b805ee71841abf1cdc/pyzmq-22.1.0.tar.gz"
     sha256 "7040d6dd85ea65703904d023d7f57fab793d7ffee9ba9e14f3b897f34ff2415d"
-  end
-
-  resource "six" do
-    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
-    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "tornado" do
@@ -138,7 +133,11 @@ class Ipython < Formula
 
     # install other resources
     ipykernel = resource("ipykernel")
-    (resources - [ipykernel]).each do |r|
+    res = resources - [ipykernel]
+    on_linux do
+      res -= [resource("appnope")]
+    end
+    res.each do |r|
       r.stage do
         system Formula["python@3.9"].opt_bin/"python3", *Language::Python.setup_install_args(libexec/"vendor")
       end

@@ -5,6 +5,7 @@ class ErlangAT21 < Formula
   url "https://github.com/erlang/otp/releases/download/OTP-21.3.8.24/otp_src_21.3.8.24.tar.gz"
   sha256 "a82de871d7ba40fd256558b23a3b4c1539e6c7ece7507d6eb2b00330c6135012"
   license "Apache-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -12,10 +13,10 @@ class ErlangAT21 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 big_sur:      "7f0e28c3d5df61614dbb3d4309b28889fb1944a888dc21e63bf9d4f084e63c7c"
-    sha256 cellar: :any,                 catalina:     "e2dae570da5fe6c5b020d82630b96b5455db810ddcca28355b5868a910a36a26"
-    sha256 cellar: :any,                 mojave:       "6d3947327c537fd7f39c368edc94a7328dcd7deaa945e425bd52c5681cb932e9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "0a738096d78a98ed23c5a4306694c14ed8b2ba5fd93da25fddb0d50801eac26e"
+    sha256 cellar: :any,                 big_sur:      "b074d48246e319c33a05b019814c93efc265e9af53619c518cbc122f9910b2ab"
+    sha256 cellar: :any,                 catalina:     "cc5af3f968adeeffbd97c62a8e11bf7b4b1ccb27d676a52722df1b5d0ce7bc71"
+    sha256 cellar: :any,                 mojave:       "3683938c124d27e1ba0bdb9e259894632851e7e3664239c9090bf6a8e0f821c4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "d2fc12b3989f045ce75936780cd760d1fbfe2dc24acc835c73888e618f47e66f" # linuxbrew-core
   end
 
   keg_only :versioned_formula

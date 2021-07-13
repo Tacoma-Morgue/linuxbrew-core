@@ -1,8 +1,8 @@
 class TektoncdCli < Formula
   desc "CLI for interacting with TektonCD"
   homepage "https://github.com/tektoncd/cli"
-  url "https://github.com/tektoncd/cli/archive/v0.19.0.tar.gz"
-  sha256 "ff600937c122820572f718def7ad5b623fea5b4108d985bc367519364ae6b16b"
+  url "https://github.com/tektoncd/cli/archive/v0.19.1.tar.gz"
+  sha256 "e824f5e32d66d7068e9632ff901f72ac46e8b67ac362fd6daa36b2ff85ae2268"
   license "Apache-2.0"
 
   livecheck do
@@ -11,23 +11,23 @@ class TektoncdCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "119cc1700e7c18bcca61e637a2a88c9058de42b711eadf22367c9479e7940054"
-    sha256 cellar: :any_skip_relocation, big_sur:       "6deafc37752f59a57f042a8aa7c37abbc0a383d34117ec60f8bdcc517c18d24e"
-    sha256 cellar: :any_skip_relocation, catalina:      "26d8781cd27fee60e2d9f4962ea9a3401cf55395906d1bc6958c324243374d13"
-    sha256 cellar: :any_skip_relocation, mojave:        "47a530f97f9896db3b4c4c1541f799da793621191d9c57bb8e9e6d49572ae0da"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8dfa1bb855bf15e575f9ca543bb17bc028e832a28b98f4c46c26b3025fd06258"
+    sha256 cellar: :any_skip_relocation, big_sur:       "aca5a966205a0060e8abea04025809772245c25dcdc64976f28ee77f6481b181"
+    sha256 cellar: :any_skip_relocation, catalina:      "3e3fa67ce9fa22f4fbe89be521407cceb6267f8302954a1557a7a83f8b9e8f56"
+    sha256 cellar: :any_skip_relocation, mojave:        "9b274ec482c44afaabfe9805532864e714b51f96e4cd36ae9a952352756861de"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9c734057d02d6204e0d3360edb239e42d57a3d6537da61652b3f5d2a1a1310bc" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   def install
     system "make", "bin/tkn"
-
     bin.install "bin/tkn" => "tkn"
+
     output = Utils.safe_popen_read({ "SHELL" => "bash" }, bin/"tkn", "completion", "bash")
     (bash_completion/"tkn").write output
     output = Utils.safe_popen_read({ "SHELL" => "zsh" }, bin/"tkn", "completion", "zsh")
     (zsh_completion/"_tkn").write output
-    prefix.install_metafiles
   end
 
   test do

@@ -1,8 +1,8 @@
 class NodeAT14 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v14.17.0/node-v14.17.0.tar.gz"
-  sha256 "6114e82d3256136dc85a509d835442fbdf2f8430dcd8bfa7c304097344d06fb7"
+  url "https://nodejs.org/dist/v14.17.3/node-v14.17.3.tar.gz"
+  sha256 "dcbd156506ee79ee48439257626ca0a6db3d7eab8cb0208db6979125ae7d3a95"
   license "MIT"
 
   livecheck do
@@ -11,11 +11,11 @@ class NodeAT14 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "9a94ee6cb701f73d99917367d534b9b100c08646d4c88461fec47b2a711e454e"
-    sha256 cellar: :any,                 big_sur:       "062783bf3ef055f22c15a0828ebf944cfd493d5cbe4cdb2a3d7a6559fa7bdeb2"
-    sha256 cellar: :any,                 catalina:      "dcb9cf2bceca1ed58609ef46a9a42b0f68bc3e408a365645b7bdb5bcf216e344"
-    sha256 cellar: :any,                 mojave:        "c8b8d45d038f3fe40cd63fb7315ad101788b6b8470ba08fcb14b5ad52c237e04"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a224220dc9c4733130ef00b816b358f24f634c4c11b78d3eeb3c8c06fb39ea1e"
+    sha256 cellar: :any,                 arm64_big_sur: "93f9271fff083158429d5d67eb6e5ea9c5a5e1bffde4c221d86070f03db8950f"
+    sha256 cellar: :any,                 big_sur:       "c87d777aa21e21e629a9e0d725eb3f60c459078dd0e421209f9dc944b707408d"
+    sha256 cellar: :any,                 catalina:      "d9da78895841afbc6fc312399c7df295c611fe44260d9740799a8aa0f246ca4a"
+    sha256 cellar: :any,                 mojave:        "7370ddc1acd747aad811c0a16191250d0b532954cd790c43bfb591d6b75bbe0d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ffc35ae6f097d880ef0bc05e956ef25a5fcaba7066bc09cea8fcd27302aa7a0" # linuxbrew-core
   end
 
   keg_only :versioned_formula
@@ -23,14 +23,6 @@ class NodeAT14 < Formula
   depends_on "pkg-config" => :build
   depends_on "python@3.9" => :build
   depends_on "icu4c"
-
-  # Patch for compatibility with ICU 69
-  # https://github.com/v8/v8/commit/035c305ce7761f51328b45f1bd83e26aef267c9d
-  patch do
-    url "https://github.com/v8/v8/commit/035c305ce7761f51328b45f1bd83e26aef267c9d.patch?full_index=1"
-    sha256 "dfe0f6c312b0bea2733252db41fedae330afa21b055ee886b0b8f9ca780e2901"
-    directory "deps/v8"
-  end
 
   def install
     # make sure subprocesses spawned by make are using our Python 3

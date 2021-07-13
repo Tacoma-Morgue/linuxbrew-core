@@ -26,12 +26,14 @@ class Libelf < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "a771e35555810a4910304e3ca5967ea3e4f8cbe45576e5b2dc6b80cd9c1f0f13"
     sha256 cellar: :any_skip_relocation, el_capitan:    "a06b058c7e401942f442f573b63aa2cdd548b45d38b02b7af92393c67093f56e"
     sha256 cellar: :any_skip_relocation, yosemite:      "3b4ea9ab20228d9e912f80a330b6d6d093f9bb65a712208c83cd49bdcc4fc9ea"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7bf880eee47f3426bf118683c699ef1b533e8a1d2f76908e481c53e6c93bb5eb" # glibc 2.19
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7bf880eee47f3426bf118683c699ef1b533e8a1d2f76908e481c53e6c93bb5eb" # linuxbrew-core
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
+
+  conflicts_with "elfutils", because: "both install `libelf.a` library"
 
   def install
     # Workaround for ancient config files not recognising aarch64 macos.
@@ -53,9 +55,9 @@ class Libelf < Formula
 
   test do
     elf_content =  "7F454C460101010000000000000000000200030001000000548004083" \
-      "4000000000000000000000034002000010000000000000001000000000000000080040" \
-      "80080040874000000740000000500000000100000B00431DB43B96980040831D2B20CC" \
-      "D8031C040CD8048656C6C6F20776F726C640A"
+                   "4000000000000000000000034002000010000000000000001000000000000000080040" \
+                   "80080040874000000740000000500000000100000B00431DB43B96980040831D2B20CC" \
+                   "D8031C040CD8048656C6C6F20776F726C640A"
     File.open(testpath/"elf", "w+b") do |file|
       file.write([elf_content].pack("H*"))
     end

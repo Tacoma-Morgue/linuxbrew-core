@@ -1,23 +1,22 @@
 class Fn < Formula
   desc "Command-line tool for the fn project"
   homepage "https://fnproject.io"
-  url "https://github.com/fnproject/cli/archive/0.6.7.tar.gz"
-  sha256 "04be78eef18e8f70a808a3c1eb4f7d78b043b7f725a0dcad55c4fb46275dbecc"
+  url "https://github.com/fnproject/cli/archive/0.6.8.tar.gz"
+  sha256 "eebfc7bea0da0f56cbe392c0dc62b35804f6531ba9dd6b49ddf4875f32505fae"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "cdece231a93d918679aff4365e28abf13eff116ee213692568daa40d95bd3e99"
-    sha256 cellar: :any_skip_relocation, big_sur:       "05f4afa0bbd454765bfdd652a31ee80b8064fe57c7d1812a1f9c7ac2da990e73"
-    sha256 cellar: :any_skip_relocation, catalina:      "8fa84327394e057c668906bf33d799f59510410e49da51b218e88e09820a3607"
-    sha256 cellar: :any_skip_relocation, mojave:        "df350eb2238e4ec8a17a446639ebdca3fc2275678f72702db8c3795527bc6ca4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7a2d03ec6eb476611961f97abc22271036e2101fae7657f482fb0c9aaae77fe7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f05b0e3cd6375632eddb33bebfff9a88529cd203e816a6ea554c87bc50bb0379"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c556a28674afde6a2af8863f7379672c7a34019964b09c9934612586fce548ed"
+    sha256 cellar: :any_skip_relocation, catalina:      "f54b7aac76ce204ff59836c248234f9930f7ab30e3cd312563742869661daafe"
+    sha256 cellar: :any_skip_relocation, mojave:        "ea758f6762f87e6c965c290a59d94d03a13c320f68117e75deb28d54c5ba4b15"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5ffddb7655b62dab7ab76022ceb7bedf02ea86814511f5cd73b1ed1ff5c44736" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-ldflags", "-s -w", "-trimpath", "-o", "#{bin}/fn"
-    prefix.install_metafiles
+    system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
   test do
@@ -29,13 +28,17 @@ class Fn < Formula
     server = TCPServer.new("localhost", port)
     pid = fork do
       loop do
+        response = {
+          id:         "01CQNY9PADNG8G00GZJ000000A",
+          name:       "myapp",
+          created_at: "2018-09-18T08:56:08.269Z",
+          updated_at: "2018-09-18T08:56:08.269Z",
+        }.to_json
+
         socket = server.accept
-        response =
-          '{"id":"01CQNY9PADNG8G00GZJ000000A","name":"myapp",' \
-           '"created_at":"2018-09-18T08:56:08.269Z","updated_at":"2018-09-18T08:56:08.269Z"}'
         socket.print "HTTP/1.1 200 OK\r\n" \
-                    "Content-Length: #{response.bytesize}\r\n" \
-                    "Connection: close\r\n"
+                     "Content-Length: #{response.bytesize}\r\n" \
+                     "Connection: close\r\n"
         socket.print "\r\n"
         socket.print response
         socket.close

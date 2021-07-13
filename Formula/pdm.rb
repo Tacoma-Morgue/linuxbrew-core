@@ -3,20 +3,21 @@ class Pdm < Formula
 
   desc "Modern Python package manager with PEP 582 support"
   homepage "https://pdm.fming.dev"
-  url "https://files.pythonhosted.org/packages/59/a0/6cc4d9e4dc8a35a38b201756c69fd8b40c844bc15e3a2df9d71f1ebf30ce/pdm-1.6.2.tar.gz"
-  sha256 "e403a43f49230458a9712def22c77a89a8907379cf3cfc1087d9a3e74a59fcd2"
+  url "https://files.pythonhosted.org/packages/c1/a2/15d20b364a70403acb72d54af594cbc85d95d76f71cffc24028284294db7/pdm-1.6.4.tar.gz"
+  sha256 "6c3ab53fba8fa33811fd1c3cf4652f05d0081f5e3c2885b8690c874c8d77c999"
   license "MIT"
   head "https://github.com/pdm-project/pdm.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "af6270ceccbfcb17c17f1953c0af37c6a4a6d41c23c4c8c3ad8fb7ab73bc0e14"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b39ff64712e7e23f0f6a49b97ac18dc5022a8ab235b441b26f98e42e3ab4dd09"
-    sha256 cellar: :any_skip_relocation, catalina:      "2c8dfa071d55a99df894779b576cdf1e4acd4fbd5b1c8f080dd7eac4911a59b1"
-    sha256 cellar: :any_skip_relocation, mojave:        "60c7503ea14b6ad799523368b212baa2e743058773a752b1a6f9cb4566072816"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c45469a7743627c02fadac511ee70de0f6afdca371a116a3cf79c8497cb10b6c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "63be551c91abc01ecfd18cd47107933099a7335ca615312b9f69e86936d2e845"
+    sha256 cellar: :any_skip_relocation, big_sur:       "62b305a7bec9049099aacc9e89bfd7abcc2cc8231670c0c9aec5e3162593f7d1"
+    sha256 cellar: :any_skip_relocation, catalina:      "4cb101d812b752bff72fe9ed46848dc633034735d834079538be1b4bbb79207c"
+    sha256 cellar: :any_skip_relocation, mojave:        "9e118e700656cd5c708a138dd0b383779bbfe68d5aaae32e44a7602da29d6f7b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5731e2d5aecc2947aaff4ce231baacd1a81aef9920ceb26da5e970101da0f7d" # linuxbrew-core
   end
 
   depends_on "python@3.9"
+  depends_on "six"
 
   resource "appdirs" do
     url "https://files.pythonhosted.org/packages/d7/d8/05696357e0311f5b5c316d7b95f46c669dd9c15aaeecbb48c7d0aeb88c40/appdirs-1.4.4.tar.gz"
@@ -24,8 +25,8 @@ class Pdm < Formula
   end
 
   resource "atoml" do
-    url "https://files.pythonhosted.org/packages/b2/08/bdf5d2f46be558383a1eff7af3c778126e0039b5f1392fca80898686af22/atoml-1.0.1.tar.gz"
-    sha256 "f8180558dcb74891325e05776f07f8780a7ed9b20948693d07366bff55d3470d"
+    url "https://files.pythonhosted.org/packages/a9/06/96184509172e790ab6388f6b793a670f76630f29c7a19990a6cc38f15de3/atoml-1.0.2.tar.gz"
+    sha256 "6bb0c219304ad63b0a567227ad34ccfd56c197fafed3120d4eca720b885397a0"
   end
 
   resource "attrs" do
@@ -79,8 +80,8 @@ class Pdm < Formula
   end
 
   resource "python-dotenv" do
-    url "https://files.pythonhosted.org/packages/66/94/286b7b88e24a7a2f3e020234524e3dc3dfdba313f299054b24b8d4d39b77/python-dotenv-0.17.1.tar.gz"
-    sha256 "b1ae5e9643d5ed987fc57cc2583021e38db531946518130777734f9589b3141f"
+    url "https://files.pythonhosted.org/packages/7a/1c/4dbbae00fc9a3bc605fc2d92dc0e197fcf0b6e0357d217d1819afe8206af/python-dotenv-0.18.0.tar.gz"
+    sha256 "effaac3c1e58d89b3ccb4d04a40dc7ad6e0275fda25fd75ae9d323e2465e202d"
   end
 
   resource "pythonfinder" do
@@ -89,18 +90,13 @@ class Pdm < Formula
   end
 
   resource "resolvelib" do
-    url "https://files.pythonhosted.org/packages/af/91/9c0a7a26d77806184980411f38243acf2611f9ff5c91e8f94ea437688e3a/resolvelib-0.7.0.tar.gz"
-    sha256 "8840a8bf49fd56cff51398ebfe090e5d6aeaf4c4102472bff006aca7db470868"
+    url "https://files.pythonhosted.org/packages/0f/79/248bf2687fdaa4a3d8f695a51f03dac38f4c902de7a48b10ccc374bd6b5c/resolvelib-0.7.1.tar.gz"
+    sha256 "c526cda7f080d908846262d86c738231d9bfb556eb02d77167b685d65d85ace9"
   end
 
   resource "shellingham" do
     url "https://files.pythonhosted.org/packages/9c/c9/a3e3bc667c8372a74aa4b16649c3466364cd84f7aacb73453c51b0c2c8a7/shellingham-1.4.0.tar.gz"
     sha256 "4855c2458d6904829bd34c299f11fdeed7cfefbf8a2c522e4caea6cd76b3171e"
-  end
-
-  resource "six" do
-    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
-    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "toml" do
@@ -128,7 +124,7 @@ class Pdm < Formula
 
     EOS
     system bin/"pdm", "add", "requests==2.24.0"
-    assert_match "dependencies = [\"requests==2.24.0\"]", (testpath/"pyproject.toml").read
+    assert_match "dependencies = [\n    \"requests==2.24.0\",\n]", (testpath/"pyproject.toml").read
     assert_predicate testpath/"pdm.lock", :exist?
     assert_match "name = \"urllib3\"", (testpath/"pdm.lock").read
     output = shell_output("#{bin}/pdm run python -c 'import requests;print(requests.__version__)'")

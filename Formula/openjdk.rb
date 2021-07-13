@@ -21,7 +21,7 @@ class Openjdk < Formula
 
   bottle do
     rebuild 1
-    sha256 x86_64_linux: "3f0605079feaec84c5b944c16975cc6283bb4f7074bae283ac59d45492fa5a81"
+    sha256 x86_64_linux: "3f0605079feaec84c5b944c16975cc6283bb4f7074bae283ac59d45492fa5a81" # linuxbrew-core
   end
 
   keg_only :shadowed_by_macos
@@ -45,6 +45,8 @@ class Openjdk < Formula
     depends_on "libxtst"
     depends_on "unzip"
     depends_on "zip"
+
+    ignore_missing_libraries "libjvm.so"
   end
 
   fails_with gcc: "5"

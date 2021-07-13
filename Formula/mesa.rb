@@ -3,10 +3,19 @@ class Mesa < Formula
 
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
-  url "https://archive.mesa3d.org/mesa-21.1.2.tar.xz"
-  sha256 "23b4b63760561f3a4f98b5be12c6de621e9a6bdf355e087a83d9184cd4e2825f"
   license "MIT"
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
+
+  stable do
+    url "https://archive.mesa3d.org/mesa-21.1.4.tar.xz"
+    sha256 "1f177f44098164b65731c5ded4c928fd58b14f6c9d2087aa0e37bc79bf79e90b"
+
+    # should be removed in mesa 21.2
+    patch do
+      url "https://gitlab.freedesktop.org/mesa/mesa/-/commit/89b4f337d50c01c5782e19ee40b57a6c9e4b324b.diff"
+      sha256 "e3a7b97e40485d829708bf6013b0755f92f52d00c91bb0f40aa1cdae3cc69e98"
+    end
+  end
 
   livecheck do
     url "https://www.mesa3d.org/news/"
@@ -14,11 +23,12 @@ class Mesa < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "d15149248938b4959a14fd8f24e433c1a9446e3ad7dd6584c77eb873e882846a"
-    sha256 big_sur:       "35c8afa1c97db20542e322e1db37015322c7b0b50d2f5b7c4979df02e63c22e7"
-    sha256 catalina:      "5263b1f81993e09684b4ea5904fff681437ec6dbea8f3d06b688707ad45cd2c6"
-    sha256 mojave:        "b7d85db70c358b3a411fbfc1d1744e4d0484e735d86cc52ed362a2910991cfdb"
-    sha256 x86_64_linux:  "a4498038d53b594370cdf2ec0458d0041277efe409e4c2238efc522ea0bcca6b"
+    rebuild 1
+    sha256 arm64_big_sur: "da05062497899ef5c3b7fef6f95d2ac2c00effdcef41b1a8060d592a9fb11e32"
+    sha256 big_sur:       "7714347a2eda2748ec8a075f6b7a30637e947740ac16f2e0a6109d72b9597937"
+    sha256 catalina:      "62fc9cec08c6f3390af975bf2810d3176de789b463c5f975f274bafbf85f14a2"
+    sha256 mojave:        "629dca53ec381164368e08b2c26aa2ca473e16ce2870a429da7a6bdc68ae6c53"
+    sha256 x86_64_linux:  "bd5fae24c77efa5c54a1bb8f006af9cd4af59ce71f89aadecabb20d0cbd42640" # linuxbrew-core
   end
 
   depends_on "meson" => :build
@@ -70,11 +80,6 @@ class Mesa < Formula
   resource "gl_wrap.h" do
     url "https://gitlab.freedesktop.org/mesa/demos/-/raw/faaa319d704ac677c3a93caadedeb91a4a74b7a7/src/util/gl_wrap.h"
     sha256 "c727b2341d81c2a1b8a0b31e46d24f9702a1ec55c8be3f455ddc8d72120ada72"
-  end
-
-  patch do
-    url "https://gitlab.freedesktop.org/mesa/mesa/-/commit/50064ad367449afad03c927f7e572c138b05c5d4.diff"
-    sha256 "2f17f8f03a54350025fff65ec6d410b1c2f924a30199551457a0f43a9bada7b6"
   end
 
   def install

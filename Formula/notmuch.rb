@@ -1,10 +1,9 @@
 class Notmuch < Formula
   desc "Thread-based email index, search, and tagging"
   homepage "https://notmuchmail.org/"
-  url "https://notmuchmail.org/releases/notmuch-0.32.1.tar.xz"
-  sha256 "a747ca4e8cc919d91feda6cadb97e63b72ff79119491989bbcea79ad47680615"
+  url "https://notmuchmail.org/releases/notmuch-0.32.2.tar.xz"
+  sha256 "8e0a7eb8ff2e6011ef48b2bf11d79b9c4bb74511cfe2987758b64898c2a2ded7"
   license "GPL-3.0-or-later"
-  revision 1
   head "https://git.notmuchmail.org/git/notmuch", using: :git
 
   livecheck do
@@ -13,11 +12,11 @@ class Notmuch < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "25e42a13769182c88367bd2940d6522210e5a82eee4f02a5173851de6ce918d5"
-    sha256 cellar: :any,                 big_sur:       "287a0e2f7e7dd492135626de4fbea9324893bd647bf2d8fc50e691da2be437eb"
-    sha256 cellar: :any,                 catalina:      "8001f0c34b748c8ee7dbd92d73b093f3aa31fc0b25160bb1e4315c65f236ecb8"
-    sha256 cellar: :any,                 mojave:        "6d3dd1031db525fb1623e61a12ca49bb948449b1fe4ba08b9461fa73f32ad594"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "69f9ce4c600e71a9c83d9074941452887ba4404a2f31a3f8fff3657247b890ae"
+    sha256 cellar: :any,                 arm64_big_sur: "d8529ee44554e96bb5ffaa1afecf48e9d3d9e76295217b3c6c798702a027370f"
+    sha256 cellar: :any,                 big_sur:       "0f8769ef93addb20475aa9c17ca144358c66b068cc6467d43c5464633cee5355"
+    sha256 cellar: :any,                 catalina:      "c3ba8b9912ef53894f73f5005cd13e20769cf1fc49df8017ab985225f3f0f68c"
+    sha256 cellar: :any,                 mojave:        "8bb7a7a888f98972f63d05c62de0cef1613338abc70810d01ff5d5f0cb834ee4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "52de489510b6d6c8c905ca6a1c34d4a55a41d8cdee984fa06ce027c145f1107b" # linuxbrew-core
   end
 
   depends_on "doxygen" => :build
@@ -32,12 +31,6 @@ class Notmuch < Formula
   depends_on "xapian"
 
   uses_from_macos "zlib", since: :sierra
-
-  # Remove in the release after 0.32.1
-  patch do
-    url "https://git.notmuchmail.org/git?p=notmuch;a=patch;h=59c953656dbd2e65265a2c850f2375afc9d69589;hp=92454bc0935604f4a623e75dec9506c0283eee70"
-    sha256 "291066e48a26e8f78504413203685bedc77a35d0c8f94143e1daa058b444235e"
-  end
 
   def install
     args = %W[

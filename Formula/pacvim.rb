@@ -6,15 +6,6 @@ class Pacvim < Formula
   license "LGPL-3.0-or-later"
   head "https://github.com/jmoon018/PacVim.git"
 
-  # Use ncurses.h instead of cursesw.h which is not installed by brew
-  # https://github.com/jmoon018/PacVim/pull/31
-  unless OS.mac?
-    patch do
-      url "https://github.com/jmoon018/PacVim/commit/2f95ef4d312d760b8a3aae463e959646b27e774a.patch?full_index=1"
-      sha256 "e5b753de87937c0853a1adbab31eb1ec938add4ceb0df26eafef5b4f613bc3e6"
-    end
-  end
-
   bottle do
     rebuild 1
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "b690b089d153174f596700e750e133228e05949b3c4d01c993d93b862b102dc0"
@@ -22,7 +13,7 @@ class Pacvim < Formula
     sha256 cellar: :any_skip_relocation, catalina:      "85bd0087ecc54716772881e46ce00553ee037eb2ea200d34d5db28709092369f"
     sha256 cellar: :any_skip_relocation, mojave:        "e2ecd6cc1337adb4c9e760c50a83ae04a8cb86495d3c1ea167bfa5930d7a16a0"
     sha256 cellar: :any_skip_relocation, high_sierra:   "b8ef8cdba34802db97fba770e013393973e908e11486b87a4f5189f139e468dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9a304c39ddb8a1e9680ec916e92faa291eac7f406f01e76141ab16a1e7051f70"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9a304c39ddb8a1e9680ec916e92faa291eac7f406f01e76141ab16a1e7051f70" # linuxbrew-core
   end
 
   uses_from_macos "ncurses"

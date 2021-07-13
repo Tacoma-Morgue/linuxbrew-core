@@ -7,11 +7,12 @@ class Pipx < Formula
   head "https://github.com/pypa/pipx.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3d2f7c5ed804dffb92b4d08a9f72f1581046df4c39492ab5742153843d7592cf"
-    sha256 cellar: :any_skip_relocation, big_sur:       "65efd93e3f5b999df2d9b65774c71a3d0945e8b394a22623c110a274c283e714"
-    sha256 cellar: :any_skip_relocation, catalina:      "65efd93e3f5b999df2d9b65774c71a3d0945e8b394a22623c110a274c283e714"
-    sha256 cellar: :any_skip_relocation, mojave:        "65efd93e3f5b999df2d9b65774c71a3d0945e8b394a22623c110a274c283e714"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b142db014d1024a5ca3e9b8582a20688e04090b9697dbe0a5377f71d498bb4ff"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9fc7275f1378c5b8de804fe4567aa291388f9655b98785a04bcff767ef5ed618"
+    sha256 cellar: :any_skip_relocation, big_sur:       "18a5233a0e711c55d9b6eb1e71fd5665004fd52de354d05005a73c767c9d7c80"
+    sha256 cellar: :any_skip_relocation, catalina:      "18a5233a0e711c55d9b6eb1e71fd5665004fd52de354d05005a73c767c9d7c80"
+    sha256 cellar: :any_skip_relocation, mojave:        "18a5233a0e711c55d9b6eb1e71fd5665004fd52de354d05005a73c767c9d7c80"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e264cbf4ee0245324250d6dc3f7ce89a74b85637a3f2d49019d4738405cf85d7" # linuxbrew-core
   end
 
   depends_on "python@3.9"
@@ -62,6 +63,13 @@ class Pipx < Formula
     (bin/"pipx").write_env_script(libexec/"bin/pipx", PYTHONPATH: ENV["PYTHONPATH"])
     (bin/"register-python-argcomplete").write_env_script(libexec/"bin/register-python-argcomplete",
       PYTHONPATH: ENV["PYTHONPATH"])
+
+    # Install shell completions
+    output = Utils.safe_popen_read(libexec/"bin/register-python-argcomplete", "--shell=bash", "pipx")
+    (bash_completion/"pipx").write output
+
+    output = Utils.safe_popen_read(libexec/"bin/register-python-argcomplete", "--shell=fish", "pipx")
+    (fish_completion/"pipx.fish").write output
   end
 
   test do

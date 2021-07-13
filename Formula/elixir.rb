@@ -1,17 +1,17 @@
 class Elixir < Formula
   desc "Functional metaprogramming aware language built on Erlang VM"
   homepage "https://elixir-lang.org/"
-  url "https://github.com/elixir-lang/elixir/archive/v1.12.1.tar.gz"
-  sha256 "96167d614b9c483efc54bd7898c3eea4768569a77dd8892ada85d7800d5e3ea4"
+  url "https://github.com/elixir-lang/elixir/archive/v1.12.2.tar.gz"
+  sha256 "701006d1279225fc42f15c8d3f39906db127ddcc95373d34d8d160993356b15c"
   license "Apache-2.0"
   head "https://github.com/elixir-lang/elixir.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a4076024319aaa559386b60b2c114d89ac327552a16dd63151c517dacd09fae8"
-    sha256 cellar: :any_skip_relocation, big_sur:       "aea92e79f010ded4ab036a442fece1d04c89f55143ade4253b1a72d1e0d963f4"
-    sha256 cellar: :any_skip_relocation, catalina:      "c12b1e73a30867954d87a4714007f9fe402884342e3e752dab1df28a98b31bcf"
-    sha256 cellar: :any_skip_relocation, mojave:        "829d1cc6b9ba8fc2b8037bed900b1fe074f08a40f52f58e9c0cc10dbb4afbe4f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ddbeabe710a684f45f7f86426f4b28d4ab8e57070f15e6d944f3a9348447289c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9931199e37b5ed93b73b10cbbea910f735d537d935f7e0609645e828d5883a0b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4911491569ca202ea71fb36a4bbb50bc89ddb936148660f0c8a484e4f0b84052"
+    sha256 cellar: :any_skip_relocation, catalina:      "e362b53d078cbbb93b016f5e0efe53347e2c2b18c44419dc80070570c4ac11c7"
+    sha256 cellar: :any_skip_relocation, mojave:        "00b036d03064ef97c3cdca45577a412e22304f19b357d1906098161ab7da9450"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c4ad23cb38af4672b77ee757484fc7b25d20934f4b49d12984ba841016677271" # linuxbrew-core
   end
 
   depends_on "erlang"

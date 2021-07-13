@@ -1,8 +1,8 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/v2.0.1.tar.gz"
-  sha256 "b04953dbe571873b83580b4084cbe10921254236d08f3bf8c7bc392f6db236a3"
+  url "https://github.com/pyenv/pyenv/archive/v2.0.3.tar.gz"
+  sha256 "929c7dfcdf3ca3f584e177ede96950aeef40d3300bf68560add9dd1fb9059156"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git"
@@ -13,24 +13,27 @@ class Pyenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "4ffee8a2f974ac30970698fc186877879040fd070d7c71cf6b70466087bd826f"
-    sha256 cellar: :any,                 big_sur:       "06646f2a7779fc545226e0a79b26e3c7a3e50f55e08431d83e51301e2842de5d"
-    sha256 cellar: :any,                 catalina:      "c726cb329b9905cbeb80da1f874e1affceede6fa7a9cc463068d8c41a8d33b90"
-    sha256 cellar: :any,                 mojave:        "78c4debffd9cad117de67e502b6b16b199aa278895668dcfc7c7f910bab8085f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ce9fd81a58041e55dbf63363a6aefdc87755eb17ead91e2b46f34e60db6b701"
+    sha256 cellar: :any,                 arm64_big_sur: "57f0a28fe0a6e6ddfdab5f34c0e49712f2eb962315c1042eec7241ece47b0f5d"
+    sha256 cellar: :any,                 big_sur:       "5e1bf2df8261958ef972bab6f3ceb415f94b8c7a36c69c927e611f1adad22493"
+    sha256 cellar: :any,                 catalina:      "6fa7b23b73c8cdfcd4c18251f616f3ab9b10ef3526086996528340a78a8a0911"
+    sha256 cellar: :any,                 mojave:        "c1bd0f0420c203c1810115f7a854394d06dcc28966c45ad011ba89f5af3e6c2a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6518953d1580d6c0c0e682a6f24e977e277a0eb3ce8e570ce86692c3b0dcc8a3" # linuxbrew-core
   end
 
   depends_on "autoconf"
   depends_on "openssl@1.1"
   depends_on "pkg-config"
   depends_on "readline"
-  depends_on "python@3.9" => :test unless OS.mac?
 
   uses_from_macos "bzip2"
   uses_from_macos "libffi"
   uses_from_macos "ncurses"
   uses_from_macos "xz"
   uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "python@3.9" => :test
+  end
 
   def install
     inreplace "libexec/pyenv", "/usr/local", HOMEBREW_PREFIX

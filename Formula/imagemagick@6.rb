@@ -1,11 +1,8 @@
 class ImagemagickAT6 < Formula
   desc "Tools and libraries to manipulate images in many formats"
   homepage "https://legacy.imagemagick.org/"
-  # Please always use a mirror as the primary URL as the
-  # ImageMagick site removes tarballs regularly which means we get issues
-  # unnecessarily and older versions of the formula are broken.
-  url "https://www.imagemagick.org/download/releases/ImageMagick-6.9.12-14.tar.xz"
-  sha256 "6933206cdc68e46dd65d02c4fb3ffabae873c6fb88a3c4d256db313864043d9e"
+  url "https://www.imagemagick.org/download/releases/ImageMagick-6.9.12-17.tar.xz"
+  sha256 "a95a9441aca03cecc4df2d584361c0734352d7473d4267af4e0f1979abd356cb"
   license "ImageMagick"
   head "https://github.com/imagemagick/imagemagick6.git"
 
@@ -15,11 +12,11 @@ class ImagemagickAT6 < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "8b13316aec9421df27e1c9024cdfa39e2dbd35bef1591a707c7c55aa997020df"
-    sha256 big_sur:       "38e7bcb5be0bb52d1deaab79861ae1056d4132cf15e7a0f8d5d25fe3f949188a"
-    sha256 catalina:      "184bea2c0697f27430869d03e114ba1e97df67272a8f70a0145126627dc91592"
-    sha256 mojave:        "1a0b71795702b0fb684b7bcb7aff66d4979f69c6cc7316fb3de240654f77666c"
-    sha256 x86_64_linux:  "73bb688723b68fa8d7ecc09f988ba10eba8b709909985a6cf20c04c526d44994"
+    sha256 arm64_big_sur: "12de2ef0df830eec6435458d9a1be82d6da179d39a914130954f82f83e413c9d"
+    sha256 big_sur:       "db8f3ead310d086248eababf0b11973a3edfcca4de9caef43b75a188072d9218"
+    sha256 catalina:      "c04c24b5cf3902a57676cc9195d3003241ad101abf060221f56f8154a8d933a2"
+    sha256 mojave:        "19f9835fc9a4193d2c12bef48197fad3ba8f6559092f4a313b28b12bbbe10f91"
+    sha256 x86_64_linux:  "cb577b959ec7a0ed272a4faf2f7245953190c3a2e638009c50d516edf56368d4" # linuxbrew-core
   end
 
   keg_only :versioned_formula

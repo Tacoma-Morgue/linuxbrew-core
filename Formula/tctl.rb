@@ -1,22 +1,25 @@
 class Tctl < Formula
   desc "Temporal CLI (tctl)"
   homepage "https://temporal.io/"
-  url "https://github.com/temporalio/temporal/archive/v1.10.2.tar.gz"
-  sha256 "dc85709dc7407828ced5a7fbf8a03e62b1a97f1dd3652f4df4233ad715e34585"
+  url "https://github.com/temporalio/temporal/archive/v1.10.5.tar.gz"
+  sha256 "da8279e8ac5945ddbfbfec9dbefef8d99ac911dc37fc97cf725316239512c72f"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "099fd3f17ed5dc2b212cb056c84abd25410cd44dd965ccc918564d7850fedf3e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "1605ceaaab47a29f6f3d62255a1fe2e71f872fe0a991a766e80bf47e8146af3c"
-    sha256 cellar: :any_skip_relocation, catalina:      "3b1b866985c070952cec1bce7b430f00411e5a51ebde8740ddd71dc9110a7282"
-    sha256 cellar: :any_skip_relocation, mojave:        "da94b6283f3138470c32c70c2eee5cef2e46748069585b9722d2b7d890cd2829"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ae59e8cb0065cf13733708679cc1be86a2d8df398459ded9606bff7880c38b1e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "05902b14ed5faf7ee929ea6ea6cbf7ad2d23ca162a8e2d9a229e0a6762246068"
+    sha256 cellar: :any_skip_relocation, big_sur:       "9593a16cc39a5c9476960741ae568020c01fa1e2388cb31f1bf7e225fd7abe46"
+    sha256 cellar: :any_skip_relocation, catalina:      "943c03263bb52032517ad7b290bd0391961a48c2ddc1a5ec8edf083f241d9adb"
+    sha256 cellar: :any_skip_relocation, mojave:        "8306eb33ac17c37e6fc106f5c842e7762a22c6eb1e322487b7264d170bdb4953"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "454213c37aace0883788b01202be30481266b86c2cc1bb04a7eaf7cc6cc451db" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-s -w", "./cmd/tools/cli/main.go"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/tools/cli/main.go"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "-o", bin/"tctl-authorization-plugin",
+      "./cmd/tools/cli/plugins/authorization/main.go"
   end
 
   test do

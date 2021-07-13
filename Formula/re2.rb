@@ -19,11 +19,12 @@ class Re2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "fd9573e36089968186676dfbe4a7af7dfb7ef7049d0523de68c890de509ab2c9"
-    sha256 cellar: :any,                 big_sur:       "6f4a0ffc9a7a09aea3cf7acfa84b5ebe5ab7834f6a55d6f586e15242ea05d317"
-    sha256 cellar: :any,                 catalina:      "7170869b764314dd7804bc4d234215965725356739fffd99279f2d4690cf6bc8"
-    sha256 cellar: :any,                 mojave:        "9587952072674b6432c3bc0c6cdf1200cb5041e154025e13de78c8628c3493e2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "22b252135d70ed1b7ac2809a7944a86089f30066c7c22f1f68c590fa5dda1ab8"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "3951877486d2ce0e2c539f69f192b42d881160446d0657c2f212800d4fa47885"
+    sha256 cellar: :any,                 big_sur:       "bf681152897e7d95030d6c6d5768c8a62acefa030400b7d0b101550d684af2d4"
+    sha256 cellar: :any,                 catalina:      "f5fa3c199ea233cc5113c8f9828019718977a84dee59aa4b80a423db407fb387"
+    sha256 cellar: :any,                 mojave:        "094976a778bcb6a57051bf8a14f234a531660c612d1727114d8e0ee0d23c17cc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f1f28d7fdfe1ce5e0bb4c0e3772a54fa0cb19a3000948e9719b9a873f6e21311" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -50,8 +51,8 @@ class Re2 < Formula
         return 0;
       }
     EOS
-    system ENV.cxx, "-std=c++11",
-           "test.cpp", "-I#{include}", "-L#{lib}", "-pthread", "-lre2", "-o", "test"
+    system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test",
+                    "-I#{include}", "-L#{lib}", "-lre2"
     system "./test"
   end
 end

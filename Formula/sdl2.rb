@@ -8,7 +8,7 @@ class Sdl2 < Formula
 
   livecheck do
     url "https://www.libsdl.org/download-2.0.php"
-    regex(/SDL2[._-]v?(\d+(?:\.\d+)*)/i)
+    regex(/href=.*?SDL2[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
@@ -16,7 +16,7 @@ class Sdl2 < Formula
     sha256 cellar: :any, big_sur:       "ccde7145d4334d9274f9588e6b841bf3749729682e1d25f590bdcf7994dfdd89"
     sha256 cellar: :any, catalina:      "d6ae3300160c5bb495b78a5c5c0fc995f9e797e9cdd4b04ef77d59d45d2d694d"
     sha256 cellar: :any, mojave:        "4f3988fb3af0f370bc1648d6eb1d6573fd37381df0f3b9ee0874a49d6a7dec2e"
-    sha256 cellar: :any, x86_64_linux:  "feb0cb7f4d5338f820892d917e821cfe09ad4ca0b66c5981b9af06411c199f09"
+    sha256 cellar: :any, x86_64_linux:  "feb0cb7f4d5338f820892d917e821cfe09ad4ca0b66c5981b9af06411c199f09" # linuxbrew-core
   end
 
   head do
@@ -29,9 +29,6 @@ class Sdl2 < Formula
 
   on_linux do
     depends_on "pkg-config" => :build
-  end
-
-  unless OS.mac?
     depends_on "libice"
     depends_on "libxcursor"
     depends_on "libxscrnsaver"
@@ -48,32 +45,26 @@ class Sdl2 < Formula
 
     system "./autogen.sh" if build.head?
 
-    args = if OS.mac?
-      %W[--prefix=#{prefix} --without-x]
-    else
-      %W[--prefix=#{prefix} --with-x]
+    args = %W[--prefix=#{prefix} --enable-hidapi]
+    on_macos do
+      args << "--without-x"
     end
-
-    args << "--enable-hidapi"
-
-    unless OS.mac?
-      args += %w[
-        --enable-pulseaudio
-        --enable-pulseaudio-shared
-        --enable-video-dummy
-        --enable-video-opengl
-        --enable-video-opengles
-        --enable-video-x11
-        --enable-video-x11-scrnsaver
-        --enable-video-x11-xcursor
-        --enable-video-x11-xinerama
-        --enable-video-x11-xinput
-        --enable-video-x11-xrandr
-        --enable-video-x11-xshape
-        --enable-x11-shared
-      ]
+    on_linux do
+      args << "--with-x"
+      args << "--enable-pulseaudio"
+      args << "--enable-pulseaudio-shared"
+      args << "--enable-video-dummy"
+      args << "--enable-video-opengl"
+      args << "--enable-video-opengles"
+      args << "--enable-video-x11"
+      args << "--enable-video-x11-scrnsaver"
+      args << "--enable-video-x11-xcursor"
+      args << "--enable-video-x11-xinerama"
+      args << "--enable-video-x11-xinput"
+      args << "--enable-video-x11-xrandr"
+      args << "--enable-video-x11-xshape"
+      args << "--enable-x11-shared"
     end
-
     system "./configure", *args
     system "make", "install"
   end

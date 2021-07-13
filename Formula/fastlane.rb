@@ -1,8 +1,8 @@
 class Fastlane < Formula
   desc "Easiest way to build and release mobile apps"
   homepage "https://fastlane.tools"
-  url "https://github.com/fastlane/fastlane/archive/2.185.0.tar.gz"
-  sha256 "dc57213fd7e63cd48487acedfd4064dd34d845abc0b3d4e4f0866fc815b9e7ca"
+  url "https://github.com/fastlane/fastlane/archive/2.187.0.tar.gz"
+  sha256 "142f693fe83db83d78f48ecc86301c55a2eb6e65628290508886326e390da4ae"
   license "MIT"
   head "https://github.com/fastlane/fastlane.git"
 
@@ -12,14 +12,15 @@ class Fastlane < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "b51316b523d8a04b28708e99df536a21b8ad28c3b470e27208369e3fa4d385e6"
-    sha256 cellar: :any,                 big_sur:       "dac134a7cb24fd8f96d9d9e155c588682e6bed78d88af25f8cbbc52bb9a95ac8"
-    sha256 cellar: :any,                 catalina:      "e697f3784c18e7085afb90f53da73fd444ce964478e022e29a683ce92d6a6744"
-    sha256 cellar: :any,                 mojave:        "da3fa9500aa579067e895b3c62f9772c2fa94b7dc5086e75507c64f979d5090a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e6deb572cee7fe7ef0bf855c62f2358fb9ded5c177412add21f8488c2014dd5e"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "f470190cf8a65d8e149374ab6ea701ca53a9a1c05014057715e4535da5778505"
+    sha256 cellar: :any,                 big_sur:       "21b7796249e1ca2c884a78aee115bcd8418215d0320fcf6fa77a55e04b891267"
+    sha256 cellar: :any,                 catalina:      "4de029317572573afd507a20135ff39a262886a9a820017bdd44f470a498c833"
+    sha256 cellar: :any,                 mojave:        "674c6385ad5869f39a773c4be4f775dbb258320a16c304b96d7962507b9b1b5e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f9b91268de7ef80cdf9ccf79850582f70b8fdc721e2e2adc487ca250e8c96512" # linuxbrew-core
   end
 
-  depends_on "ruby@2.7"
+  depends_on "ruby"
 
   def install
     ENV["GEM_HOME"] = libexec
@@ -29,7 +30,7 @@ class Fastlane < Formula
     system "gem", "install", "fastlane-#{version}.gem", "--no-document"
 
     (bin/"fastlane").write_env_script libexec/"bin/fastlane",
-      PATH:                            "#{Formula["ruby@2.7"].opt_bin}:#{libexec}/bin:$PATH",
+      PATH:                            "#{Formula["ruby"].opt_bin}:#{libexec}/bin:$PATH",
       FASTLANE_INSTALLED_VIA_HOMEBREW: "true",
       GEM_HOME:                        libexec.to_s,
       GEM_PATH:                        libexec.to_s

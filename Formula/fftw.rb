@@ -1,13 +1,13 @@
 class Fftw < Formula
   desc "C routines to compute the Discrete Fourier Transform"
-  homepage "http://www.fftw.org"
-  url "http://fftw.org/fftw-3.3.9.tar.gz"
+  homepage "https://fftw.org"
+  url "https://fftw.org/fftw-3.3.9.tar.gz"
   sha256 "bf2c7ce40b04ae811af714deb512510cc2c17b9ab9d6ddcf49fe4487eea7af3d"
   license all_of: ["GPL-2.0-or-later", "BSD-2-Clause"]
   revision OS.mac? ? 1 : 2
 
   livecheck do
-    url "http://fftw.org/"
+    url :homepage
     regex(%r{latest official release.*? <b>v?(\d+(?:\.\d+)+)</b>}i)
   end
 
@@ -16,7 +16,7 @@ class Fftw < Formula
     sha256 cellar: :any,                 big_sur:       "8ee0fe663966dcc2ba924768dc921536873b172b024302f1f06e663237d11a29"
     sha256 cellar: :any,                 catalina:      "e5c826687292998daa2f2e76d13325fde551b54450846c3190efde540a02650e"
     sha256 cellar: :any,                 mojave:        "17af7472492ccf0704b958db622505872d7bca0f2d2f05869d07f1b01557c0ab"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "525ccc854bdb048261d0fca7b3e0f5bc758e45e6373d7d591fd8f761ddc719be"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "525ccc854bdb048261d0fca7b3e0f5bc758e45e6373d7d591fd8f761ddc719be" # linuxbrew-core
   end
 
   depends_on "open-mpi"
@@ -67,7 +67,7 @@ class Fftw < Formula
 
   test do
     # Adapted from the sample usage provided in the documentation:
-    # http://www.fftw.org/fftw3_doc/Complex-One_002dDimensional-DFTs.html
+    # https://www.fftw.org/fftw3_doc/Complex-One_002dDimensional-DFTs.html
     (testpath/"fftw.c").write <<~EOS
       #include <fftw3.h>
       int main(int argc, char* *argv)

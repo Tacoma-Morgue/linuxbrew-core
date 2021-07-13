@@ -5,13 +5,13 @@ class I686ElfGcc < Formula
   mirror "https://ftpmirror.gnu.org/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
   sha256 "4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
+  revision 1
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "06ffaa046cdc144d56fec59df4c77790fe3dde2cba2e3a11a30c3cf01ee8ce0f"
-    sha256 big_sur:       "714c96b4c9174aaf2945be91156cc273da8f53628b213f51abb905df4a2a077c"
-    sha256 catalina:      "c0305f2b0b27c90931be17c7979c2d7f9dcac05c48781dcf2184014dac17537a"
-    sha256 mojave:        "274ac95b8ddc3b560aedb197ffa54ac51020a09fd7814d31d5273fe68ec15a82"
+    sha256 arm64_big_sur: "7365d64296a1435d2a3649c4b9bf8d17e0d42ed40523de3fbe09cdea725c1651"
+    sha256 big_sur:       "f90e0015f48d6801c2baecff35f1f585424736886c61df900d6a16d3a6ca0f58"
+    sha256 catalina:      "653e014807bf4321c23e9e5375d489065bee7cd3e67e0b48bbfb8583420b6d66"
+    sha256 mojave:        "ed1638bf912983d96fd04d43f5a56a542a6cd9dc927ca2dbac028238f1b6f7de"
   end
 
   depends_on "gmp"
@@ -29,10 +29,11 @@ class I686ElfGcc < Formula
   end
 
   def install
+    target = "i686-elf"
     mkdir "i686-elf-gcc-build" do
-      system "../configure", "--target=i686-elf",
+      system "../configure", "--target=#{target}",
                              "--prefix=#{prefix}",
-                             "--infodir=#{info}/i686-elf-gcc",
+                             "--infodir=#{info}/#{target}",
                              "--disable-nls",
                              "--without-isl",
                              "--without-headers",

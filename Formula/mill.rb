@@ -6,7 +6,7 @@ class Mill < Formula
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "f3566d48b5acef9f7a349550dfe0a184b79a2bf4bbf70b0a3e2873ce9737ef8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "1e823aa9b5e31f4b17b381933f2293c430c476783a25562cf350eec055157a07" # linuxbrew-core
   end
 
   depends_on "openjdk"

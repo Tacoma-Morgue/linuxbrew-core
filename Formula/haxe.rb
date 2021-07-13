@@ -2,12 +2,13 @@ class Haxe < Formula
   desc "Multi-platform programming language"
   homepage "https://haxe.org/"
   license all_of: ["GPL-2.0-or-later", "MIT"]
+  revision 1
   head "https://github.com/HaxeFoundation/haxe.git", branch: "development"
 
   stable do
     url "https://github.com/HaxeFoundation/haxe.git",
-        tag:      "4.2.2",
-        revision: "a2f4ba95400edf10195ce2a1c87c56dc0d67111b"
+        tag:      "4.2.3",
+        revision: "1385eda48e60387e349282d26347b28d0b2768ca"
 
     # Remove when campl5 dependency is bumped to 8.00 in a release
     patch do
@@ -22,10 +23,10 @@ class Haxe < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "74bc5a229f86d345f643054840ca1cbf395c9f5c937acf66f67d445ace61b715"
-    sha256 cellar: :any, big_sur:       "c7ddddb58e535f31e496ffdc78142aa55f1ae30982bbfbdd626914b91fe1bbe0"
-    sha256 cellar: :any, catalina:      "06f2c63317134f8554cf2a7b1c45f774ac341b1a8155fe4fc05b2fc444d4c398"
-    sha256 cellar: :any, mojave:        "a8eca0f220ec10a993c4208508993567c6e9e509611418d5dbd70e00570bc38d"
+    sha256 cellar: :any, arm64_big_sur: "61d820d3e70a5a80e292c4ed6c237b22548552b75ae7ccb0ee0a3e4295a6ac61"
+    sha256 cellar: :any, big_sur:       "16eb12fc8eb8df93e1f721613e288f1c6bbf7ca5fca12bb02bccdc07ce87a8a3"
+    sha256 cellar: :any, catalina:      "9b74bd6cc7cd8fef321aae3e89ba219dc50e55cacbe2fca04c614c370167c53d"
+    sha256 cellar: :any, mojave:        "43d1f66bc65c272556d0cdb5ac195c1f525214eb6e8cdbf53d117f99027e6f1c"
   end
 
   depends_on "cmake" => :build

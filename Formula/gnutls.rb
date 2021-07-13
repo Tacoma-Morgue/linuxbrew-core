@@ -13,7 +13,7 @@ class Gnutls < Formula
 
   bottle do
     rebuild 1
-    sha256 x86_64_linux: "022fb300ceaef9ad84519925fea3f01eaa63e137cf8da95bde8edef0ecb639a7"
+    sha256 x86_64_linux: "022fb300ceaef9ad84519925fea3f01eaa63e137cf8da95bde8edef0ecb639a7" # linuxbrew-core
   end
 
   depends_on "autoconf" => :build
@@ -81,7 +81,7 @@ class Gnutls < Formula
       /System/Library/Keychains/SystemRootCertificates.keychain
     ]
 
-    certs_list = `security find-certificate -a -p #{keychains.join(" ")}`
+    certs_list = `/usr/bin/security find-certificate -a -p #{keychains.join(" ")}`
     certs = certs_list.scan(
       /-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m,
     )

@@ -1,8 +1,8 @@
 class Pypy < Formula
   desc "Highly performant implementation of Python 2 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy2.7-v7.3.4-src.tar.bz2"
-  sha256 "ff9b928237767efe08ccfba79dae489519b3c768fb6e3af52d39c2a8a1c21ca4"
+  url "https://downloads.python.org/pypy/pypy2.7-v7.3.5-src.tar.bz2"
+  sha256 "c0444fd9873058c1c0d99e13a934e92285cb05992c9968bf523c32bf9bec0a9d"
   license "MIT"
   head "https://foss.heptapod.net/pypy/pypy", using: :hg
 
@@ -12,9 +12,9 @@ class Pypy < Formula
   end
 
   bottle do
-    sha256 big_sur:  "c92e910215c9d44708ce97f360851ff4878ce7a0f494bdef1c601a78596f4c41"
-    sha256 catalina: "c7da4bd5c5908efb24d85305d5f818392fad38a2a41de5e7e35d93dfbfd8f048"
-    sha256 mojave:   "12ad92759cd93a3994d7542b9717d904c77139596bea5d579ffe4ed24586a4cb"
+    sha256 big_sur:  "b803e4751bcbdc4d9bdb7f031e5d97e91622683195fa4a347d680640ab421efc"
+    sha256 catalina: "995a970d4d67e45cc06c72440e557e80c527761729c91c194b03ad3fb974f38e"
+    sha256 mojave:   "cbdd251aa6df8899643acd894ba4af7cd0c162795191997b7a37361e9ebb0ff5"
   end
 
   depends_on "pkg-config" => :build

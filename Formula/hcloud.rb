@@ -1,16 +1,16 @@
 class Hcloud < Formula
   desc "Command-line interface for Hetzner Cloud"
   homepage "https://github.com/hetznercloud/cli"
-  url "https://github.com/hetznercloud/cli/archive/v1.23.0.tar.gz"
-  sha256 "1dd4535420b29de7ca6b5cdfa1d6984a2780a6a3d1d60c11585a5f98fce80f48"
+  url "https://github.com/hetznercloud/cli/archive/v1.25.1.tar.gz"
+  sha256 "da5ac8d2b2f54acb56cfc68a37120f7e2171ee25a9fdd07445608436e0790593"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c80badbb82f0701f97612f688184c3fcc8b13433eb75083c6d1188fbaae9845c"
-    sha256 cellar: :any_skip_relocation, big_sur:       "7b6142d37875ed2283e682c471bbd298d2be104069ff40e7192685b2e8fef354"
-    sha256 cellar: :any_skip_relocation, catalina:      "00137c5bda7c47373829c3fdc28d1964863bc41bc82964465711bb9f70eeea60"
-    sha256 cellar: :any_skip_relocation, mojave:        "a0d55ec31e314b04035c2108dc84a57eacbb1ef6f3f4381feca3f608831ddc86"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2a461339ff682586b8dc7524a6c9eeca306ce2aaacc6266ca1621b8ff5bb189c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "efb93630d989ad7712c2865d26de7075b4eb55b190393c6c3339e9266320060e"
+    sha256 cellar: :any_skip_relocation, big_sur:       "e71707d9f66a6475fe25f23b75b7e145f8d8657a0adff02ffa8118a96f09ef95"
+    sha256 cellar: :any_skip_relocation, catalina:      "65a9fd8c9a10fc1113a1f8399bb60cf6e3f1ae6732c81f3b46b9bfbfe2eb5941"
+    sha256 cellar: :any_skip_relocation, mojave:        "2f6912bd56e8354f5c2446de3ae6ef3f1ad7ae1ccf71c616a987bc5799a2c80b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "de748f0e422b6edb1fd698169ded93891ae88a6a621baa8093c7c579afcb1c0e" # linuxbrew-core
   end
 
   depends_on "go" => :build

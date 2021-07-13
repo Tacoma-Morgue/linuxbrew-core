@@ -10,6 +10,7 @@ class Goffice < Formula
     sha256 big_sur:       "4cbc19a7ea37b8d511e2c908ab810c5655d76af9f13cffbaafdc39bac01ad009"
     sha256 catalina:      "b21162268cc6c6dc2bdb7c63f6ea7b95eb3db9228f75536b98bf7fabff4ea9e8"
     sha256 mojave:        "e7e8f0d817617e0b4450bc77905d988cd06918e45992881eeaba24c61b2e4030"
+    sha256 x86_64_linux:  "845fd1faf5d5500d5d6cda1d7dedb50bb0085bf211a1001b03b8e6e608a4a251" # linuxbrew-core
   end
 
   head do
@@ -35,8 +36,11 @@ class Goffice < Formula
   uses_from_macos "libxslt"
 
   def install
-    # Needed by intltool (xml::parser)
-    ENV.prepend_path "PERL5LIB", "#{Formula["intltool"].libexec}/lib/perl5" unless OS.mac?
+    on_linux do
+      # Needed to find intltool (xml::parser)
+      ENV.prepend_path "PERL5LIB", Formula["intltool"].libexec/"lib/perl5"
+      ENV["INTLTOOL_PERL"] = Formula["perl"].bin/"perl"
+    end
 
     args = %W[--disable-dependency-tracking --prefix=#{prefix}]
     if build.head?
@@ -59,7 +63,10 @@ class Goffice < Formula
           return 0;
       }
     EOS
-    libxml2 = OS.mac? ? "#{MacOS.sdk_path}/usr/include/libxml2" : "#{Formula["libxml2"].opt_include}/libxml2"
+    libxml2 = MacOS.sdk_path/"usr/include/libxml2"
+    on_linux do
+      libxml2 = Formula["libxml2"].opt_include/"libxml2"
+    end
     system ENV.cc, "-I#{include}/libgoffice-0.10",
            "-I#{Formula["glib"].opt_include}/glib-2.0",
            "-I#{Formula["glib"].opt_lib}/glib-2.0/include",

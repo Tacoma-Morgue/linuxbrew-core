@@ -18,7 +18,7 @@ class Gtkx < Formula
     sha256 big_sur:       "8ead5b96878ad431ac3e23dc3bd20bb4eac509c63c231e594986a0fa331e157f"
     sha256 catalina:      "3900f64476d7988670b5d0c855f072fba0af2b1bb323acf4f126f70c95a38616"
     sha256 mojave:        "10d1f2a81a115b9cf1e8c76fbd6cdc58f5b4593eb7f9e15cbe0127e14221dd06"
-    sha256 x86_64_linux:  "7a6506474b1d9921a0dd5b548d6efc3ae58f2f40c283eb3c023af6adbe156a0b"
+    sha256 x86_64_linux:  "7a6506474b1d9921a0dd5b548d6efc3ae58f2f40c283eb3c023af6adbe156a0b" # linuxbrew-core
   end
 
   head do
@@ -37,7 +37,9 @@ class Gtkx < Formula
   depends_on "hicolor-icon-theme"
   depends_on "pango"
 
-  unless OS.mac?
+  uses_from_macos "cups"
+
+  on_linux do
     depends_on "cairo"
     depends_on "libxinerama"
     depends_on "libxcomposite"
@@ -58,6 +60,14 @@ class Gtkx < Formula
     sha256 "ce5adf1a019ac7ed2a999efb65cfadeae50f5de8663638c7f765f8764aa7d931"
   end
 
+  def backend
+    backend = "quartz"
+    on_linux do
+      backend = "x11"
+    end
+    backend
+  end
+
   def install
     args = ["--disable-dependency-tracking",
             "--disable-silent-rules",
@@ -65,11 +75,8 @@ class Gtkx < Formula
             "--enable-static",
             "--disable-glibtest",
             "--enable-introspection=yes",
-            "--with-gdktarget=#{OS.mac? ? "quartz" : "x11"}",
+            "--with-gdktarget=#{backend}",
             "--disable-visibility"]
-
-    # temporarily disable cups until linuxbrew/homebrew-core#495 is merged
-    args << "--disable-cups" unless OS.mac?
 
     if build.head?
       inreplace "autogen.sh", "libtoolize", "glibtoolize"
@@ -102,7 +109,6 @@ class Gtkx < Formula
     libpng = Formula["libpng"]
     pango = Formula["pango"]
     pixman = Formula["pixman"]
-    backend = OS.mac? ? "quartz" : "x11"
     flags = (ENV.cflags || "").split + (ENV.cppflags || "").split + (ENV.ldflags || "").split
     flags += %W[
       -I#{atk.opt_include}/atk-1.0

@@ -1,9 +1,9 @@
 class Openvpn < Formula
   desc "SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension"
   homepage "https://openvpn.net/community/"
-  url "https://swupdate.openvpn.org/community/releases/openvpn-2.5.2.tar.xz"
-  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.5.2.tar.xz"
-  sha256 "b12743836901f365efaf82ab2493967e1b21c21eb43ce9a8da1002a17c9c1dc8"
+  url "https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.xz"
+  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.5.3.tar.xz"
+  sha256 "fb6a9943c603a1951ca13e9267653f8dd650c02f84bccd2b9d20f06a4c9c9a7e"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -12,11 +12,11 @@ class Openvpn < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "5e6986332d574ba7bdc3144396db4f709ab9a63dcdfb6017dcb422dd7497c7b5"
-    sha256 big_sur:       "8d7ea075eed8132ff0032e63db26afcae982f1348a524de87290551d1b90f3f0"
-    sha256 catalina:      "b44a899e4774a47fd25522cfddd4a28e46df11e796745c5c1bdeffe6e7e2f54c"
-    sha256 mojave:        "4b5ea16d5633f96a6009eb964a56d36fd0cc4f84d420a4cae21e13adc55f405d"
-    sha256 x86_64_linux:  "ebca6702c2ce03f256b4504321cfc47e93982b3b41ec690190a546f1a9db4894"
+    sha256 arm64_big_sur: "433d03f96b84988645792035d030fe75d6dd5798ef8378801819ea26fcf47e53"
+    sha256 big_sur:       "2793ac511bf39ba8188d91f44ed4e54a3d4d7ebe343b12bc51ab5230527dafa5"
+    sha256 catalina:      "934be2e38dcba81a70b32c075bde79d5bbe57f5f754c9216c24edb0c8a1a581f"
+    sha256 mojave:        "e7b821dff3579fbb6e1d3b9c0ece0e2152ede9eac7ff98daec488300d92c50ac"
+    sha256 x86_64_linux:  "0bcb1684b5b57c830df22dc05327b416d9e31ad06933555c2445b908d6a8f08c" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build

@@ -1,16 +1,16 @@
 class Gravity < Formula
   desc "Embeddable programming language"
   homepage "https://marcobambini.github.io/gravity/"
-  url "https://github.com/marcobambini/gravity/archive/0.8.2.tar.gz"
-  sha256 "d342c4713939c864a62387381b7ccea2b40eecc86204bbdef578fed53ded936c"
+  url "https://github.com/marcobambini/gravity/archive/0.8.3.tar.gz"
+  sha256 "b35f3f8a82f508be3bb3b746c5b1b9bb924171ea110480a209bce4ca4a9d5539"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "85ef605bd023af84e0db85b35c75cba699b168d9c5f21ab8d5346716060228af"
-    sha256 cellar: :any_skip_relocation, big_sur:       "49f19ce7992a5e087b879beaf9a4a8fb875a0d063b283e5aadfc320cb2b41f79"
-    sha256 cellar: :any_skip_relocation, catalina:      "73e493759b7928d8a557fb194f3fd4b9d4b700fcc2fdb85953f273f68350e31d"
-    sha256 cellar: :any_skip_relocation, mojave:        "1ad9606bdd5ff83b24b1220cdde9adfa70ff2b92c887d5cf4a67141cfd1e24c4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a5ffed2e163aae2226273c079d0e0ca82d4506fd3f8e2f889c584e9cd0948bf9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e4bbcd21021ce0ea675f4e89eb7ee5e7891a76329397045f391c1fc66fc29ac6"
+    sha256 cellar: :any_skip_relocation, big_sur:       "45fa429c501fbc6bed4df03f4bd42d843eb9a0c2178c38e91463c5be23d8c559"
+    sha256 cellar: :any_skip_relocation, catalina:      "b5c92698d98471fd098e09fafbc39cfac3fbde7f445e5fadde854fab8aa8f658"
+    sha256 cellar: :any_skip_relocation, mojave:        "dca9c51bdb7adbc1310c28ac630b19f12567d3110af64a7a0e4821ea61c31e8b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "94b4c99bc9a711da94f7d4d20f5a9cb3eac76a972d0e8dca199da17904e6942c" # linuxbrew-core
   end
 
   def install

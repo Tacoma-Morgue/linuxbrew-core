@@ -3,7 +3,8 @@ class Exiftool < Formula
   homepage "https://exiftool.org"
   # Ensure release is tagged production before submitting.
   # https://exiftool.org/history.html
-  url "https://exiftool.org/Image-ExifTool-12.26.tar.gz"
+  url "https://cpan.metacpan.org/authors/id/E/EX/EXIFTOOL/Image-ExifTool-12.26.tar.gz"
+  mirror "https://exiftool.org/Image-ExifTool-12.26.tar.gz"
   sha256 "ed9f3285e263636c713ab52fcfb55cbcf4becd6c6e04bda410c8f240996ece9e"
   license any_of: ["Artistic-1.0-Perl", "GPL-1.0-or-later"]
 
@@ -17,7 +18,7 @@ class Exiftool < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "4d2164b47c21c2bc512a51e356350acd2e3c3eab476625678772ca20c4290a30"
     sha256 cellar: :any_skip_relocation, catalina:      "dcecf0acae250788ce5a32aec3e45a11a45af51a92109f78a560b6d896cc21a7"
     sha256 cellar: :any_skip_relocation, mojave:        "dcecf0acae250788ce5a32aec3e45a11a45af51a92109f78a560b6d896cc21a7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8ed7c5c2115a65021d85a45a8a68901faeb4c5fb306308ac06758f73a1a0528e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8ed7c5c2115a65021d85a45a8a68901faeb4c5fb306308ac06758f73a1a0528e" # linuxbrew-core
   end
 
   def install
