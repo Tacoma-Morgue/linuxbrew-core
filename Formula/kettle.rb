@@ -1,13 +1,16 @@
 class Kettle < Formula
   desc "Pentaho Data Integration software"
   homepage "https://www.hitachivantara.com/en-us/products/data-management-analytics.html"
-  url "https://downloads.sourceforge.net/project/pentaho/Pentaho%209.1/client-tools/pdi-ce-9.1.0.0-324.zip"
-  sha256 "ffbcb7bba736af765bbb14ccb0a5f2ae239e75b5aebf0ecfee924a5738d2c530"
-  revision 1
+  url "https://downloads.sourceforge.net/project/pentaho/Pentaho-9.2/client-tools/pdi-ce-9.2.0.0-290.zip"
+  sha256 "8e64d1125b2403df66f212488762f1558968a3900d079c730b2f6943e346a7e7"
 
   livecheck do
     url :stable
     regex(%r{url=.*?/pdi-ce[._-]v?(\d+(?:\.\d+)+(?:-\d+)?)\.(?:t|zip)}i)
+  end
+
+  bottle do
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c39816fbf4175cfd98a5870ea24e31a739dcf1b1014f4201d3f324b22847af7d" # linuxbrew-core
   end
 
   depends_on arch: :x86_64

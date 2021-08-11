@@ -25,7 +25,6 @@ class Cminpack < Formula
 
     man3.install Dir["doc/*.3"]
     doc.install Dir["doc/*"]
-
     pkgshare.install "examples/thybrdc.c"
   end
 

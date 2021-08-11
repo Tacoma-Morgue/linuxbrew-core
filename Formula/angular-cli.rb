@@ -3,16 +3,16 @@ require "language/node"
 class AngularCli < Formula
   desc "CLI tool for Angular"
   homepage "https://cli.angular.io/"
-  url "https://registry.npmjs.org/@angular/cli/-/cli-12.1.1.tgz"
-  sha256 "d4f4c11d44bb05d5c74c3552405574008c528dcd8a41cec748d8179efc99534a"
+  url "https://registry.npmjs.org/@angular/cli/-/cli-12.2.0.tgz"
+  sha256 "1e6a66259a9b759838f3df4ba5efd0ecee7c7ea98e35f1698bb7681551ac29ec"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "86f7b99a8799e8a0ff384074418409f83a674989c84d8ca220f9db00a45ca314"
-    sha256 cellar: :any_skip_relocation, big_sur:       "e680bf4fb93924b180d3fc27b047e43f739b382dcc019c9b9b100d55e8396fa4"
-    sha256 cellar: :any_skip_relocation, catalina:      "e680bf4fb93924b180d3fc27b047e43f739b382dcc019c9b9b100d55e8396fa4"
-    sha256 cellar: :any_skip_relocation, mojave:        "e680bf4fb93924b180d3fc27b047e43f739b382dcc019c9b9b100d55e8396fa4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ce2daf2f987c9a9a939bee8df287446a8ce0759f570d39379192ce8bdc80d5b5" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f021832535f5cd550f74ab6f88a82a194dcbe23e0377199f768d2db7b923362e"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5a2cef2473837506454ff2d117ee5311f6fd2586eb2ac8d7a72f93f9adeee060"
+    sha256 cellar: :any_skip_relocation, catalina:      "5a2cef2473837506454ff2d117ee5311f6fd2586eb2ac8d7a72f93f9adeee060"
+    sha256 cellar: :any_skip_relocation, mojave:        "5a2cef2473837506454ff2d117ee5311f6fd2586eb2ac8d7a72f93f9adeee060"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56dc58c14f0796dcc016ddd092e2656a031b0e8d902957889ef2d0704da98948" # linuxbrew-core
   end
 
   depends_on "node"

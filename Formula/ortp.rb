@@ -1,28 +1,27 @@
 class Ortp < Formula
   desc "Real-time transport protocol (RTP, RFC3550) library"
   homepage "https://www.linphone.org/technical-corner/ortp"
-  url "https://gitlab.linphone.org/BC/public/ortp/-/archive/4.5.22/ortp-4.5.22.tar.bz2"
-  sha256 "c30fd72e7847b32b5aaa31dc5a82c92856c59ca8cb8128d50b3c0e38104d6376"
+  url "https://gitlab.linphone.org/BC/public/ortp/-/archive/5.0.0/ortp-5.0.0.tar.bz2"
+  sha256 "426d62cd8acd776cb7d34d89f9dce124ee4585e224da8d89869aa954945c3215"
   license "GPL-3.0-or-later"
-  revision 1
   head "https://gitlab.linphone.org/BC/public/ortp.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "1939dabc8c80305f35b3244de7f6c1fab71c54b43416ba07f6f398019ac68a6d"
-    sha256 cellar: :any, big_sur:       "2d25bad15b9ac8d4fc55bd8989be9ba6a296808f76ecc5d5115567ccc6e78ec6"
-    sha256 cellar: :any, catalina:      "e44c68f9c34d1ecfa737de1d42697f731f87dc9949fe0d70834e47f93478f31c"
-    sha256 cellar: :any, mojave:        "4dcb1c86c0164a8b1ca311ccf0d2dfddb20e350a0dab9d27aa77e48bc34790a8"
+    sha256 cellar: :any, arm64_big_sur: "bd78fecdcafbcde38d8e0c4fafe7bc63c95528e1d5b5f549282a174544f54c60"
+    sha256 cellar: :any, big_sur:       "ba82c1b311372c4a4edc319acfd9c8b49ea8e668076bd67e5cfc5f18184bf492"
+    sha256 cellar: :any, catalina:      "3b3ef5c8abe87a81483839c059c4190667745d42d75ac81344689422dfd5b380"
+    sha256 cellar: :any, mojave:        "2cd99b724e859ac59291c16e9f3f8cb9b6572b1273d402296635c4eae024a7fc"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "mbedtls"
+  depends_on "mbedtls@2"
 
   # bctoolbox appears to follow ortp's version. This can be verified at the GitHub mirror:
   # https://github.com/BelledonneCommunications/bctoolbox
   resource "bctoolbox" do
-    url "https://gitlab.linphone.org/BC/public/bctoolbox/-/archive/4.5.22/bctoolbox-4.5.22.tar.bz2"
-    sha256 "2c659b572e909c4beac3f1e5565d3ba1565663243228b803a9ee49ff1a9b1cf4"
+    url "https://gitlab.linphone.org/BC/public/bctoolbox/-/archive/5.0.3/bctoolbox-5.0.3.tar.bz2"
+    sha256 "230b6d46c1c234df6b1edeac96812a8826b8336c5d0fbe3df298e512f8d218a7"
   end
 
   def install

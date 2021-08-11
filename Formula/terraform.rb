@@ -1,8 +1,8 @@
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v1.0.2.tar.gz"
-  sha256 "036a028cb311c001c48e86bc65e9b7870c81de57e96437325247785cf6c84937"
+  url "https://github.com/hashicorp/terraform/archive/v1.0.4.tar.gz"
+  sha256 "71a9d9e4a5d3ccfc6c41710a48870259ac977a2080f4d734a4b8fb8dc18728b6"
   license "MPL-2.0"
   head "https://github.com/hashicorp/terraform.git", branch: "main"
 
@@ -12,16 +12,24 @@ class Terraform < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "21124f9183cc412db43f260fe21180b785aea099eef6744d0c95ecb3665beb6e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "fc3c635772ddc322986c1c87c3204145874a0058b365116dcc921d64e4c3cbdb"
-    sha256 cellar: :any_skip_relocation, catalina:      "f9a8260f1d7fa0b32cec11e120d5ae4a466c41b04d05a0ff5a0da02c0f218755"
-    sha256 cellar: :any_skip_relocation, mojave:        "d9cdd42b6bb80ac80f0105b48fdc4556355c30e8c1d3ce51a706fba76e4a1deb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "88e75bee2d33d7997e629d69cf6aca6292431c1075b1610ea3e876cd966ee34d" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b8e5da1aebd83f1afcd7e51b7e6d2f421d7e2be77e24ce164b066fbb959024b9"
+    sha256 cellar: :any_skip_relocation, big_sur:       "e10b91ecf7df1ceaa3b3cb543408cc825a03ea358ec94b1999f279fb6664bbcc"
+    sha256 cellar: :any_skip_relocation, catalina:      "d7dd8de08a632725c5aaa2a8a2e8d3b3adb9bf474639ae082f01414c87eee694"
+    sha256 cellar: :any_skip_relocation, mojave:        "9f3b8c36ece942718bbff7f99559799a2fe98e47b653e3bea58cb404f7cabec3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "44f1c51dbc5657e50f670843662ab6e87aa50ce4647f74e2d259d186b1dc5276" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
+  on_linux do
+    depends_on "gcc"
+  end
+
   conflicts_with "tfenv", because: "tfenv symlinks terraform binaries"
+
+  # Needs libraries at runtime:
+  # /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by node)
+  fails_with gcc: "5"
 
   def install
     # v0.6.12 - source contains tests which fail if these environment variables are set locally.

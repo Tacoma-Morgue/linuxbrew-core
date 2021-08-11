@@ -22,10 +22,6 @@ class WireguardTools < Formula
   depends_on "bash"
   depends_on "wireguard-go"
 
-  on_linux do
-    depends_on "libmnl"
-  end
-
   def install
     system "make", "BASHCOMPDIR=#{bash_completion}", "WITH_BASHCOMPLETION=yes", "WITH_WGQUICK=yes",
                    "WITH_SYSTEMDUNITS=no", "PREFIX=#{prefix}", "SYSCONFDIR=#{prefix}/etc",

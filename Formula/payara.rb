@@ -1,8 +1,8 @@
 class Payara < Formula
   desc "Java EE application server forked from GlassFish"
   homepage "https://www.payara.fish"
-  url "https://search.maven.org/remotecontent?filepath=fish/payara/distributions/payara/5.2021.4/payara-5.2021.4.zip"
-  sha256 "b080057e4e2e4e7eed09eba67fe4777c2aa4a0eca401ec480d677812b7591521"
+  url "https://search.maven.org/remotecontent?filepath=fish/payara/distributions/payara/5.2021.5/payara-5.2021.5.zip"
+  sha256 "52fbc7272823739030475d8df97d05a526677ed7bbe73e2933264a93ee7c7806"
   license any_of: [
     "CDDL-1.1",
     { "GPL-2.0-only" => { with: "Classpath-exception-2.0" } },
@@ -37,40 +37,11 @@ class Payara < Formula
     EOS
   end
 
-  plist_options manual: "asadmin start-domain --verbose domain1"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>Label</key>
-        <string>#{plist_name}</string>
-        <key>KeepAlive</key>
-        <dict>
-          <key>Crashed</key>
-          <true/>
-          <key>SuccessfulExit</key>
-          <false/>
-        </dict>
-        <key>WorkingDirectory</key>
-        <string>#{opt_libexec}/glassfish</string>
-        <key>EnvironmentVariables</key>
-        <dict>
-          <key>GLASSFISH_HOME</key>
-          <string>#{opt_libexec}/glassfish</string>
-        </dict>
-        <key>ProgramArguments</key>
-        <array>
-          <string>#{opt_libexec}/glassfish/bin/asadmin</string>
-          <string>start-domain</string>
-          <string>--verbose</string>
-          <string>domain1</string>
-        </array>
-      </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_libexec/"glassfish/bin/asadmin", "start-domain", "--verbose", "domain1"]
+    keep_alive true
+    working_dir opt_libexec/"glassfish"
+    environment_variables GLASSFISH_HOME: opt_libexec/"glassfish"
   end
 
   test do

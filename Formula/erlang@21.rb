@@ -5,7 +5,7 @@ class ErlangAT21 < Formula
   url "https://github.com/erlang/otp/releases/download/OTP-21.3.8.24/otp_src_21.3.8.24.tar.gz"
   sha256 "a82de871d7ba40fd256558b23a3b4c1539e6c7ece7507d6eb2b00330c6135012"
   license "Apache-2.0"
-  revision 1
+  revision 2
 
   livecheck do
     url :stable
@@ -13,10 +13,10 @@ class ErlangAT21 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 big_sur:      "b074d48246e319c33a05b019814c93efc265e9af53619c518cbc122f9910b2ab"
-    sha256 cellar: :any,                 catalina:     "cc5af3f968adeeffbd97c62a8e11bf7b4b1ccb27d676a52722df1b5d0ce7bc71"
-    sha256 cellar: :any,                 mojave:       "3683938c124d27e1ba0bdb9e259894632851e7e3664239c9090bf6a8e0f821c4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "d2fc12b3989f045ce75936780cd760d1fbfe2dc24acc835c73888e618f47e66f" # linuxbrew-core
+    sha256 cellar: :any,                 big_sur:      "f05c014c491877da25d19f775a576803a25c36c5d57309548711c253b90711c8"
+    sha256 cellar: :any,                 catalina:     "042070fc8af915df870a67f1eaa43e87beacd3bcf4c8cde8d78bbe1e195cf133"
+    sha256 cellar: :any,                 mojave:       "03315a212e5e5ddcb5bf37d45faacd0ce075d6a2503217f42f5eda083ebacec5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "20fb63856a77812d3d69c8a061bb62ea8011548ba0001559ebfcd0c018b555dc" # linuxbrew-core
   end
 
   keg_only :versioned_formula
@@ -26,7 +26,7 @@ class ErlangAT21 < Formula
   depends_on "libtool" => :build
   depends_on arch: :x86_64
   depends_on "openssl@1.1"
-  depends_on "wxmac" # for GUI apps like observer
+  depends_on "wxwidgets" # for GUI apps like observer
 
   resource "man" do
     url "https://www.erlang.org/download/otp_doc_man_21.3.tar.gz"

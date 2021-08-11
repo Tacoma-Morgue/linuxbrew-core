@@ -10,7 +10,6 @@ class GhcAT88 < Formula
   ]
   revision OS.mac? ? 1 : 2
 
-  # Cellar should be :any_skip_relocation on Linux
   bottle do
     rebuild 1
     sha256                               big_sur:      "b099711b984463a32a073f49ec91e6034519a6140958a6603d3888e565ea2e4e"

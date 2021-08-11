@@ -31,12 +31,9 @@ class Ocaml < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "779e6f230c29dd6ef71ec70e83fea42168c097c720c0a4d4b1ae34ab6e58be74" # linuxbrew-core
   end
 
-  pour_bottle? do
-    # The ocaml compilers embed prefix information in weird ways that the default
-    # brew detection doesn't find, and so needs to be explicitly blocked.
-    reason "The bottle needs to be installed into #{Homebrew::DEFAULT_PREFIX}."
-    satisfy { HOMEBREW_PREFIX.to_s == Homebrew::DEFAULT_PREFIX }
-  end
+  # The ocaml compilers embed prefix information in weird ways that the default
+  # brew detection doesn't find, and so needs to be explicitly blocked.
+  pour_bottle? only_if: :default_prefix
 
   def install
     ENV.deparallelize # Builds are not parallel-safe, esp. with many cores

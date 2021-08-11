@@ -65,7 +65,7 @@ class Pypy < Formula
 
     cd "pypy/goal" do
       system python, buildpath/"rpython/bin/rpython",
-             "-Ojit", "--shared", "--cc", ENV.cc,
+             "-Ojit", "--shared", "--cc", ENV.cc, "--verbose",
              "--make-jobs", ENV.make_jobs, "targetpypystandalone.py"
     end
 

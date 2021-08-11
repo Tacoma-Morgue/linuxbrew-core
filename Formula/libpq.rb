@@ -1,13 +1,12 @@
 class Libpq < Formula
   desc "Postgres C API library"
-  homepage "https://www.postgresql.org/docs/12/libpq.html"
+  homepage "https://www.postgresql.org/docs/13/libpq.html"
   url "https://ftp.postgresql.org/pub/source/v13.3/postgresql-13.3.tar.bz2"
   sha256 "3cd9454fa8c7a6255b6743b767700925ead1b9ab0d7a0f9dcb1151010f8eb4a1"
   license "PostgreSQL"
 
   livecheck do
-    url "https://ftp.postgresql.org/pub/source/?C=M&O=A"
-    regex(%r{href=.*?v?(\d+(?:\.\d+)+)/?["' >]}i)
+    formula "postgresql"
   end
 
   bottle do
@@ -23,9 +22,8 @@ class Libpq < Formula
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
   depends_on "krb5"
-  depends_on "openssl@1.1"
 
-  uses_from_macos "zlib"
+  depends_on "openssl@1.1"
 
   on_linux do
     depends_on "readline"

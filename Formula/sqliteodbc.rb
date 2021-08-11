@@ -26,25 +26,15 @@ class Sqliteodbc < Formula
   def install
     ENV["SDKROOT"] = MacOS.sdk_path if MacOS.version == :sierra
 
-    unless OS.mac?
-      # sqliteodbc ships its own version of libtool, which breaks superenv.
-      # Therefore, we set the following enviroment to help it find superenv.
-      ENV["CC"] = which("cc")
-      ENV["CXX"] = which("cxx")
-    end
     lib.mkdir
-    args = ["--prefix=#{prefix}", "--with-odbc=#{Formula["unixodbc"].opt_prefix}"]
-    unless OS.mac?
-      args += ["--with-sqlite3=#{Formula["sqlite"].opt_prefix}",
-               "--with-libxml2=#{Formula["libxml2"].opt_prefix}"]
-    end
+    args = ["--with-odbc=#{Formula["unixodbc"].opt_prefix}",
+            "--with-sqlite3=#{Formula["sqlite"].opt_prefix}"]
+    on_linux { args << "--with-libxml2=#{Formula["libxml2"].opt_prefix}" }
 
-    ENV["SDKROOT"] = MacOS.sdk_path if MacOS.version == :sierra
-    system "./configure", *args
-
+    system "./configure", "--prefix=#{prefix}", *args
     system "make"
     system "make", "install"
-    lib.install_symlink "#{lib}/libsqlite3odbc.dylib" => "libsqlite3odbc.so" if OS.mac?
+    on_macos { lib.install_symlink lib/"libsqlite3odbc.dylib" => "libsqlite3odbc.so" }
   end
 
   test do

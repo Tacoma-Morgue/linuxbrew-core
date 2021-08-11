@@ -41,7 +41,7 @@ index 46d7496..fed25fe 100644
 @@ -18,6 +18,14 @@
  #include <sys/time.h>
  #include <sys/stat.h>
-
+ 
 +// Since macOS 10.6, stat64 variants are equivalent to plain stat, and the
 +// suffixed versions have been removed in macOS 11 on Apple Silicon. See stat(2).
 +#ifdef __APPLE__

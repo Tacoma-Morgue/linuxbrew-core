@@ -3,6 +3,7 @@ class Gtksourceview3 < Formula
   homepage "https://projects.gnome.org/gtksourceview/"
   url "https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.11.tar.xz"
   sha256 "691b074a37b2a307f7f48edc5b8c7afa7301709be56378ccf9cc9735909077fd"
+  license "LGPL-2.1-or-later"
   revision 3
 
   livecheck do
@@ -20,18 +21,22 @@ class Gtksourceview3 < Formula
     sha256 x86_64_linux:  "7f15b9a06b7eaeccfb50a44fa3abba8498ee81d8b56b6c84e5c139ff1d7d1301" # linuxbrew-core
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
   depends_on "gobject-introspection" => :build
-  depends_on "intltool" => :build
-  depends_on "libtool" => :build
   depends_on "pkg-config" => :build
   depends_on "vala" => :build
   depends_on "gettext"
   depends_on "gtk+3"
 
+  on_macos do
+    depends_on "autoconf@2.69" => :build # avoid `gtk-doc` dependency
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
+
   def install
-    system "autoreconf", "-fi"
+    on_macos do
+      system "autoreconf", "--verbose", "--install", "--force"
+    end
     system "./configure", "--disable-dependency-tracking",
                           "--enable-vala=yes",
                           "--enable-introspection=yes",

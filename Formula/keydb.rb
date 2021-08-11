@@ -13,8 +13,9 @@ class Keydb < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "97f837f813ba24794577daac35977c7b661fa28afab7fe022e63fd784f47e4e8" # linuxbrew-core
   end
 
+  uses_from_macos "curl"
+
   on_linux do
-    depends_on "curl"
     depends_on "util-linux"
   end
 

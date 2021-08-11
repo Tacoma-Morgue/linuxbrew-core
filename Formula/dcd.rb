@@ -2,16 +2,16 @@ class Dcd < Formula
   desc "Auto-complete program for the D programming language"
   homepage "https://github.com/dlang-community/DCD"
   url "https://github.com/dlang-community/DCD.git",
-      tag:      "v0.13.4",
-      revision: "8dce131a8ec715382a104feed52d08a1aacdc960"
+      tag:      "v0.13.6",
+      revision: "02acaa534b9be65142aed7b202a6a8d5524abf2a"
   license "GPL-3.0-or-later"
   head "https://github.com/dlang-community/dcd.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:      "3f78982cca3087697d53cf0e240dfcd8d601f9b25d80f01ad6ff237a1604ea16"
-    sha256 cellar: :any_skip_relocation, catalina:     "4a77f9bb6025a0ea9c30372dad8bb548226100f81391340a39cdde29e9a9ae13"
-    sha256 cellar: :any_skip_relocation, mojave:       "a6ad4603f6ca68b68be9ca7716875f38a537c3dea00f15dcfa8b4f0edbe9dc07"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "8708b3f07677556e9cc2214ca7aa8350615445a00d103c4107b4396236caced0" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, big_sur:      "e97405796485c96ea4dd9f7458cd548ed609f61ed8d5e006fb73ec00072d0811"
+    sha256 cellar: :any_skip_relocation, catalina:     "1455dd1a3d4919d261c6cc8a73d05f62f4436f17b66d8790db249bcf4fbdcc6f"
+    sha256 cellar: :any_skip_relocation, mojave:       "484f3c51a322172c8bab3cfa850685f91ce9dfdcccc85daeedead97cc63f13e1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "888663a5c8d357d6f9a3ee21031cb2a5a860709e8b2e326384cff0996f96ab7a" # linuxbrew-core
   end
 
   depends_on "dmd" => :build

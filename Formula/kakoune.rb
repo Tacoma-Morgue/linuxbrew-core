@@ -24,12 +24,12 @@ class Kakoune < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_big_sur: "6a6af6d41f893e851691984867efeee176098f47c881d5fe77d8534bc4086375"
-    sha256 cellar: :any,                 big_sur:       "61064437727a2eb062b89941b25fb46c017d350e8947e867e72f51f591d030ad"
-    sha256 cellar: :any,                 catalina:      "9cb8ffd67651eab6f269daab2bbf4e66adf4f7dad4029a3285631a3615cf1514"
-    sha256 cellar: :any,                 mojave:        "00c9127f14d643eee79fc64d02874bc131dad426fb11580b5d4fa43a3a51007c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e8062679af31109456606e0183a75f36cca2830bf5dcdd0a1abc8c009216a84" # linuxbrew-core
+    rebuild 2
+    sha256 cellar: :any,                 arm64_big_sur: "87457c197389b0e6a8346db08f8b69f544aab44f88cac1c6cf79327422b4528e"
+    sha256 cellar: :any,                 big_sur:       "0f94939ffdfce93cdc4f8ab527a36429ad2cdf9a1f42600baad7ff972835ee6a"
+    sha256 cellar: :any,                 catalina:      "daa8001d4739938d1b34a09c96160fb0e5e9525b57fa2c1949a2e15cc2159323"
+    sha256 cellar: :any,                 mojave:        "f489d4936caeda3e2e6aba22d4db82245cff1291bca5cf93d26a676e7147866f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7f31799ed122c559d701a49955e1e36d15bcbd32c84ca635f7dc556b92cba75d" # linuxbrew-core
   end
 
   depends_on macos: :high_sierra # needs C++17
@@ -39,7 +39,7 @@ class Kakoune < Formula
 
   on_linux do
     depends_on "binutils" => :build
-    depends_on "linux-headers" => :build
+    depends_on "linux-headers@4.4" => :build
     depends_on "pkg-config" => :build
     depends_on "gcc"
   end

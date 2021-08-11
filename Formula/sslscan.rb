@@ -22,10 +22,9 @@ class Sslscan < Formula
   depends_on "openssl@1.1"
 
   def install
-    # use `libcrypto.dylib`/`libcrypto.a` built from `openssl@1.1`
-    libcrypto = OS.mac? ? "libcrypto.dylib" : "libcrypto.a"
+    # use `libcrypto.dylib|so` built from `openssl@1.1`
     inreplace "Makefile", "static: openssl/libcrypto.a",
-                          "static: #{Formula["openssl@1.1"].opt_lib}/#{libcrypto}"
+                          "static: #{Formula["openssl@1.1"].opt_lib}/#{shared_library("libcrypto")}"
 
     system "make", "static"
     system "make", "install", "PREFIX=#{prefix}"

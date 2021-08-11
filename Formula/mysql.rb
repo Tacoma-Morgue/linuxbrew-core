@@ -1,10 +1,9 @@
 class Mysql < Formula
   desc "Open source relational database management system"
   homepage "https://dev.mysql.com/doc/refman/8.0/en/"
-  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.25.tar.gz"
-  sha256 "93c5f57cbd69573a8d9798725edec52e92830f70c398a1afaaea2227db331728"
+  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.26.tar.gz"
+  sha256 "209442c1001c37bcbc001845e1dc623d654cefb555b47b528742a53bf21c0b4d"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
-  revision 1
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/?tpl=files&os=src"
@@ -12,8 +11,11 @@ class Mysql < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 x86_64_linux: "fbe65cc2fd6af29ef16a0d67573981148e7515cd5b0115016c129d916ae06dc4" # linuxbrew-core
+    sha256 arm64_big_sur: "d9d5058320a81f82a97cf005ec2d7369a8f002792bc6f85239794aad2a076f38"
+    sha256 big_sur:       "7e949939fa4da88ebfa5ac5398416f4847ec37ac06e4c7f05413a6a575e0e28a"
+    sha256 catalina:      "dfa737ee641b3ef4c3a054134c083f0d79c2929a437ab586f79c03832f4cca00"
+    sha256 mojave:        "a5a4eb9b6f0fe8700833c868d8ee52ddeecd4551f4bb019ec53e1a0d426ec0e9"
+    sha256 x86_64_linux:  "9311f2ae122b31e44defb9705a3f1e5432a20e083c5ee6ba229c43c999c1b709" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -32,10 +34,18 @@ class Mysql < Formula
 
   on_linux do
     depends_on "patchelf" => :build
+    depends_on "gcc" # for C++17
+
+    ignore_missing_libraries "metadata_cache.so"
+
+    # Disable ABI checking
+    patch :DATA
   end
 
   conflicts_with "mariadb", "percona-server",
     because: "mysql, mariadb, and percona install the same binaries"
+
+  fails_with gcc: "5"
 
   def datadir
     var/"mysql"
@@ -193,3 +203,18 @@ class Mysql < Formula
     system "#{bin}/mysqladmin", "--port=#{port}", "--user=root", "--password=", "shutdown"
   end
 end
+
+__END__
+diff --git a/cmake/abi_check.cmake b/cmake/abi_check.cmake
+index 0e1886bb..87b7aff7 100644
+--- a/cmake/abi_check.cmake
++++ b/cmake/abi_check.cmake
+@@ -30,7 +30,7 @@
+ # (Solaris) sed or diff might act differently from GNU, so we run only 
+ # on systems we can trust.
+ IF(LINUX)
+-  SET(RUN_ABI_CHECK 1)
++  SET(RUN_ABI_CHECK 0)
+ ELSE()
+   SET(RUN_ABI_CHECK 0)
+ ENDIF()

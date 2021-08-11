@@ -51,14 +51,8 @@ class Perl < Formula
     system "./Configure", *args
 
     system "make"
-    system "make", "install"
 
-    # expose libperl.so to ensure we aren't using a brewed executable
-    # but a system library
-    if OS.linux?
-      perl_core = Pathname.new(`#{bin/"perl"} -MConfig -e 'print $Config{archlib}'`)+"CORE"
-      lib.install_symlink perl_core/"libperl.so"
-    end
+    system "make", "install"
   end
 
   def post_install

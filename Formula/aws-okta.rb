@@ -17,7 +17,6 @@ class AwsOkta < Formula
   deprecate! date: "2020-01-20", because: :deprecated_upstream
 
   depends_on "go" => :build
-  depends_on "govendor" => :build
 
   on_linux do
     depends_on "pkg-config" => :build

@@ -53,7 +53,6 @@ class Xmltoman < Formula
 
     man1.install %w[xmltoman.1 xmlmantohtml.1]
     bin.install %w[xmltoman xmlmantohtml]
-    bin.env_script_all_files(libexec/"bin", PERL5LIB: ENV["PERL5LIB"])
     pkgshare.install %w[xmltoman.xsl xmltoman.dtd xmltoman.css]
 
     on_linux do

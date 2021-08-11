@@ -1,17 +1,17 @@
 class Pspg < Formula
   desc "Unix pager optimized for psql"
   homepage "https://github.com/okbob/pspg"
-  url "https://github.com/okbob/pspg/archive/5.0.5.tar.gz"
-  sha256 "0bafcddf47d880995b4d53d9159e201c8943317e3a565dc6d35ca478a9714f35"
+  url "https://github.com/okbob/pspg/archive/5.3.2.tar.gz"
+  sha256 "cf112d3ed9e56734f332835b793389d019b75d9d63da78e62ceb00ca213e686c"
   license "BSD-2-Clause"
   head "https://github.com/okbob/pspg.git"
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "98699c7907fdc5538fc1f219455931377584dbbf2083b0b1d6418e28ead1ebd2"
-    sha256 cellar: :any,                 big_sur:       "cd253836c86476bf07bd12c96326e7b4aef72ea53523ac68212c6f4ccd0f91b8"
-    sha256 cellar: :any,                 catalina:      "4fc02ff3b704996e389d56dac0bb141f014ad644379ff1479ae3dec167ef621a"
-    sha256 cellar: :any,                 mojave:        "72abd00c24036f3ca6e5434ee8c4f4980e81b88ea0aef62e391d7e3f7e01fc50"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "190592f954517a2f6c319ca0331e09e70cdc3f53b03ea2901a32ef0f7b4c8109" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "8c247f31481d78b68113c044c3ed8076fd55a53a1aa3cca8118f177f2612dd68"
+    sha256 cellar: :any,                 big_sur:       "4349424381446c75ec751820c409badd6dacd1ed8c89018363cf78a785b937c3"
+    sha256 cellar: :any,                 catalina:      "06079a8053c5b87b6008af5af1488dc951c290cce7505a172cf59c29e9e3ea36"
+    sha256 cellar: :any,                 mojave:        "470bbdc8429129d14a9f6886e94a6494efc035138b2964bb75d817955e10e6ca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3ec7c95db6944e84079d961d7a0a3e058b88f879852ee2893766a9b67e31ac65" # linuxbrew-core
   end
 
   depends_on "libpq"

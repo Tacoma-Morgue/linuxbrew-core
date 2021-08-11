@@ -8,11 +8,10 @@ class LlvmAT9 < Formula
   revision OS.mac? ? 2 : 6
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 big_sur:      "9a0e78a7bacb2ae0dbd0ab743603ec495a9585b3e1392edd6a03475d0c4d9361"
-    sha256 cellar: :any,                 catalina:     "ce2d6976563d4d7e319b756d0b36516916ac72a22c6988da68b8a689fe928095"
-    sha256 cellar: :any,                 mojave:       "af34cdde7dd9445a38c4c18dd5856004b47da54cfec9cb46ddd469b22d020893"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "85c9f5a649ba3cbc1ca9c45231dd3083d7b4c3a9a644441c899b2e3c19ead59d" # linuxbrew-core
+    rebuild 2
+    sha256 cellar: :any,                 big_sur:      "4ea2e3aefffd649357af3d4d884382821e9b1173d29e5c141d7735bf5e3f8796"
+    sha256 cellar: :any,                 catalina:     "b1845cee7f49596b1ce6fe7cfd1a0be22ae05c6fff17811a2951b01fe0b371c1"
+    sha256 cellar: :any,                 mojave:       "c9855ebfb96ab3ea128ad75360ab914b91e7769adff0b1cf053702b401813c20"
   end
 
   # Clang cannot find system headers if Xcode CLT is not installed
@@ -22,19 +21,19 @@ class LlvmAT9 < Formula
 
   # https://llvm.org/docs/GettingStarted.html#requirement
   depends_on "cmake" => :build
-  depends_on xcode: :build
   depends_on arch: :x86_64
-  depends_on "libffi"
   depends_on "swig"
+
+  uses_from_macos "libedit"
+  uses_from_macos "libffi", since: :catalina
+  uses_from_macos "libxml2"
+  uses_from_macos "ncurses"
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "glibc" if Formula["glibc"].any_version_installed?
     depends_on "binutils" # needed for gold and strip
-    depends_on "libedit" # llvm requires <histedit.h>
     depends_on "libelf" # openmp requires <gelf.h>
-    depends_on "ncurses"
-    depends_on "libxml2"
-    depends_on "zlib"
     depends_on "python@3.8"
   end
 
@@ -119,7 +118,7 @@ class LlvmAT9 < Formula
     # can almost be treated as an entirely different build from llvm.
     ENV.permit_arch_flags
 
-    args = %W[
+    args = %w[
       -DLIBOMP_ARCH=x86_64
       -DLINK_POLLY_INTO_TOOLS=ON
       -DLLVM_BUILD_LLVM_DYLIB=ON
@@ -132,12 +131,18 @@ class LlvmAT9 < Formula
       -DLLVM_OPTIMIZED_TABLEGEN=ON
       -DLLVM_TARGETS_TO_BUILD=all
       -DWITH_POLLY=ON
-      -DFFI_INCLUDE_DIR=#{Formula["libffi"].opt_lib}/libffi-#{Formula["libffi"].version}/include
-      -DFFI_LIBRARY_DIR=#{Formula["libffi"].opt_lib}
       -DLLDB_USE_SYSTEM_DEBUGSERVER=ON
       -DLLDB_DISABLE_PYTHON=1
       -DLIBOMP_INSTALL_ALIASES=OFF
     ]
+
+    if MacOS.version >= :catalina
+      args << "-DFFI_INCLUDE_DIR=#{MacOS.sdk_path}/usr/include/ffi"
+      args << "-DFFI_LIBRARY_DIR=#{MacOS.sdk_path}/usr/lib"
+    else
+      args << "-DFFI_INCLUDE_DIR=#{Formula["libffi"].opt_include}"
+      args << "-DFFI_LIBRARY_DIR=#{Formula["libffi"].opt_lib}"
+    end
 
     on_macos do
       args << "-DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON" if MacOS.version <= :mojave

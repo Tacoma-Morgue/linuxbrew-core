@@ -5,6 +5,7 @@ class Git < Formula
   url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.0.tar.xz"
   sha256 "68a841da3c4389847ecd3301c25eb7e4a51d07edf5f0168615ad6179e3a83623"
   license "GPL-2.0-only"
+  revision 1
   head "https://github.com/git/git.git"
 
   livecheck do
@@ -13,11 +14,11 @@ class Git < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "fc595cdaa2ea7e968429c0e257bdfe576401652bf390d94239c78dcd57e26ec8"
-    sha256 big_sur:       "ae89ad7ec0ffdb013b49e6b8bb645d476c6cf25ba69f6e006dc917a5ef75cac1"
-    sha256 catalina:      "b6bb01606496254a7857f04f257697732965d032962e50ed8242c95d6ee755a9"
-    sha256 mojave:        "3c613c84fbc7410006e4dfed5c0d917c127a0b645c5c3a327a2e14811b0f525a"
-    sha256 x86_64_linux:  "c1a319a3a95e784a0be19432dc6ffe2a4dd02ab60c9d3d1c44b03f7f958f76d4" # linuxbrew-core
+    sha256 arm64_big_sur: "74d2f8e5376eb204c5f812bbefc77c81d500fca1295e6571f7c680a36f98a73b"
+    sha256 big_sur:       "c73ff9436e9642d745a612ed1071ae770d57fdca95589539d63e1e0c9f428f3b"
+    sha256 catalina:      "0f303c5f3bb53ff24d0ba10d7c2612b0f4bc8e384eb082b51a8aff62e4aace72"
+    sha256 mojave:        "4610c1e22e2df2e7f0c70146f630675a041064ac904702cbd492b7845be4f88e"
+    sha256 x86_64_linux:  "6450d793363f6ebb119b30c0186ea3aeab0dbb57b9b5c74cfdeb0dff2bf8f214" # linuxbrew-core
   end
 
   depends_on "gettext"
@@ -29,7 +30,7 @@ class Git < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "linux-headers"
+    depends_on "linux-headers@4.4"
   end
 
   resource "html" do
@@ -161,13 +162,6 @@ class Git < Formula
     # only contains the perllocal.pod installation file.
     rm_rf prefix/"Library/Perl"
 
-    pod = Dir[lib/"*/*/perllocal.pod"][0]
-    unless pod.nil?
-      # Remove perllocal.pod, which conflicts with the perl formula.
-      # I don't know why this issue doesn't affect Mac.
-      rm_r Pathname.new(pod).dirname.dirname
-    end
-
     # Set the macOS keychain credential helper by default
     # (as Apple's CLT's git also does this).
     on_macos do
@@ -188,11 +182,6 @@ class Git < Formula
   test do
     system bin/"git", "init"
     %w[haunted house].each { |f| touch testpath/f }
-
-    # Test environment has no git configuration, which prevents commiting
-    system bin/"git", "config", "user.email", "you@example.com"
-    system bin/"git", "config", "user.name", "Your Name"
-
     system bin/"git", "add", "haunted", "house"
     system bin/"git", "config", "user.name", "'A U Thor'"
     system bin/"git", "config", "user.email", "author@example.com"

@@ -35,50 +35,33 @@ class Tundra < Formula
         return 0;
       }
     EOS
-    if OS.mac?
-      (testpath/"tundra.lua").write <<~'EOS'
-        Build {
-          Units = function()
-            local test = Program {
-              Name = "test",
-              Sources = { "test.c" },
-            }
-            Default(test)
-          end,
-          Configs = {
-            {
-              Name = "macosx-clang",
-              DefaultOnHost = "macosx",
-              Tools = { "clang-osx" },
-            },
-          },
-        }
-      EOS
-    else
-      (testpath/"tundra.lua").write <<~'EOS'
-        Build {
-          Units = function()
-            local test = Program {
-              Name = "test",
-              Sources = { "test.c" },
-            }
-            Default(test)
-          end,
-          Configs = {
-            {
-              Name = "linux-gcc",
-              DefaultOnHost = "linux",
-              Tools = { "gcc" },
-            },
-          },
-        }
-      EOS
+
+    os = "macosx"
+    cc = "clang"
+    on_linux do
+      os = "linux"
+      cc = "gcc"
     end
+
+    (testpath/"tundra.lua").write <<~EOS
+      Build {
+        Units = function()
+          local test = Program {
+            Name = "test",
+            Sources = { "test.c" },
+          }
+          Default(test)
+        end,
+        Configs = {
+          {
+            Name = "#{os}-#{cc}",
+            DefaultOnHost = "#{os}",
+            Tools = { "#{cc}" },
+          },
+        },
+      }
+    EOS
     system bin/"tundra2"
-    if OS.mac?
-      system "./t2-output/macosx-clang-debug-default/test"
-    else
-      system "./t2-output/linux-gcc-debug-default/test"
-    end
+    system "./t2-output/#{os}-#{cc}-debug-default/test"
   end
 end

@@ -25,11 +25,6 @@ class RabbitmqC < Formula
                          "-DBUILD_TESTS=OFF", "-DBUILD_API_DOCS=OFF",
                          "-DBUILD_TOOLS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"
     system "make", "install"
-
-    if (lib/"x86_64-linux-gnu").directory?
-      lib.install Dir[lib/"x86_64-linux-gnu/*"]
-      rmdir lib/"x86_64-linux-gnu"
-    end
   end
 
   test do

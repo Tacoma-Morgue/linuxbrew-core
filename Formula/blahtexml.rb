@@ -32,12 +32,14 @@ class Blahtexml < Formula
 
   def install
     ENV.cxx11
-
     on_macos do
       system "make", "blahtex-mac"
       system "make", "blahtexml-mac"
     end
     on_linux do
+      # Parallel make has a race condition between mkdir and file write.
+      # Fatal error: can't create bin-blahtex/main.o: No such file or directory
+      ENV.deparallelize
       system "make", "blahtex-linux"
       system "make", "blahtexml-linux"
     end

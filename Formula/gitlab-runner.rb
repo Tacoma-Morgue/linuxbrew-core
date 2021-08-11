@@ -2,8 +2,8 @@ class GitlabRunner < Formula
   desc "Official GitLab CI runner"
   homepage "https://gitlab.com/gitlab-org/gitlab-runner"
   url "https://gitlab.com/gitlab-org/gitlab-runner.git",
-      tag:      "v14.0.1",
-      revision: "c1edb47838c7a0862e0bea80622f98798f34fd4e"
+      tag:      "v14.1.0",
+      revision: "8925d9a06fd8e452e2161a768462652a2a13111f"
   license "MIT"
   head "https://gitlab.com/gitlab-org/gitlab-runner.git"
 
@@ -13,26 +13,25 @@ class GitlabRunner < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "191d0e22a3a4bbdd8400413c2adcce6dfbf088706b40f804cca2738580eb8c7c"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c8e1a75b4ba9a6353055866fae3cc0e17898f49b185d1b8094c6dfb4a90a9080"
-    sha256 cellar: :any_skip_relocation, catalina:      "25fd3bfb505971967d2f807b4e54c81319397781f48563ffa119db3c83a0f8a8"
-    sha256 cellar: :any_skip_relocation, mojave:        "d0659d95203d06f63f578b5ba6101628d2fe208890cb5123f817fc55f0ce048a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dc1205ac7e3836a57b6d56585fd1126f021be7a12c2a626fb78881d2e81586b7" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4017374ee8ebe818985995a346c66ec7438416573dbae4d326a7d80bbe367cd8"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5bdfe0e955e2761c47a8016be92dbe35af60a8e10febe76996aec02bcc736e8c"
+    sha256 cellar: :any_skip_relocation, catalina:      "f1097a08020404d4ef163e4b68f3de99f647eb83b198099776966948740cbfb2"
+    sha256 cellar: :any_skip_relocation, mojave:        "4cd4d95737a3eaf45ffec086f307428d7338fe2d2c9f61007f93bc065f18a0f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d70a5a246dac7f30c37ae627df2f23c810d261ab248551a6efb1f5f38afb7dba" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   def install
     proj = "gitlab.com/gitlab-org/gitlab-runner"
-    ldflags = [
-      "-X #{proj}/common.NAME=gitlab-runner",
-      "-X #{proj}/common.VERSION=#{version}",
-      "-X #{proj}/common.REVISION=#{Utils.git_short_head(length: 8)}",
-      "-X #{proj}/common.BRANCH=#{version.major}-#{version.minor}-stable",
-      "-X #{proj}/common.BUILT=#{Time.new.strftime("%Y-%m-%dT%H:%M:%S%:z")}",
-    ]
-
-    system "go", "build", *std_go_args(ldflags: ldflags.join(" "))
+    ldflags = %W[
+      -X #{proj}/common.NAME=gitlab-runner
+      -X #{proj}/common.VERSION=#{version}
+      -X #{proj}/common.REVISION=#{Utils.git_short_head(length: 8)}
+      -X #{proj}/common.BRANCH=#{version.major}-#{version.minor}-stable
+      -X #{proj}/common.BUILT=#{time.strftime("%Y-%m-%dT%H:%M:%S%:z")}
+    ].join(" ")
+    system "go", "build", *std_go_args(ldflags: ldflags)
   end
 
   service do

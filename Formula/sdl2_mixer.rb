@@ -5,7 +5,6 @@ class Sdl2Mixer < Formula
   sha256 "b4cf5a382c061cd75081cf246c2aa2f9df8db04bdda8dcdc6b6cca55bede2419"
   license "Zlib"
   revision 1
-  head "https://hg.libsdl.org/SDL_mixer", using: :hg
 
   livecheck do
     url :homepage
@@ -20,6 +19,14 @@ class Sdl2Mixer < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "d70cbd83404b632a8a908a0686f17f34a3f966d716c12b0512ac180ef8d4e861" # linuxbrew-core
   end
 
+  head do
+    url "https://github.com/libsdl-org/SDL_mixer.git"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
+
   depends_on "pkg-config" => :build
   depends_on "flac"
   depends_on "libmodplug"
@@ -28,6 +35,11 @@ class Sdl2Mixer < Formula
 
   def install
     inreplace "SDL2_mixer.pc.in", "@prefix@", HOMEBREW_PREFIX
+
+    if build.head?
+      mkdir "build"
+      system "./autogen.sh"
+    end
 
     args = %W[
       --prefix=#{prefix}

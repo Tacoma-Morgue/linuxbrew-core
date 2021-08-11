@@ -7,6 +7,7 @@ class LlvmAT8 < Formula
   revision OS.mac? ? 3 : 7
 
   bottle do
+    sha256 cellar: :any,                 big_sur:      "3807a935c2ea14dab5336a75a8ed9d9f06c656673608c338b4b519a22f267c9c"
     sha256 cellar: :any,                 catalina:     "ab099d84e5f0a58ea37172fd85753336d855fc25e9459ceff12ddc2dbb56ef71"
     sha256 cellar: :any,                 mojave:       "ee795cbebce64f79bbcf7c42526093df7bd2e5e986a721197bca5cf6c822e87a"
     sha256 cellar: :any,                 high_sierra:  "3f80b7119307b128b1e3ae8a2fea97a9878afb5a7436a7d35615b1e743bc7622"
@@ -20,32 +21,49 @@ class LlvmAT8 < Formula
 
   # https://llvm.org/docs/GettingStarted.html#requirement
   depends_on "cmake" => :build
-  depends_on xcode: :build
+  depends_on xcode: :build if MacOS.version < :mojave
   depends_on arch: :x86_64
-  depends_on "libffi"
   depends_on "swig"
+
+  uses_from_macos "libedit"
+  uses_from_macos "libffi", since: :catalina
+  uses_from_macos "libxml2"
+  uses_from_macos "ncurses"
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "glibc" if Formula["glibc"].any_version_installed?
     depends_on "binutils" # needed for gold and strip
-    depends_on "libedit" # llvm requires <histedit.h>
     depends_on "libelf" # openmp requires <gelf.h>
-    depends_on "ncurses"
-    depends_on "libxml2"
-    depends_on "zlib"
     depends_on "python@3.8"
   end
 
   resource "clang" do
     url "https://github.com/llvm/llvm-project/releases/download/llvmorg-8.0.1/cfe-8.0.1.src.tar.xz"
     sha256 "70effd69f7a8ab249f66b0a68aba8b08af52aa2ab710dfb8a0fba102685b1646"
-  end
 
-  unless OS.mac?
-    patch :p2 do
-      # Fixes MicrosoftDemangleNodes.h:14:17: error: found ':' in nested-name-specifier, expected '::'
-      url "https://github.com/llvm/llvm-project/commit/b288d90b39f4b905c02092a9bfcfd6d78f99b191.patch?full_index=1"
-      sha256 "2028d52e1a39326bb48fb7463132bbfe7fb4fa18f1adfeea9c3ed0320ed49564"
+    # Fix include paths on Big Sur
+    if MacOS.version >= :big_sur
+      # Refactor header search path logic into driver
+      # https://github.com/llvm/llvm-project/commit/e97b5f5cf37e382643b567affd714823215d0e75
+      patch :p2 do
+        url "https://github.com/llvm/llvm-project/commit/e97b5f5cf37e382643b567affd714823215d0e75.patch?full_index=1"
+        sha256 "ba4776b7a8c23c844d98c436011c24453ab6f740edd2c3bba2f8b909d2e59dcf"
+      end
+
+      # Respect --sysroot for header search
+      # https://github.com/llvm/llvm-project/commit/b2ece169ed609b9111c290254d831101d21cbf8f
+      patch :p2 do
+        url "https://github.com/llvm/llvm-project/commit/b2ece169ed609b9111c290254d831101d21cbf8f.patch?full_index=1"
+        sha256 "40a2689cd97bc85d666f74286526b5311015d030ce5a1feae627460805f7b5ca"
+      end
+
+      # Skip sysroot headers if they are found alongside the toolchain. Backported from
+      # https://github.com/llvm/llvm-project/commit/a3a24316087d0e1b4db0b8fee19cdee8b7968032
+      patch :p3 do
+        url "https://raw.githubusercontent.com/Homebrew/formula-patches/bc3176e6794efb9f2581ce4f9ede3ad34efb492c/llvm%409/llvm%409.patch"
+        sha256 "02fb21c26f468b0dab25c93b2802539133e06b0bcf19802a7ecdc227c454c4db"
+      end
     end
   end
 
@@ -143,6 +161,9 @@ class LlvmAT8 < Formula
       args << "-DLLVM_CREATE_XCODE_TOOLCHAIN=ON"
       args << "-DLLVM_ENABLE_LIBCXX=ON"
       args << "-DDARWIN_osx_ARCHS=x86_64;x86_64h"
+
+      sdk = MacOS.sdk_path_if_needed
+      args << "-DDEFAULT_SYSROOT=#{sdk}" if sdk
     end
 
     on_linux do
@@ -180,11 +201,6 @@ class LlvmAT8 < Formula
         "list(APPEND LIBCXXABI_LINK_FLAGS \"-rtlib=compiler-rt\")", ""
       inreplace (buildpath/"projects/libunwind/CMakeLists.txt"),
         "list(APPEND LIBUNWIND_LINK_FLAGS \"-rtlib=compiler-rt\")", ""
-    end
-
-    if MacOS.version >= :mojave
-      sdk_path = MacOS::CLT.installed? ? "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk" : MacOS.sdk_path
-      args << "-DDEFAULT_SYSROOT=#{sdk_path}"
     end
 
     mkdir "build" do

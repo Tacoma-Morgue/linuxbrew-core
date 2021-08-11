@@ -38,13 +38,6 @@ class Squashfs < Formula
     sha256 "eb399705d259346473ebe5d43b886b278abc66d822ee4193b7c65b4a2ca903da"
   end
 
-  # Fixes the following compilation issue of squash4.3 with newer versions of gcc:
-  # "mksquashfs.c:987:24: error: called object 'major' is not a function or function pointer"
-  patch do
-    url "https://raw.githubusercontent.com/rchikhi/formula-patches/14e9deef14117908e24c17b81b60b11996688991/squashfs/squashfs-new-gcc.diff"
-    sha256 "24e51ef16f6e6101b59f4913aa4acbd6ff541a1953e923019e8648f6e6bdd582"
-  end
-
   def install
     args = %W[
       EXTRA_CFLAGS=-std=gnu89

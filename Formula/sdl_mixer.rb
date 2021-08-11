@@ -15,6 +15,14 @@ class SdlMixer < Formula
     sha256 cellar: :any, x86_64_linux:  "21b058aab76077c4023a45635ac80048827f86fe56b3d5b3ae873810c52cb351" # linuxbrew-core
   end
 
+  head do
+    url "https://github.com/libsdl-org/SDL_mixer.git", branch: "SDL-1.2"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
+
   # SDL 1.2 is deprecated, unsupported, and not recommended for new projects.
   deprecate! date: "2013-08-17", because: :deprecated_upstream
 
@@ -27,12 +35,14 @@ class SdlMixer < Formula
 
   # Source file for sdl_mixer example
   resource "playwave" do
-    url "https://hg.libsdl.org/SDL_mixer/raw-file/a4e9c53d9c30/playwave.c"
+    url "https://github.com/libsdl-org/SDL_mixer/raw/1a14d94ed4271e45435ecb5512d61792e1a42932/playwave.c"
     sha256 "92f686d313f603f3b58431ec1a3a6bf29a36e5f792fb78417ac3d5d5a72b76c9"
   end
 
   def install
     inreplace "SDL_mixer.pc.in", "@prefix@", HOMEBREW_PREFIX
+
+    system "./autogen.sh" if build.head?
 
     args = %W[
       --prefix=#{prefix}

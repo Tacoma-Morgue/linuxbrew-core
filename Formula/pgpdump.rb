@@ -17,6 +17,9 @@ class Pgpdump < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "8aff5b4553f8db403d33fac7202a3d59cfab9f19bf6b630736eef81453c33913" # linuxbrew-core
   end
 
+  uses_from_macos "bzip2"
+  uses_from_macos "zlib"
+
   def install
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"

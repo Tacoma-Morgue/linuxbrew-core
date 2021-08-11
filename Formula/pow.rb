@@ -20,6 +20,7 @@ class Pow < Formula
   # The related GitHub repository (basecamp/pow) was archived sometime between
   # 2018-06-11 and 2019-04-10 (referencing Wayback Machine snapshots)
 
+  depends_on :macos
   depends_on "node"
 
   def install

@@ -29,6 +29,7 @@ class Qcachegrind < Formula
       system "#{Formula["qt@5"].opt_bin}/qmake", "-spec", spec,
                                                "-config", "release"
       system "make"
+
       on_macos do
         prefix.install "qcachegrind.app"
         bin.install_symlink prefix/"qcachegrind.app/Contents/MacOS/qcachegrind"

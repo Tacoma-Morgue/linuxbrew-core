@@ -23,7 +23,6 @@ class Fcgi < Formula
     system "./autogen.sh"
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
-    system "make"
     system "make", "install"
   end
 

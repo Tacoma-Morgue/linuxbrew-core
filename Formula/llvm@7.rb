@@ -383,6 +383,6 @@ class LlvmAT7 < Formula
           printf("Hello world!"); }
     EOS
     assert_equal "int main() { printf(\"Hello world!\"); }\n",
-    shell_output("#{bin}/clang-format -style=google clangformattest.c")
+      shell_output("#{bin}/clang-format -style=google clangformattest.c")
   end
 end

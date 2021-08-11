@@ -49,10 +49,9 @@ class Pypy3 < Formula
     ENV["PYPY_USESSION_DIR"] = buildpath
 
     python = Formula["pypy"].opt_bin/"pypy"
-
     cd "pypy/goal" do
       system python, buildpath/"rpython/bin/rpython",
-             "-Ojit", "--shared", "--cc", ENV.cc,
+             "-Ojit", "--shared", "--cc", ENV.cc, "--verbose",
              "--make-jobs", ENV.make_jobs, "targetpypystandalone.py"
     end
 

@@ -1,5 +1,3 @@
-require "os/linux/glibc"
-
 class GccAT9 < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
@@ -13,7 +11,6 @@ class GccAT9 < Formula
     regex(%r{href=.*?gcc[._-]v?(9(?:\.\d+)+)(?:/?["' >]|\.t)}i)
   end
 
-  # gcc is designed to be portable.
   bottle do
     sha256 big_sur:      "ef05afedb14a945c18e8ab08af9e96293a8ef285af2df365a676b9df0be9c93f"
     sha256 catalina:     "01e1eb5be5910cd743653c25de299ac7614ca3910de50b0ae3c25f9ba89c108d"
@@ -59,8 +56,6 @@ class GccAT9 < Formula
     #  - BRIG
     languages = %w[c c++ objc obj-c++ fortran]
 
-    args = []
-
     pkgversion = "Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip
 
     args = %W[
@@ -97,7 +92,7 @@ class GccAT9 < Formula
       end
 
       # Ensure correct install names when linking against libgcc_s;
-      # see discussion in https://github.com/Homebrew/homebrew/pull/34303
+      # see discussion in https://github.com/Homebrew/legacy-homebrew/pull/34303
       inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
     end
 

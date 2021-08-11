@@ -30,11 +30,12 @@ class Gpredict < Formula
   depends_on "gtk+3"
   depends_on "hamlib"
 
+  uses_from_macos "perl" => :build
   uses_from_macos "curl"
 
   def install
     # Needed by intltool (xml::parser)
-    ENV.prepend_path "PERL5LIB", "#{Formula["intltool"].libexec}/lib/perl5" unless OS.mac?
+    on_linux { ENV.prepend_path "PERL5LIB", "#{Formula["intltool"].libexec}/lib/perl5" }
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
@@ -42,7 +43,10 @@ class Gpredict < Formula
   end
 
   test do
-    return if !OS.mac? && ENV["HOMEBREW_GITHUB_ACTIONS"]
+    on_linux do
+      # Gtk-WARNING **: 20:21:55.071: cannot open display
+      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+    end
 
     assert_match "real-time", shell_output("#{bin}/gpredict -h")
   end

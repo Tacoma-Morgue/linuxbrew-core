@@ -41,7 +41,6 @@ class Wimlib < Formula
   test do
     # make a directory containing a dummy 1M file
     mkdir("foo")
-
     size = nil
     on_macos do
       size = "1m"

@@ -3,17 +3,17 @@ class Snakemake < Formula
 
   desc "Pythonic workflow system"
   homepage "https://snakemake.readthedocs.io/"
-  url "https://files.pythonhosted.org/packages/a0/56/31de6ca9a754be460d4f3c4fd6e98c9d8219f4df9892387e5f60a5e5252b/snakemake-6.5.3.tar.gz"
-  sha256 "a06839346425c74542e6e2e6047db3133cd747ef89e1ebd87dad1fbba041f62d"
+  url "https://files.pythonhosted.org/packages/c5/43/344d922d39ec84b80e35dbe479ae00d38a1b261a4280533af009243bf0a1/snakemake-6.6.1.tar.gz"
+  sha256 "91637a801342f3bc349c033b284fef7c0201b4e5e29d5650cb6c7f69096d4184"
   license "MIT"
   head "https://github.com/snakemake/snakemake.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "75bf7e51ae774b3b7a8a97d1a7028c2a8ee1274772c1637548c9e9815e72242b"
-    sha256 cellar: :any_skip_relocation, big_sur:       "f1e7055c37f2a81843e1dc7805ee92b8af56f6aac6a41d20f80a394d46541453"
-    sha256 cellar: :any_skip_relocation, catalina:      "3ea90ca70861a86f4482801666075d84b5e38bb907932ee2c63f9c5242f9559b"
-    sha256 cellar: :any_skip_relocation, mojave:        "b8b70633400b3f6dfb9e98250505c8c123c197076171bc81c843f23a612c6ffc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c035a75e9f526a12c5b9b6db3b28f63e01f9f8956ef585e26a41d4b2288fe8e2" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "77a58888a42dca402564855407aa47a376f3055126278a9908beec9874b989f0"
+    sha256 cellar: :any_skip_relocation, big_sur:       "7c27f1aee041fa5b050f4a9e82dfe954d3e5a919d3218d5add2c9ac4039e9861"
+    sha256 cellar: :any_skip_relocation, catalina:      "2911e4c6bfcfe0448fe6af5479af32a596737cadee159db5f7d33fcb7a552402"
+    sha256 cellar: :any_skip_relocation, mojave:        "f84e73c2e0c4f93b983c0217039d657088aaea721b8bab0eefc29c5ee8a37578"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d3174e4bd42da533e21b2a751a20a31c59511367d13e4727371ffaf466c9f809" # linuxbrew-core
   end
 
   depends_on "cbc"
@@ -39,9 +39,9 @@ class Snakemake < Formula
     sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
-  resource "chardet" do
-    url "https://files.pythonhosted.org/packages/ee/2d/9cdc2b527e127b4c9db64b86647d567985940ac3698eeabc7ffaccb4ea61/chardet-4.0.0.tar.gz"
-    sha256 "0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa"
+  resource "charset-normalizer" do
+    url "https://files.pythonhosted.org/packages/37/fd/05a04d7e14548474d30d90ad0db5d90ee2ba55cd967511a354cf88b534f1/charset-normalizer-2.0.3.tar.gz"
+    sha256 "c46c3ace2d744cfbdebceaa3c19ae691f53ae621b39fd7570f59d14fb7f2fd12"
   end
 
   resource "ConfigArgParse" do
@@ -80,8 +80,8 @@ class Snakemake < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/ea/b7/e0e3c1c467636186c39925827be42f16fee389dc404ac29e930e9136be70/idna-2.10.tar.gz"
-    sha256 "b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"
+    url "https://files.pythonhosted.org/packages/cb/38/4c4d00ddfa48abe616d7e572e02a04273603db446975ab46bbcd36552005/idna-3.2.tar.gz"
+    sha256 "467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"
   end
 
   resource "ipython_genutils" do
@@ -135,8 +135,8 @@ class Snakemake < Formula
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/6b/47/c14abc08432ab22dc18b9892252efaf005ab44066de871e72a38d6af464b/requests-2.25.1.tar.gz"
-    sha256 "27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"
+    url "https://files.pythonhosted.org/packages/e7/01/3569e0b535fb2e4a6c384bdbed00c55b9d78b5084e0fb7f4d0bf523d7670/requests-2.26.0.tar.gz"
+    sha256 "b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7"
   end
 
   resource "six" do

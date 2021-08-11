@@ -4,7 +4,7 @@ class Sysdig < Formula
   url "https://github.com/draios/sysdig/archive/0.27.1.tar.gz"
   sha256 "b9d05854493d245a7a7e75f77fc654508f720aab5e5e8a3a932bd8eb54e49bda"
   license "Apache-2.0"
-  revision 1
+  revision 2
 
   livecheck do
     url :stable
@@ -12,10 +12,10 @@ class Sysdig < Formula
   end
 
   bottle do
-    sha256 big_sur:      "9caf5620dbeadf8e87bf19a598baa7bae5f6c0d1643666182fe91972806e6d84"
-    sha256 catalina:     "7a21384d18bf9848f7fc91b6deb2099b01f44952e9ce88cbee3f53c0b8f1f33e"
-    sha256 mojave:       "e29dcafe2de6f4fecc5e32ceb9d81c6bbab6b252dae5056ee8e617ac5204911a"
-    sha256 x86_64_linux: "0ad352bb19b40652d7622acdb060b5c3a65470ec5f1c1723af19df13b707991c" # linuxbrew-core
+    sha256 big_sur:      "5d26c152781c472694c45d59a73e9650859be3f329023e3d55ec28aedcd3257f"
+    sha256 catalina:     "a587a80a9969ef9a280834f08c21b90753cf33d716a0df608a5d8f97c5e81043"
+    sha256 mojave:       "6bb2d53d4fa74604759a32bfd9d68acf1fca9c54b28476467a026e3c1d7275a3"
+    sha256 x86_64_linux: "e6c198beddb081a32c1eb947d80c7a3d1b2a610084bfa5dfda1795bc25dfcfee" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -23,12 +23,14 @@ class Sysdig < Formula
   depends_on "jsoncpp"
   depends_on "luajit"
   depends_on "tbb"
-  unless OS.mac?
-    depends_on "c-ares"
-    depends_on "curl"
+
+  uses_from_macos "curl"
+
+  on_linux do
     depends_on "elfutils"
     depends_on "grpc"
     depends_on "jq"
+    depends_on "libb64"
     depends_on "protobuf"
   end
 
@@ -39,13 +41,15 @@ class Sysdig < Formula
   end
 
   def install
+    args = std_cmake_args + %W[
+      -DSYSDIG_VERSION=#{version}
+      -DUSE_BUNDLED_DEPS=OFF
+      -DCREATE_TEST_TARGETS=OFF
+    ]
+    on_linux { args << "-DBUILD_DRIVER=OFF" }
+
     mkdir "build" do
-      system "cmake", "..", "-DSYSDIG_VERSION=#{version}",
-                            "-DUSE_BUNDLED_DEPS=OFF",
-                            "-DCREATE_TEST_TARGETS=OFF",
-                            ("-DUSE_BUNDLED_B64=ON" unless OS.mac?),
-                            ("-DBUILD_DRIVER=OFF" unless OS.mac?),
-                            *std_cmake_args
+      system "cmake", "..", *args
       system "make"
       system "make", "install"
     end

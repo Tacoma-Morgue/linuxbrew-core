@@ -28,13 +28,6 @@ class Ddd < Formula
   depends_on "libxt"
   depends_on "openmotif"
 
-  # Needed for OSX 10.9 DP6 build failure:
-  # https://savannah.gnu.org/patch/?8178
-  patch :p0 do
-    url "https://savannah.gnu.org/patch/download.php?file_id=29114"
-    sha256 "aaacae79ce27446ead3483123abef0f8222ebc13fd61627bfadad96016248af6"
-  end
-
   # https://savannah.gnu.org/bugs/?41997
   patch do
     url "https://savannah.gnu.org/patch/download.php?file_id=31132"

@@ -7,13 +7,14 @@ class Global < Formula
   mirror "https://ftpmirror.gnu.org/global/global-6.6.7.tar.gz"
   sha256 "69a0f77f53827c5568176c1d382166df361e74263a047f0b3058aa2f2ad58a3c"
   license "GPL-3.0-or-later"
+  revision 1
 
   bottle do
-    sha256 arm64_big_sur: "ffba636507257bfb9dffd90dc114f1ad3528edf724beae0d200e3b5817f642bf"
-    sha256 big_sur:       "598cb4071a8d708c46becd27983443b6c14259c797d8a61718b0f1bb9094ae6f"
-    sha256 catalina:      "c476c6bee46e116a6dbe93754221132f8cc1cfbdb88d10c08d38b65c4e77b460"
-    sha256 mojave:        "37c6a139a405bbd869bcd8175e20a0e488ce0176646a0dbbfed3d9ede030977f"
-    sha256 x86_64_linux:  "646dbc4c4529115bdb731329eceac00824d6a1cc4d0566dc8e9a745d8e6bbf5b" # linuxbrew-core
+    sha256 arm64_big_sur: "f2481ae1cb5d8077d7ac769ca1cda9c34a6cb8d0e89eeb831a452f3992dab6e0"
+    sha256 big_sur:       "7d48a07430d1c4197c031dbbeb2c9993e3470f67ef1b2148e76f433039cebd4d"
+    sha256 catalina:      "3814876d5cb67f8e914415fd2ff09b7ebf62ce272af19e9e4c03baebfbb3aa02"
+    sha256 mojave:        "cf6c674b4656adca75cfd7d34af6aa48c9c7f9ce9498137babe2f69a71bb429d"
+    sha256 x86_64_linux:  "c7ced61b617c07c0137631d18b74cb2987ddcdfa6b6bbb1a1429ecc26159e3e3" # linuxbrew-core
   end
 
   head do
@@ -23,17 +24,17 @@ class Global < Formula
     depends_on "automake" => :build
     depends_on "bison" => :build
     depends_on "flex" => :build
+    ## gperf is provided by OSX Command Line Tools.
     depends_on "libtool" => :build
   end
 
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
   depends_on "ctags"
+  depends_on "libtool"
+  depends_on "ncurses"
   depends_on "python@3.9"
-
-  uses_from_macos "ncurses"
-
-  on_linux do
-    depends_on "libtool"
-  end
+  depends_on "sqlite"
 
   skip_clean "lib/gtags"
 
@@ -42,8 +43,21 @@ class Global < Formula
     sha256 "a18f47b506a429f6f4b9df81bb02beab9ca21d0a5fee38ed15aef65f0545519f"
   end
 
+  # use homebrew sqlite instead of the older copy included in libdb/
+  # When removing the patch, check whether we can remove the
+  # autoconf/automake/libtool dependencies
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/bc4dc49c2476c2d4ffecb21bb76699e67cb57415/global/6.6.7-external-sqlite.patch"
+    sha256 "1b87c9b90a6555cd77c72de933303348e1e148b71a5976d4a0040a3038ef2627"
+  end
+
   def install
-    system "sh", "reconf.sh" if build.head?
+    if build.head?
+      system "sh", "reconf.sh"
+    else
+      # Needed for the patch. Check that this can be removed when the patch is not necessary
+      system "autoreconf", "--force", "--install", "--symlink", "--verbose"
+    end
 
     ENV.prepend_create_path "PYTHONPATH", libexec/Language::Python.site_packages("python3")
 
@@ -55,6 +69,7 @@ class Global < Formula
       --disable-dependency-tracking
       --prefix=#{prefix}
       --sysconfdir=#{etc}
+      --with-sqlite3=#{Formula["sqlite"].opt_prefix}
       --with-exuberant-ctags=#{Formula["ctags"].opt_bin}/ctags
     ]
 
@@ -85,7 +100,7 @@ class Global < Formula
            pyvar = py2func()
     EOS
 
-    assert shell_output("#{bin}/gtags --gtagsconf=#{share}/gtags/gtags.conf --gtagslabel=pygments .")
+    system bin/"gtags", "--gtagsconf=#{share}/gtags/gtags.conf", "--gtagslabel=pygments"
     assert_match "test.c", shell_output("#{bin}/global -d cfunc")
     assert_match "test.c", shell_output("#{bin}/global -d c2func")
     assert_match "test.c", shell_output("#{bin}/global -r c2func")
@@ -95,7 +110,7 @@ class Global < Formula
     assert_match "test.c", shell_output("#{bin}/global -s cvar")
     assert_match "test.py", shell_output("#{bin}/global -s pyvar")
 
-    assert shell_output("#{bin}/gtags --gtagsconf=#{share}/gtags/gtags.conf --gtagslabel=exuberant-ctags .")
+    system bin/"gtags", "--gtagsconf=#{share}/gtags/gtags.conf", "--gtagslabel=exuberant-ctags"
     # ctags only yields definitions
     assert_match "test.c", shell_output("#{bin}/global -d cfunc   # passes")
     assert_match "test.c", shell_output("#{bin}/global -d c2func  # passes")
@@ -107,10 +122,21 @@ class Global < Formula
     refute_match "test.py", shell_output("#{bin}/global -s pyvar   # correctly fails")
 
     # Test the default parser
-    assert shell_output("#{bin}/gtags --gtagsconf=#{share}/gtags/gtags.conf --gtagslabel=default .")
+    system bin/"gtags", "--gtagsconf=#{share}/gtags/gtags.conf", "--gtagslabel=default"
     assert_match "test.c", shell_output("#{bin}/global -d cfunc")
     assert_match "test.c", shell_output("#{bin}/global -d c2func")
     assert_match "test.c", shell_output("#{bin}/global -r c2func")
     assert_match "test.c", shell_output("#{bin}/global -s cvar")
+
+    # Test tag files in sqlite format
+    system bin/"gtags", "--gtagsconf=#{share}/gtags/gtags.conf", "--gtagslabel=pygments", "--sqlite3"
+    assert_match "test.c", shell_output("#{bin}/global -d cfunc")
+    assert_match "test.c", shell_output("#{bin}/global -d c2func")
+    assert_match "test.c", shell_output("#{bin}/global -r c2func")
+    assert_match "test.py", shell_output("#{bin}/global -d pyfunc")
+    assert_match "test.py", shell_output("#{bin}/global -d py2func")
+    assert_match "test.py", shell_output("#{bin}/global -r py2func")
+    assert_match "test.c", shell_output("#{bin}/global -s cvar")
+    assert_match "test.py", shell_output("#{bin}/global -s pyvar")
   end
 end

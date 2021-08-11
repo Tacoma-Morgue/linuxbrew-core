@@ -6,6 +6,11 @@ class Calceph < Formula
   license "GPL-2.0-or-later"
   revision 1 unless OS.mac?
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?calceph[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any,                 arm64_big_sur: "0466e27596cec26f2fcce66fe699f4366e8e2e3c020c9c69a86e3dfe5982c81c"
     sha256 cellar: :any,                 big_sur:       "f5aa0d2c90d1bf0fdd1b01e7d540a243552054274634cc429c0364fdcbafb44a"

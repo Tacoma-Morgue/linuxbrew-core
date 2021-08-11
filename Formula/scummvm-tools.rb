@@ -4,7 +4,7 @@ class ScummvmTools < Formula
   url "https://downloads.scummvm.org/frs/scummvm-tools/2.2.0/scummvm-tools-2.2.0.tar.xz"
   sha256 "1e72aa8f21009c1f7447c755e7f4cf499fe9b8ba3d53db681ea9295666cb48a4"
   license "GPL-2.0-or-later"
-  revision 2
+  revision 3
   head "https://github.com/scummvm/scummvm-tools.git"
 
   livecheck do
@@ -13,10 +13,10 @@ class ScummvmTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 big_sur:      "aee03cae297adf7d8dea7810148e34669a533cafc8bd4fc136d01d9602654afd"
-    sha256 cellar: :any,                 catalina:     "e5adfc7c4a46b93538f4eb6ae92d74d089c5dd0702709bec10a2b13e507d3b30"
-    sha256 cellar: :any,                 mojave:       "cbd440b905907ecffa3e63ad833f73c3263f8a4970c01cc0ae83de131fa83272"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "44d06e29c8c1763521920d1b4aea1834a4dd0c31f4c7e9d5b9cdfca9d06b7565" # linuxbrew-core
+    sha256 cellar: :any,                 big_sur:      "08b599a5a43c08ac6bf0b1d9e1595eb20e930f9c5f25bc916b94529f0fab3941"
+    sha256 cellar: :any,                 catalina:     "996875778890186143218b023d6bd1cb53c518d9e98e6f7409fb19b50c745be4"
+    sha256 cellar: :any,                 mojave:       "221fd9eaf4604bb37fc3c204008232d7feed8b93af246772f5c436902bec8ba2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "04ebe28d8b59d672db9d6b3f1d0168db7d496a057726944095eb99dfd6e39aab" # linuxbrew-core
   end
 
   depends_on "boost"
@@ -25,17 +25,17 @@ class ScummvmTools < Formula
   depends_on "libpng"
   depends_on "libvorbis"
   depends_on "mad"
-  depends_on "wxmac@3.0"
+  depends_on "wxwidgets@3.0"
 
   def install
-    # configure will happily carry on even if it can't find wxmac,
+    # configure will happily carry on even if it can't find wxwidgets,
     # so let's make sure the install method keeps working even when
-    # the wxmac dependency version changes
-    wxmac = deps.find { |dep| dep.name.match?(/^wxmac(@\d+(\.\d+)?)?$/) }
-                .to_formula
+    # the wxwidgets dependency version changes
+    wxwidgets = deps.find { |dep| dep.name.match?(/^wxwidgets(@\d+(\.\d+)?)?$/) }
+                    .to_formula
 
     # The configure script needs a little help finding our wx-config
-    wxconfig = "wx-config-#{wxmac.version.major_minor}"
+    wxconfig = "wx-config-#{wxwidgets.version.major_minor}"
     inreplace "configure", /^_wxconfig=wx-config$/, "_wxconfig=#{wxconfig}"
 
     system "./configure", "--prefix=#{prefix}",

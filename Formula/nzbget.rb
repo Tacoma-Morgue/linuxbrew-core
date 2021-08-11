@@ -29,11 +29,13 @@ class Nzbget < Formula
 
     # Fix "ncurses library not found"
     # Reported 14 Aug 2016: https://github.com/nzbget/nzbget/issues/264
-    if OS.mac?
+    on_macos do
       (buildpath/"brew_include").install_symlink MacOS.sdk_path/"usr/include/ncurses.h"
       ENV["ncurses_CFLAGS"] = "-I#{buildpath}/brew_include"
       ENV["ncurses_LIBS"] = "-L/usr/lib -lncurses"
-    else
+    end
+
+    on_linux do
       ENV["ncurses_CFLAGS"] = "-I#{Formula["ncurses"].opt_include}"
       ENV["ncurses_LIBS"] = "-L#{Formula["ncurses"].opt_lib} -lncurses"
     end
@@ -49,7 +51,7 @@ class Nzbget < Formula
 
     # Set upstream's recommended values for file systems without
     # sparse-file support (e.g., HFS+); see Homebrew/homebrew-core#972
-    if OS.mac?
+    on_macos do
       inreplace "nzbget.conf", "DirectWrite=yes", "DirectWrite=no"
       inreplace "nzbget.conf", "ArticleCache=0", "ArticleCache=700"
     end

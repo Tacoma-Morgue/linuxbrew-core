@@ -69,3 +69,4 @@ index 7c46890..b036e9f 100644
 +#include <limits.h>
  
  #define DO_SCAN(scan) struct session *scan(struct session *ses, FILE *fp, char *arg, char *arg1, char *arg2)
+ 

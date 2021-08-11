@@ -240,10 +240,6 @@ class Buku < Formula
           -re ".*ERROR.*" { exit 1 }
           "1. Title unknown"
       }
-      spawn #{bin}/buku --nc --import bookmarks.html
-      expect "Add imported folders names as tags? (y/n): "
-      send "y\r"
-      expect "\\[ERROR\\] URL \\[https://github.com/Homebrew/brew\\] already exists at index 1"
       spawn sleep 5
     EOS
     system expect, "-f", "import"

@@ -46,13 +46,7 @@ class SuiteSparse < Formula
       "MY_METIS_LIB=-L#{Formula["metis"].opt_lib} -lmetis",
       "MY_METIS_INC=#{Formula["metis"].opt_include}",
     ]
-
     system "make", "library", *args
-    unless OS.mac?
-      args << "INSTALL_LIB=#{lib}"
-      args << "INSTALL_INCLUDE=#{include}"
-      args << "DESTDIR=#{prefix}"
-    end
     system "make", "install", *args
     lib.install Dir["**/*.a"]
     pkgshare.install "KLU/Demo/klu_simple.c"

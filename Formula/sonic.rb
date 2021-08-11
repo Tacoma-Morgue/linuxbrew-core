@@ -6,13 +6,16 @@ class Sonic < Formula
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:     "cd8065c75076f377f02ff7c2b010f2eb653077c7c691bf12e0beb4ad2fbcae2c"
-    sha256 cellar: :any_skip_relocation, catalina:    "d22157b31f471d3b5a74018cef0fbcb5c5b6cf4f2a59df7b3cfe315090d3d3b4"
-    sha256 cellar: :any_skip_relocation, mojave:      "5e68bc4761ff25830382fe068ef89a38c71762f98958cf1b7f3dc1db8dc7cc26"
-    sha256 cellar: :any_skip_relocation, high_sierra: "184bf1ac4972c580d1a648f48a4aa6f01fecdc1aeefb2cd0bb6789232fc2ba22"
+    sha256 cellar: :any_skip_relocation, big_sur:      "cd8065c75076f377f02ff7c2b010f2eb653077c7c691bf12e0beb4ad2fbcae2c"
+    sha256 cellar: :any_skip_relocation, catalina:     "d22157b31f471d3b5a74018cef0fbcb5c5b6cf4f2a59df7b3cfe315090d3d3b4"
+    sha256 cellar: :any_skip_relocation, mojave:       "5e68bc4761ff25830382fe068ef89a38c71762f98958cf1b7f3dc1db8dc7cc26"
+    sha256 cellar: :any_skip_relocation, high_sierra:  "184bf1ac4972c580d1a648f48a4aa6f01fecdc1aeefb2cd0bb6789232fc2ba22"
   end
 
   depends_on "rust" => :build
+
+  uses_from_macos "llvm" => :build
+  uses_from_macos "netcat" => :test
 
   def install
     system "cargo", "install", *std_cargo_args
@@ -58,7 +61,7 @@ class Sonic < Formula
     port = free_port
 
     cp etc/"sonic.cfg", testpath/"config.cfg"
-    inreplace "config.cfg", ":1491", ":#{port}"
+    inreplace "config.cfg", "[::1]:1491", "0.0.0.0:#{port}"
     inreplace "config.cfg", "#{var}/sonic", "."
 
     fork { exec bin/"sonic" }

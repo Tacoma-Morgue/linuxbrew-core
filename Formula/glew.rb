@@ -16,9 +16,9 @@ class Glew < Formula
   end
 
   depends_on "cmake" => [:build, :test]
-  unless OS.mac?
+
+  on_linux do
     depends_on "freeglut" => :test
-    depends_on "mesa"
     depends_on "mesa-glu"
   end
 
@@ -34,35 +34,10 @@ class Glew < Formula
   end
 
   test do
-    if ENV["DISPLAY"].nil?
-      ohai "Can not test without a display."
-      return true
-    end
-    (testpath/"test.c").write <<~EOS
-      #include <GL/glew.h>
-      #include <#{OS.mac? ? "GLUT" : "GL"}/glut.h>
-
-      int main(int argc, char** argv) {
-        glutInit(&argc, argv);
-        glutCreateWindow("GLEW Test");
-        GLenum err = glewInit();
-        if (GLEW_OK != err) {
-          return 1;
-        }
-        return 0;
-      }
-    EOS
-    flags = %W[-L#{lib} -lGLEW]
-    if OS.mac?
-      flags << "-framework" << "GLUT"
-    else
-      flags << "-lglut"
-    end
-    system ENV.cc, testpath/"test.c", "-o", "test", *flags
-    system "./test"
-
     (testpath/"CMakeLists.txt").write <<~EOS
       project(test_glew)
+
+      set(CMAKE_CXX_STANDARD 11)
 
       find_package(OpenGL REQUIRED)
       find_package(GLEW REQUIRED)
@@ -82,5 +57,37 @@ class Glew < Formula
 
     system "cmake", ".", "-Wno-dev"
     system "make"
+
+    glut = "GLUT"
+    on_linux do
+      glut = "GL"
+    end
+    (testpath/"test.c").write <<~EOS
+      #include <GL/glew.h>
+      #include <#{glut}/glut.h>
+
+      int main(int argc, char** argv) {
+        glutInit(&argc, argv);
+        glutCreateWindow("GLEW Test");
+        GLenum err = glewInit();
+        if (GLEW_OK != err) {
+          return 1;
+        }
+        return 0;
+      }
+    EOS
+    flags = %W[-L#{lib} -lGLEW]
+    on_macos do
+      flags << "-framework" << "GLUT"
+    end
+    on_linux do
+      flags << "-lglut"
+    end
+    system ENV.cc, testpath/"test.c", "-o", "test", *flags
+    on_linux do
+      # Fails in Linux CI with: freeglut (./test): failed to open display ''
+      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+    end
+    system "./test"
   end
 end

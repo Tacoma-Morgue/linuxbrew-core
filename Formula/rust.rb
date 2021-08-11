@@ -40,10 +40,6 @@ class Rust < Formula
   uses_from_macos "curl"
   uses_from_macos "zlib"
 
-  on_linux do
-    depends_on "binutils"
-  end
-
   resource "cargobootstrap" do
     on_macos do
       # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0.txt

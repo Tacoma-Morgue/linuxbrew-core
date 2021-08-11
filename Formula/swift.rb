@@ -24,11 +24,9 @@ class Swift < Formula
 
   # Has strict requirements on the minimum version of Xcode
   # https://github.com/apple/swift/tree/swift-#{version}-RELEASE#system-requirements
-  uses_from_macos "icu4c"
+  depends_on xcode: ["11.2", :build]
 
-  on_macos do
-    depends_on xcode: ["11.2", :build]
-  end
+  uses_from_macos "icu4c"
 
   resource "llvm-project" do
     url "https://github.com/apple/llvm-project/archive/swift-5.2.5-RELEASE.tar.gz"

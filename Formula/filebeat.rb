@@ -2,19 +2,19 @@ class Filebeat < Formula
   desc "File harvester to ship log files to Elasticsearch or Logstash"
   homepage "https://www.elastic.co/products/beats/filebeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v7.13.3",
-      revision: "3ddad4cee7394d1643023604f246cd5ab6d8cfbb"
+      tag:      "v7.14.0",
+      revision: "e127fc31fc6c00fdf8649808f9421d8f8c28b5db"
   # Outside of the "x-pack" folder, source code in a given file is licensed
   # under the Apache License Version 2.0
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b15d2714733bd1e0d2c2d9c0fa31eb867ae71eaf91cf3c5d7c985fa793807397"
-    sha256 cellar: :any_skip_relocation, big_sur:       "27300bb0bbea7621542b3baf466ba2079094048c04930f5d364025047e86b39f"
-    sha256 cellar: :any_skip_relocation, catalina:      "1b78c58773c6201c8a623385fc08b25d700582b8e2870c5324bae6bdc23f0df5"
-    sha256 cellar: :any_skip_relocation, mojave:        "597df6366a5b6de3cd154e2bb0a644bba7ee43d9dca6c45113fc5084e500669c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ecf223f6397900b12fc9fabe8b4137dff381cff42d1af414bb7460473645df54" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "deb0f2d123f04eaf0cd95320429b3930b1044618bfe566a01726b824b27ca9fe"
+    sha256 cellar: :any_skip_relocation, big_sur:       "90f6672cc9b121e579e473093ee3ce5730069bb48d2472abdccfa633f3712d06"
+    sha256 cellar: :any_skip_relocation, catalina:      "98b6c436ab4a98e878e5b3d0ceaa204da555706a55b66f1b7f17e02bc42bb74b"
+    sha256 cellar: :any_skip_relocation, mojave:        "8c7936c8faa7516a6fa7e892319583e7ced2a0f8e6f5aab5b54867a47847cccd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5af74e66d3f86c76d6254805468707338ce2b6c79acb404ca562c0f2ef1320de" # linuxbrew-core
   end
 
   depends_on "go" => :build

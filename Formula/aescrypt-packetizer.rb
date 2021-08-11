@@ -67,7 +67,6 @@ class AescryptPacketizer < Formula
   end
 
   test do
-    aescrypt = bin/"paescrypt"
     path = testpath/"secret.txt"
     original_contents = "What grows when it eats, but dies when it drinks?"
     path.write original_contents
@@ -75,7 +74,7 @@ class AescryptPacketizer < Formula
     system bin/"paescrypt", "-e", "-p", "fire", path
     assert_predicate testpath/"#{path}.aes", :exist?
 
-    system aescrypt, "-d", "-p", "fire", "#{path}.aes"
+    system bin/"paescrypt", "-d", "-p", "fire", "#{path}.aes"
     assert_equal original_contents, path.read
   end
 end

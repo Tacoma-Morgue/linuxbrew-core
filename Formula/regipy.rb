@@ -3,17 +3,17 @@ class Regipy < Formula
 
   desc "Offline registry hive parsing tool"
   homepage "https://github.com/mkorman90/regipy"
-  url "https://files.pythonhosted.org/packages/68/d9/44a939a5e32e706d904cb7ebdc099964cdc4b677a3ebac6db2477f6ef908/regipy-1.9.3.tar.gz"
-  sha256 "86cdd32eb1148273fd0ac621ddb7dafc494b7f67cd4e9df27ed11a985464fc7a"
+  url "https://files.pythonhosted.org/packages/c4/a3/b898885397175685ff21f1d85cc0f97f5915789fdf4e83f69c45a3dfc930/regipy-2.1.0.tar.gz"
+  sha256 "82bb10f0e0dc7837796946578e1898489e8d5a0c81d7d55b35892537035fef4e"
   license "MIT"
   head "https://github.com/mkorman90/regipy.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7f91cc571ae419b6a56e10c3a649a53992362c7376f37e177b309130eabc682f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "f102e1bebbdce2d4c43782795827fe83c76d46480499838be7f0f699ce20c476"
-    sha256 cellar: :any_skip_relocation, catalina:      "40f37eaee0d0ac2142d97c17f070ac443fe72ac4d5cdd3008b3cbf04f84205c9"
-    sha256 cellar: :any_skip_relocation, mojave:        "32315d4acb3745ff42ec792575db3abd04c2ae3fabeeb36557b7038e1bce8752"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6d73afeec0bbc4ce2d4c2d2504ded9293e18eefef8f46361188406f4860cb03" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "da15356f76e35f0b88b060353a3b4b36dc25409967670a977e18619607b9568e"
+    sha256 cellar: :any_skip_relocation, big_sur:       "147078169ccdc75d6916034f37948ffa74bd92d853bab685d274dc092186b385"
+    sha256 cellar: :any_skip_relocation, catalina:      "ad51e89ee4c8e2061e5b09c9adef797a9461f7987a8a5a6db2be6ae2087b29aa"
+    sha256 cellar: :any_skip_relocation, mojave:        "456ff2a89087634ec38185c392588c2e01d8653de7edcdb66d2c8e65d7d8bfb2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2af89cc8b02d89b3ab92ebd04e28875cefd9e977fe6da2291e27b08680dcb0b" # linuxbrew-core
   end
 
   depends_on "python-tabulate"
@@ -39,24 +39,9 @@ class Regipy < Formula
     sha256 "1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"
   end
 
-  resource "jsonlines" do
-    url "https://files.pythonhosted.org/packages/bf/40/a1b1810a09e3e85567c17831fcc2fc8e48ad9a1d3b02e8be940c43b908a8/jsonlines-2.0.0.tar.gz"
-    sha256 "6fdd03104c9a421a1ba587a121aaac743bf02d8f87fa9cdaa3b852249a241fe8"
-  end
-
-  resource "Logbook" do
-    url "https://files.pythonhosted.org/packages/2f/d9/16ac346f7c0102835814cc9e5b684aaadea101560bb932a2403bd26b2320/Logbook-1.5.3.tar.gz"
-    sha256 "66f454ada0f56eae43066f604a222b09893f98c1adc18df169710761b8f32fe8"
-  end
-
   resource "pytz" do
     url "https://files.pythonhosted.org/packages/b0/61/eddc6eb2c682ea6fd97a7e1018a6294be80dba08fa28e7a3570148b4612d/pytz-2021.1.tar.gz"
     sha256 "83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"
-  end
-
-  resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/0d/dd/78f7e080d3bfc87fc19bed54513b430659d38efb2d9ea6e3ad815a665a02/tqdm-4.61.2.tar.gz"
-    sha256 "8bb94db0d4468fea27d004a0f1d1c02da3cdedc00fe491c0de986b76a04d6b0a"
   end
 
   resource "test_hive" do

@@ -95,7 +95,7 @@ class Glibc < Formula
 
   depends_on "binutils" => :build
   depends_on GawkRequirement => :build
-  depends_on "linux-headers" => :build
+  depends_on "linux-headers@4.4" => :build
   depends_on MakeRequirement => :build
   depends_on SedRequirement => :build
   depends_on BrewedGlibcNotOlderRequirement
@@ -127,7 +127,6 @@ class Glibc < Formula
         "--disable-silent-rules",
         "--prefix=#{prefix}",
         "--enable-obsolete-rpc",
-        "--without-selinux",
         "--without-selinux",
         "--with-binutils=#{Formula["binutils"].bin}",
         "--with-headers=#{Formula["linux-headers"].include}",

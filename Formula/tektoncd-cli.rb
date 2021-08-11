@@ -1,8 +1,8 @@
 class TektoncdCli < Formula
   desc "CLI for interacting with TektonCD"
   homepage "https://github.com/tektoncd/cli"
-  url "https://github.com/tektoncd/cli/archive/v0.19.1.tar.gz"
-  sha256 "e824f5e32d66d7068e9632ff901f72ac46e8b67ac362fd6daa36b2ff85ae2268"
+  url "https://github.com/tektoncd/cli/archive/v0.20.0.tar.gz"
+  sha256 "91ef920cc37fd58479304ec104d4233a358f123ea2919cd8e111cd28aec7ce82"
   license "Apache-2.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class TektoncdCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8dfa1bb855bf15e575f9ca543bb17bc028e832a28b98f4c46c26b3025fd06258"
-    sha256 cellar: :any_skip_relocation, big_sur:       "aca5a966205a0060e8abea04025809772245c25dcdc64976f28ee77f6481b181"
-    sha256 cellar: :any_skip_relocation, catalina:      "3e3fa67ce9fa22f4fbe89be521407cceb6267f8302954a1557a7a83f8b9e8f56"
-    sha256 cellar: :any_skip_relocation, mojave:        "9b274ec482c44afaabfe9805532864e714b51f96e4cd36ae9a952352756861de"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9c734057d02d6204e0d3360edb239e42d57a3d6537da61652b3f5d2a1a1310bc" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b6010117f41dbbae009bc6df3415c0cc3efaac49e186e964f37239481760f1f2"
+    sha256 cellar: :any_skip_relocation, big_sur:       "23ff995156df7e4f8dcfb93021523bdfc9da375ae49f9c5cd4b0ce492963e1cc"
+    sha256 cellar: :any_skip_relocation, catalina:      "c27830c57e654803fb7a35dad330afc8085d72ac85249aa7fe10df8a94e3def2"
+    sha256 cellar: :any_skip_relocation, mojave:        "eedba2b8a0a5b9e3112538db8f7cf7857cc47f6874368dc7eb744478a3a8ddd3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9b00a05537892318e267c393e7d41d418ac5c811dd7543766ba95501ebd46b5b" # linuxbrew-core
   end
 
   depends_on "go" => :build

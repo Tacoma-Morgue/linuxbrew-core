@@ -15,7 +15,6 @@ class Mmseqs2 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "80b9a385006d4ea4bffcb2aa9cb9f2c536f68ec1edde074ef883ddfcc0d130ca" # linuxbrew-core
   end
 
-  depends_on "cmake" => :build
   depends_on "cmake" => [:build, :test]
   depends_on "libomp"
   depends_on "wget"

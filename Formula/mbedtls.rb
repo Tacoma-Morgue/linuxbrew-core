@@ -1,8 +1,8 @@
 class Mbedtls < Formula
   desc "Cryptographic & SSL/TLS library"
   homepage "https://tls.mbed.org/"
-  url "https://github.com/ARMmbed/mbedtls/archive/mbedtls-2.27.0.tar.gz"
-  sha256 "4f6a43f06ded62aa20ef582436a39b65902e1126cbbe2fb17f394e9e9a552767"
+  url "https://github.com/ARMmbed/mbedtls/archive/mbedtls-3.0.0.tar.gz"
+  sha256 "377d376919be19f07c7e7adeeded088a525be40353f6d938a78e4f986bce2ae0"
   license "Apache-2.0"
   head "https://github.com/ARMmbed/mbedtls.git", branch: "development"
 
@@ -13,18 +13,18 @@ class Mbedtls < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "9cc96f2c4c654cc565556a4ac9f111aebf6b406886998b728c6c0e6827ffc37a"
-    sha256 cellar: :any,                 big_sur:       "84ac67a7a41cafde712cec80c31120c5f1bb896ce9d212da6d132f1c24fdb2de"
-    sha256 cellar: :any,                 catalina:      "f848fa5209380ec469d00a9422101fdb2e5f57b9b588c9cadc4a35ec6fca5c23"
-    sha256 cellar: :any,                 mojave:        "78827838bf19bec7b526320b8156005bfbdd92b1dd83cf8611f0abc2633f98a7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "06d8433f2fef8828858388b4381ae618acf4731f53f8c89c9010435408a97d78" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "b5b96186a91ef95346dbc7b3ecdcc5e9b063e16ca2a8cc5901af228d5f16a909"
+    sha256 cellar: :any,                 big_sur:       "7dcd77c125f32c7285190070bbe933156f1e7c667a29bf673e851ed6ebb64064"
+    sha256 cellar: :any,                 catalina:      "3d1334aadcb984922eda762c5fcf607bec7d3dc7a095077cb46b6611a86fcad3"
+    sha256 cellar: :any,                 mojave:        "4966455e9853dae759dd194e881ca075049490dfc0a05e9d4b64abe59d7a4392"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "edffaecebb44a53db9e67e088dc118c11793a4cbed26362be28c9d7610113ace" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
   depends_on "python@3.9" => :build
 
   def install
-    inreplace "include/mbedtls/config.h" do |s|
+    inreplace "include/mbedtls/mbedtls_config.h" do |s|
       # enable pthread mutexes
       s.gsub! "//#define MBEDTLS_THREADING_PTHREAD", "#define MBEDTLS_THREADING_PTHREAD"
       # allow use of mutexes within mbed TLS
@@ -32,8 +32,9 @@ class Mbedtls < Formula
     end
 
     system "cmake", "-DUSE_SHARED_MBEDTLS_LIBRARY=On",
-      "-DPython3_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3",
-      *std_cmake_args
+                    "-DPython3_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3",
+                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
+                    *std_cmake_args
     system "make"
     system "make", "install"
 

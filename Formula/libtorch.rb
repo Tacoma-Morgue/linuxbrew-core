@@ -14,9 +14,9 @@ class Libtorch < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "a51bfd1cc532abeabea070676f04ef4650fd087371307fabc8ffac3a7b212d30"
-    sha256 cellar: :any, catalina: "ca0ddb068dd09872cfe9f7bcfdb264fd01a61347dba7660eecab45840535ad53"
-    sha256 cellar: :any, mojave:   "3e9191a6c5dcc80856aded5542387830bfcf6c6047790775b51e901324e37494"
+    sha256 cellar: :any,                 big_sur:      "a51bfd1cc532abeabea070676f04ef4650fd087371307fabc8ffac3a7b212d30"
+    sha256 cellar: :any,                 catalina:     "ca0ddb068dd09872cfe9f7bcfdb264fd01a61347dba7660eecab45840535ad53"
+    sha256 cellar: :any,                 mojave:       "3e9191a6c5dcc80856aded5542387830bfcf6c6047790775b51e901324e37494"
   end
 
   depends_on "cmake" => :build
@@ -58,9 +58,7 @@ class Libtorch < Formula
       system "cmake", "..", *std_cmake_args, *args
 
       # Avoid references to Homebrew shims
-      inreplace "caffe2/core/macros.h",
-                "{\"CXX_COMPILER\", \"#{HOMEBREW_SHIMS_PATH}/mac/super/clang++\"},",
-                "{\"CXX_COMPILER\", \"/usr/bin/clang++\"},"
+      inreplace "caffe2/core/macros.h", %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{Regexp.escape(ENV.cxx)}}, ENV.cxx
 
       system "make"
       system "make", "install"
@@ -77,8 +75,9 @@ class Libtorch < Formula
         std::cout << tensor << std::endl;
       }
     EOS
-    system ENV.cxx, "-std=c++14", "-L#{lib}", "-ltorch", "-ltorch_cpu", "-lc10",
-      "-I#{include}/torch/csrc/api/include", "test.cpp", "-o", "test"
+    system ENV.cxx, "-std=c++14", "test.cpp", "-o", "test",
+                    "-I#{include}/torch/csrc/api/include",
+                    "-L#{lib}", "-ltorch", "-ltorch_cpu", "-lc10"
     system "./test"
   end
 end

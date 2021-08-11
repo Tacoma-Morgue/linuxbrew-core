@@ -19,6 +19,8 @@ class Codemod < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "76f441b50d78411faa44ddfaa082e3d04b96bbcc20dc9f44ca6510227b5c1fde" # linuxbrew-core
   end
 
+  deprecate! date: "2021-07-13", because: :repo_archived
+
   depends_on "python@3.9"
 
   def install

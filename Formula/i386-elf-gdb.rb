@@ -8,6 +8,10 @@ class I386ElfGdb < Formula
   revision 1
   head "https://sourceware.org/git/binutils-gdb.git"
 
+  livecheck do
+    formula "gdb"
+  end
+
   bottle do
     sha256 arm64_big_sur: "b4c91d248b5ba7d765c277903ac03f1f3d35a77079ae3acbdba8768a9dcb4c55"
     sha256 big_sur:       "dbf60ac8e71d01328d134cb1eaa47cd734dd612cd67cc7b730d56afc138ea969"
@@ -19,6 +23,7 @@ class I386ElfGdb < Formula
   depends_on "python@3.9"
   depends_on "xz" # required for lzma support
 
+  uses_from_macos "texinfo" => :build
   uses_from_macos "zlib"
 
   # Fix for https://sourceware.org/bugzilla/show_bug.cgi?id=26949#c8
@@ -57,8 +62,8 @@ class I386ElfGdb < Formula
 
   test do
     (testpath/"test.c").write "void _start(void) {}"
-    system "#{Formula["i686-elf-gcc"].bin}/i686-elf-gcc", "-g", "-nostdlib", "test.c"
+    system Formula["i686-elf-gcc"].bin/"i686-elf-gcc", "-g", "-nostdlib", "test.c"
     assert_match "Symbol \"_start\" is a function at address 0x",
-          shell_output("#{bin}/i386-elf-gdb -batch -ex 'info address _start' a.out")
+                 shell_output("#{bin}/i386-elf-gdb -batch -ex 'info address _start' a.out")
   end
 end

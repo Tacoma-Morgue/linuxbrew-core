@@ -1,8 +1,8 @@
 class JenkinsLts < Formula
   desc "Extendable open-source CI server"
   homepage "https://jenkins.io/index.html#stable"
-  url "https://get.jenkins.io/war-stable/2.289.2/jenkins.war"
-  sha256 "6e5d17bb373a4167318082abaef483f280493cb216718e68771180955df52310"
+  url "https://get.jenkins.io/war-stable/2.289.3/jenkins.war"
+  sha256 "996dfd29d5f933546af9e9f77c29b371fb0627b8266b6c9f134ac2e0f1248b87"
   license "MIT"
 
   livecheck do
@@ -11,7 +11,8 @@ class JenkinsLts < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "255157d99fe5588b4dfdf5d313b841aa19741ff411893f19d2d2ba30e439f603" # linuxbrew-core
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "b7e32a6357740488c50a1721be3225ea8d5141ed317e0d4b8db17fe8c72746d2" # linuxbrew-core
   end
 
   depends_on "openjdk@11"
@@ -29,30 +30,9 @@ class JenkinsLts < Formula
     EOS
   end
 
-  plist_options manual: "jenkins-lts"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{Formula["openjdk@11"].opt_bin}/java</string>
-            <string>-Dmail.smtp.starttls.enable=true</string>
-            <string>-jar</string>
-            <string>#{opt_libexec}/jenkins.war</string>
-            <string>--httpListenAddress=127.0.0.1</string>
-            <string>--httpPort=8080</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [Formula["openjdk@11"].opt_bin/"java", "-Dmail.smtp.starttls.enable=true", "-jar", opt_libexec/"jenkins.war",
+         "--httpListenAddress=127.0.0.1", "--httpPort=8080"]
   end
 
   test do

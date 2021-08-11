@@ -1,8 +1,8 @@
 class Poppler < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-21.07.0.tar.xz"
-  sha256 "e26ab29f68065de4d6562f0a3e2b5435a83ca92be573b99a1c81998fa286a4d4"
+  url "https://poppler.freedesktop.org/poppler-21.08.0.tar.xz"
+  sha256 "e9cf5dc5964bce4bb0264d1c4f8122706c910588b421cfc30abc97d6b23e602d"
   license "GPL-2.0-only"
   head "https://gitlab.freedesktop.org/poppler/poppler.git"
 
@@ -12,10 +12,10 @@ class Poppler < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "78cb5c6ee43a21211bec472d44427466aeb3c38f4cfcd2af2d7a52fd4d0cf29a"
-    sha256 big_sur:       "1e001399365909097d98084d12ea1d7b08255b55e09b576c1085176fa623d1a7"
-    sha256 catalina:      "d4bf221bb7ca73bf61bfc27c4cbea3d024b3081b98110e9d06a8cf1a08264576"
-    sha256 mojave:        "8382678d6eba917cf144bfa7d6801f9d483b2eb1247f8489cafafb974e6b33ba"
+    sha256 arm64_big_sur: "4592c1f6c567a0a215ee65d5c7cfdac73467ba735069e47f565297eafac41e36"
+    sha256 big_sur:       "c858c4d7c4f31b1a5a80ffdaa9307070eaa5bfb3b3b6877f75bc35c628d5d94d"
+    sha256 catalina:      "af05e6a724134f9069503f347b19774ad78a0244afe9a01370d24e73087de05c"
+    sha256 mojave:        "e8ceee29d278124f4c8fc015f772088ab631bb7b7bc2415e39515daf03b60463"
   end
 
   depends_on "cmake" => :build
@@ -32,7 +32,7 @@ class Poppler < Formula
   depends_on "little-cms2"
   depends_on "nss"
   depends_on "openjpeg"
-  depends_on "qt@5"
+  depends_on "qt"
 
   uses_from_macos "gperf" => :build
   uses_from_macos "curl"
@@ -53,8 +53,8 @@ class Poppler < Formula
       -DENABLE_BOOST=OFF
       -DENABLE_CMS=lcms2
       -DENABLE_GLIB=ON
-      -DENABLE_QT5=ON
-      -DENABLE_QT6=OFF
+      -DENABLE_QT5=OFF
+      -DENABLE_QT6=ON
       -DENABLE_UNSTABLE_API_ABI_HEADERS=ON
       -DWITH_GObjectIntrospection=ON
     ]
@@ -76,7 +76,7 @@ class Poppler < Formula
       [
         "#{lib}/libpoppler-cpp.dylib",
         "#{lib}/libpoppler-glib.dylib",
-        "#{lib}/libpoppler-qt5.dylib",
+        "#{lib}/libpoppler-qt#{Formula["qt"].version.major}.dylib",
         *Dir["#{bin}/*"],
       ].each do |f|
         macho = MachO.open(f)

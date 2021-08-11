@@ -1,8 +1,8 @@
 class Clojure < Formula
   desc "Dynamic, general-purpose programming language"
   homepage "https://clojure.org"
-  url "https://download.clojure.org/install/clojure-tools-1.10.3.855.tar.gz"
-  sha256 "cb63ee38146ae646654e93d5f0dc245a1b2940a94dc708e5fa4fc3af08b19384"
+  url "https://download.clojure.org/install/clojure-tools-1.10.3.933.tar.gz"
+  sha256 "c6c9b4fc7356afc6bfee22d0542f536d4900496bf0fc42376c3d1d30384b6570"
   license "EPL-1.0"
   version_scheme 1
 
@@ -12,7 +12,7 @@ class Clojure < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "209dd191d7ecc4cc20dab4dc62fe492db44cba999a6a1c6da0c889d3d5fb80fc" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "4461d628c0d9c4d1a2f24fd7ff6fe477beb404899a5efc93a0bfff8dc76b9bad" # linuxbrew-core
   end
 
   depends_on "openjdk"

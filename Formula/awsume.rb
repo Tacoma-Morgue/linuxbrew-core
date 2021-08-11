@@ -17,7 +17,6 @@ class Awsume < Formula
 
   depends_on "openssl@1.1"
   depends_on "python@3.9"
-
   uses_from_macos "sqlite"
 
   resource "boto3" do

@@ -24,7 +24,6 @@ class Jo < Formula
   def install
     system "autoreconf", "-i" if build.head?
 
-    ENV["bashcompdir"] = bash_completion unless OS.mac?
     system "./configure", "--disable-silent-rules",
                           "--prefix=#{prefix}"
     system "make", "install"

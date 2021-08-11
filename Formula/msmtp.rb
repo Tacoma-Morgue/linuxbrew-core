@@ -21,10 +21,6 @@ class Msmtp < Formula
   depends_on "pkg-config" => :build
   depends_on "gnutls"
 
-  on_linux do
-    depends_on "libsecret"
-  end
-
   def install
     args = %W[
       --disable-debug

@@ -7,13 +7,17 @@ class Sqlcipher < Formula
   head "https://github.com/sqlcipher/sqlcipher.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "2395b5999cde9cd6c8f53dd595a2827d8e2bdef8b801879b753378728a3cc94f"
-    sha256 cellar: :any, big_sur:       "97328f386addff936379b66ae032b3341cc6f047b7453e1a837cdc8a00b06653"
-    sha256 cellar: :any, catalina:      "826fa6703434de743eec33ca60db392fe772ace12e4eb3720c106d675c3edc70"
-    sha256 cellar: :any, mojave:        "123c63643cec4a0503993ba6f9a124a5f781db317c311103da82d91a895808e9"
+    sha256 cellar: :any,                 arm64_big_sur: "2395b5999cde9cd6c8f53dd595a2827d8e2bdef8b801879b753378728a3cc94f"
+    sha256 cellar: :any,                 big_sur:       "97328f386addff936379b66ae032b3341cc6f047b7453e1a837cdc8a00b06653"
+    sha256 cellar: :any,                 catalina:      "826fa6703434de743eec33ca60db392fe772ace12e4eb3720c106d675c3edc70"
+    sha256 cellar: :any,                 mojave:        "123c63643cec4a0503993ba6f9a124a5f781db317c311103da82d91a895808e9"
   end
 
   depends_on "openssl@1.1"
+
+  # Build scripts require tclsh. `--disable-tcl` only skips building extension
+  uses_from_macos "tcl-tk" => :build
+  uses_from_macos "sqlite"
 
   def install
     args = %W[
@@ -34,6 +38,10 @@ class Sqlcipher < Formula
       -DSQLITE_ENABLE_COLUMN_METADATA
     ].join(" ")
     args << "CFLAGS=#{cflags}"
+
+    on_linux do
+      args << "LIBS=-lm"
+    end
 
     system "./configure", *args
     system "make"

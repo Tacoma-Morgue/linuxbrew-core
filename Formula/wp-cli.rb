@@ -20,6 +20,11 @@ class WpCli < Formula
 
   uses_from_macos "php"
 
+  # Keg-relocation breaks the formula when it replaces `/usr/local` with a non-default prefix
+  on_macos do
+    pour_bottle? only_if: :default_prefix if Hardware::CPU.intel?
+  end
+
   def install
     bin.install "wp-cli-#{version}.phar" => "wp"
   end

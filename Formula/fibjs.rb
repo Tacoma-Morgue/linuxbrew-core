@@ -13,7 +13,6 @@ class Fibjs < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on macos: :sierra # fibjs requires >= Xcode 8.3 (or equivalent CLT)
 
   on_linux do
     depends_on "llvm" => :build

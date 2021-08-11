@@ -3,8 +3,8 @@ require "language/node"
 class Emscripten < Formula
   desc "LLVM bytecode to JavaScript compiler"
   homepage "https://emscripten.org/"
-  url "https://github.com/emscripten-core/emscripten/archive/2.0.25.tar.gz"
-  sha256 "9d3a8c8b45a2938025733f5deae51fd9b3b24d91eed17cac2767a223d21fcd82"
+  url "https://github.com/emscripten-core/emscripten/archive/2.0.26.tar.gz"
+  sha256 "35496c8633bec92adfb63235ce2fb7db0050747c99235fbfbfc338ec41fc59da"
   license all_of: [
     "Apache-2.0", # binaryen
     "Apache-2.0" => { with: "LLVM-exception" }, # llvm
@@ -18,10 +18,11 @@ class Emscripten < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "58233bb1ad092e8a7ec14737efe86c5d42f808b76232e7a2a796dc163996d434"
-    sha256 cellar: :any, big_sur:       "731b7a3ef2a6e0197767225b00d5f9f961e1d3ca6455662d6a5f1a49e795892d"
-    sha256 cellar: :any, catalina:      "f1e91808de1f3a86e40c0a8da782a5965cd97491acdd9da10f23743eedc657c7"
-    sha256 cellar: :any, mojave:        "83220a88cbbfc0121380d0a887090b65ae5bcd57923c1e068e1ed54d0144b0ed"
+    sha256 cellar: :any,                 arm64_big_sur: "d0b3f885bd57aecd128049ad102f6e88dd6d2286dba39a76eeabae977dfb7c38"
+    sha256 cellar: :any,                 big_sur:       "8043a7c232ab62b92d13c877abced44f55d9eb915955fe0b1d511479fb057c0b"
+    sha256 cellar: :any,                 catalina:      "ee588de7682514c376c8e5cc3b2ad161c254cd95fcef2ba3c0287344e3b2a812"
+    sha256 cellar: :any,                 mojave:        "3b37667c9829e26e33f82d0fa95e76c12a585d07482a6c16b652e1bdd016f5f4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9e036ed612bdf4c3b0c63691fd942594402bcc139a62e9f53f0abe39a6a4cfb1" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -29,11 +30,24 @@ class Emscripten < Formula
   depends_on "python@3.9"
   depends_on "yuicompressor"
 
+  # OpenJDK is needed as a dependency on Linux and ARM64 for google-closure-compiler,
+  # an emscripten dependency, because the native GraalVM image will not work.
+  on_macos do
+    depends_on "openjdk" if Hardware::CPU.arm?
+  end
+
+  on_linux do
+    depends_on "gcc"
+    depends_on "openjdk"
+  end
+
+  fails_with gcc: "5"
+
   # Use emscripten's recommended binaryen revision to avoid build failures.
   # See llvm resource below for instructions on how to update this.
   resource "binaryen" do
     url "https://github.com/WebAssembly/binaryen.git",
-        revision: "10ef52d62468aec5762742930630e882dc5e5c0b"
+        revision: "ae060f070064fd87adae7ea9db5aeb2dace5a4ff"
   end
 
   # emscripten needs argument '-fignore-exceptions', which is only available in llvm >= 12
@@ -44,7 +58,7 @@ class Emscripten < Formula
   # Then use the listed llvm_project_revision for the resource below.
   resource "llvm" do
     url "https://github.com/llvm/llvm-project.git",
-        revision: "3644726a78e37823b1687a7aa8d186e91570ffe2"
+        revision: "99f869c8f00a36dac3c774178b69d05876a29a31"
   end
 
   def install
@@ -121,11 +135,20 @@ class Emscripten < Formula
     cd libexec do
       system "npm", "install", *Language::Node.local_npm_install_args
       rm_f "node_modules/ws/builderror.log" # Avoid references to Homebrew shims
+      # Delete native GraalVM image in incompatible platforms.
+      on_macos { rm_rf "node_modules/google-closure-compiler-osx" if Hardware::CPU.arm? }
+      on_linux { rm_rf "node_modules/google-closure-compiler-linux" }
     end
+
+    # Add JAVA_HOME to env_script on ARM64 macOS and Linux, so that google-closure-compiler
+    # can find OpenJDK
+    emscript_env = { PYTHON: Formula["python@3.9"].opt_bin/"python3" }
+    on_macos { emscript_env.merge! Language::Java.overridable_java_home_env if Hardware::CPU.arm? }
+    on_linux { emscript_env.merge! Language::Java.overridable_java_home_env }
 
     %w[em++ em-config emar emcc emcmake emconfigure emlink.py emmake
        emranlib emrun emscons].each do |emscript|
-      (bin/emscript).write_env_script libexec/emscript, PYTHON: Formula["python@3.9"].opt_bin/"python3"
+      (bin/emscript).write_env_script libexec/emscript, emscript_env
     end
   end
 

@@ -1,8 +1,8 @@
 class Composer < Formula
   desc "Dependency Manager for PHP"
   homepage "https://getcomposer.org/"
-  url "https://getcomposer.org/download/2.1.3/composer.phar"
-  sha256 "f8a72e98dec8da736d8dac66761ca0a8fbde913753e9a43f34112367f5174d11"
+  url "https://getcomposer.org/download/2.1.5/composer.phar"
+  sha256 "be95557cc36eeb82da0f4340a469bad56b57f742d2891892dcb2f8b0179790ec"
   license "MIT"
 
   livecheck do
@@ -11,10 +11,17 @@ class Composer < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7ce70237cec9f4a40aa1ea6917d40258c010bf59b47026f32d0b31ede8c49188"
-    sha256 cellar: :any_skip_relocation, big_sur:       "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
-    sha256 cellar: :any_skip_relocation, catalina:      "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
-    sha256 cellar: :any_skip_relocation, mojave:        "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "71f3a9db24f8a1771666a548c53530df110aff7b522b5df7f6fcd293223b2036"
+    sha256 cellar: :any_skip_relocation, big_sur:       "7c7bdb27d4f70bfd39bcf266e59652a736d7104bd0757a8194ea07357be70755"
+    sha256 cellar: :any_skip_relocation, catalina:      "7c7bdb27d4f70bfd39bcf266e59652a736d7104bd0757a8194ea07357be70755"
+    sha256 cellar: :any_skip_relocation, mojave:        "7c7bdb27d4f70bfd39bcf266e59652a736d7104bd0757a8194ea07357be70755"
+  end
+
+  uses_from_macos "php"
+
+  # Keg-relocation breaks the formula when it replaces `/usr/local` with a non-default prefix
+  on_macos do
+    pour_bottle? only_if: :default_prefix if Hardware::CPU.intel?
   end
 
   def install
@@ -41,7 +48,7 @@ class Composer < Formula
       }
     EOS
 
-    (testpath/"src/HelloWorld/greetings.php").write <<~EOS
+    (testpath/"src/HelloWorld/Greetings.php").write <<~EOS
       <?php
 
       namespace HelloWorld;

@@ -31,8 +31,4 @@ class Pacvim < Formula
     ENV.cxx11
     system "make", "install", "PREFIX=#{prefix}"
   end
-
-  test do
-    assert_predicate bin/name, :exist?
-  end
 end

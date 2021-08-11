@@ -28,6 +28,7 @@ class PostgresqlAT12 < Formula
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
   depends_on "krb5"
+
   depends_on "openssl@1.1"
   depends_on "readline"
 
@@ -55,6 +56,7 @@ class PostgresqlAT12 < Formula
       --sysconfdir=#{etc}
       --docdir=#{doc}
       --enable-thread-safety
+      --with-bonjour
       --with-gssapi
       --with-icu
       --with-ldap
@@ -63,14 +65,9 @@ class PostgresqlAT12 < Formula
       --with-openssl
       --with-pam
       --with-perl
+      --with-tcl
       --with-uuid=e2fs
     ]
-    if OS.mac?
-      args += %w[
-        --with-bonjour
-        --with-tcl
-      ]
-    end
 
     # PostgreSQL by default uses xcodebuild internally to determine this,
     # which does not work on CLT-only installs.
@@ -90,11 +87,6 @@ class PostgresqlAT12 < Formula
                                     "pkgincludedir=#{include}/postgresql",
                                     "includedir_server=#{include}/postgresql/server",
                                     "includedir_internal=#{include}/postgresql/internal"
-
-    # Remove shim references
-    if !OS.mac? && File.readlines("#{lib}/postgresql/pgxs/src/Makefile.global").grep(/#{HOMEBREW_SHIMS_PATH}/o).any?
-      inreplace lib/"postgresql/pgxs/src/Makefile.global", "#{HOMEBREW_SHIMS_PATH}/linux/super/", ""
-    end
   end
 
   def post_install
@@ -180,35 +172,12 @@ class PostgresqlAT12 < Formula
     caveats
   end
 
-  plist_options manual: "pg_ctl -D #{HOMEBREW_PREFIX}/var/postgresql@12 start"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>KeepAlive</key>
-        <true/>
-        <key>Label</key>
-        <string>#{plist_name}</string>
-        <key>ProgramArguments</key>
-        <array>
-          <string>#{opt_bin}/postgres</string>
-          <string>-D</string>
-          <string>#{postgresql_datadir}</string>
-        </array>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>WorkingDirectory</key>
-        <string>#{HOMEBREW_PREFIX}</string>
-        <key>StandardOutPath</key>
-        <string>#{postgresql_log_path}</string>
-        <key>StandardErrorPath</key>
-        <string>#{postgresql_log_path}</string>
-      </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"postgres", "-D", var/"postgresql@12"]
+    keep_alive true
+    log_path var/"log/postgresql@12.log"
+    error_log_path var/"log/postgresql@12.log"
+    working_dir HOMEBREW_PREFIX
   end
 
   test do

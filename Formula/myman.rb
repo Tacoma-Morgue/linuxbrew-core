@@ -18,16 +18,25 @@ class Myman < Formula
     sha256 x86_64_linux:  "a34e620acc560cb86f943e84762cd51b37c865114ab522bed502cfd8b366fa84" # linuxbrew-core
   end
 
-  depends_on "coreutils" => :build
-  depends_on "gnu-sed" => :build
   depends_on "groff" => :build
 
   uses_from_macos "ncurses"
 
+  on_macos do
+    depends_on "coreutils" => :build
+    depends_on "gnu-sed" => :build
+  end
+
+  on_linux do
+    depends_on "util-linux" => :build # for `col`
+  end
+
   def install
-    ENV["RMDIR"] = "grmdir"
-    ENV["SED"] = "gsed"
-    ENV["INSTALL"] = "ginstall"
+    on_macos do
+      ENV["RMDIR"] = "grmdir"
+      ENV["SED"] = "gsed"
+      ENV["INSTALL"] = "ginstall"
+    end
     system "./configure", "--disable-debug",
                           "--disable-dependency-tracking",
                           "--disable-silent-rules",
@@ -36,6 +45,6 @@ class Myman < Formula
   end
 
   test do
-    system "#{bin}/myman", "-k"
+    system bin/"myman", "-k"
   end
 end

@@ -20,8 +20,7 @@ class Gromacs < Formula
 
   depends_on "cmake" => :build
   depends_on "fftw"
-  depends_on "gcc"
-  depends_on "gsl" # for OpenMP
+  depends_on "gcc" # for OpenMP
   depends_on "openblas"
 
   fails_with :clang

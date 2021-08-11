@@ -7,9 +7,10 @@ class Tcpreplay < Formula
 
   bottle do
     rebuild 1
-    sha256 cellar: :any, big_sur:  "55ffb5347204c187b5151181efef39586b052340e8dc40635809fc8eb36ed0e6"
-    sha256 cellar: :any, catalina: "2268f0760672a512de278ea4c686b976e75589bb374663c1b9ecbf49ada784ca"
-    sha256 cellar: :any, mojave:   "7724d4f1f79cd07a77b430e63e541486d8f666785215dfd898ba54ff2aa35186"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4ff671547bf0a9b988a01d6af0ed8c387b62c79097a6915aadc50af2d11c330b"
+    sha256 cellar: :any,                 big_sur:       "55ffb5347204c187b5151181efef39586b052340e8dc40635809fc8eb36ed0e6"
+    sha256 cellar: :any,                 catalina:      "2268f0760672a512de278ea4c686b976e75589bb374663c1b9ecbf49ada784ca"
+    sha256 cellar: :any,                 mojave:        "7724d4f1f79cd07a77b430e63e541486d8f666785215dfd898ba54ff2aa35186"
   end
 
   depends_on "autoconf" => :build
@@ -17,16 +18,35 @@ class Tcpreplay < Formula
   depends_on "libtool" => :build
   depends_on "libdnet"
 
+  uses_from_macos "libpcap"
+
   def install
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
     args = %W[
       --disable-debug
       --disable-dependency-tracking
       --disable-silent-rules
       --prefix=#{prefix}
       --enable-dynamic-link
-      --with-macosx-sdk=#{MacOS.version}
     ]
+
+    on_macos do
+      ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
+      args << "--with-macosx-sdk=#{MacOS.version}"
+
+      # The SDK is currently found using `xcrun --sdk macosx<V>` starting with
+      # input `--with-macosx-sdk=<V>` and then going from older 10.8 onward.
+      # On ARM, for Big Sur 11.4 the correct SDK is 11.3 (as of 2021-07-11);
+      # however, the logic picks 10.15, which causes configure failure.
+      # As a workaround, we remove all 10.x versions from SDK detection logic.
+      #
+      # Check in next release if the workaround can be removed.
+      # Upstream issue: https://github.com/appneta/tcpreplay/issues/668
+      inreplace "configure.ac", /(\$with_macosx_sdk\s+)(?:10\.\d+\s+)+/, "\\1" if Hardware::CPU.arm?
+    end
+
+    on_linux do
+      args << "--with-libpcap=#{Formula["libpcap"].opt_prefix}"
+    end
 
     system "./autogen.sh"
     system "./configure", *args

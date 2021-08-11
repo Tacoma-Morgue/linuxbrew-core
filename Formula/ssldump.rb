@@ -29,7 +29,6 @@ class Ssldump < Formula
   # reorder include files
   # https://sourceforge.net/p/ssldump/bugs/40/
   # increase pcap sample size from an arbitrary 5000 the max TLS packet size 18432
-  # pcap-bpf.h instead of net/bpf.h
   patch :DATA
 
   def install

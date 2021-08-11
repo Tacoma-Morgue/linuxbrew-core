@@ -1,12 +1,12 @@
 class Pacapt < Formula
   desc "Package manager in the style of Arch's pacman"
   homepage "https://github.com/icy/pacapt"
-  url "https://github.com/icy/pacapt/archive/v3.0.2.tar.gz"
-  sha256 "8eca774fbf58695cecb3160081db467e92deafba545ad6477937d1e98bc8b88e"
+  url "https://github.com/icy/pacapt/archive/v3.0.4.tar.gz"
+  sha256 "3f62e211fcabfe951a1369bef684996fda65faceafcd2ceeb4b738cf43622c4d"
   license "Fair"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "e4c4bd5edea42dd8e0ad6a5315b3960daa84b360e87619e7843599d63b79758c" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "376eb885dea7254cd900e0f2ca415283b0f42c762c9bc4c332bbfb6f02084cbb" # linuxbrew-core
   end
 
   def install

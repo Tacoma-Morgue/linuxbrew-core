@@ -14,6 +14,8 @@ class Saltwater < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "7e230fae556bf6e9916576839e23951108765bfc11b4de6ef5e0a4c4aa716528" # linuxbrew-core
   end
 
+  deprecate! date: "2021-06-02", because: :repo_archived
+
   depends_on "rust" => :build
 
   def install

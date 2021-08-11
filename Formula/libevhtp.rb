@@ -15,6 +15,8 @@ class Libevhtp < Formula
     sha256 cellar: :any, x86_64_linux:  "29167d6282f7ac44301220daeeec91f0dac8ffac348b361002d933aed56fd558" # linuxbrew-core
   end
 
+  deprecate! date: "2021-07-13", because: :repo_removed
+
   depends_on "cmake" => :build
   depends_on "doxygen" => :build
   depends_on "libevent"

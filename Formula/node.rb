@@ -1,8 +1,8 @@
 class Node < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v16.4.2/node-v16.4.2.tar.xz"
-  sha256 "b2898db82adbebf83358f2f02a74aaddcd20a607efc6ec4c54cdc46bff261d11"
+  url "https://nodejs.org/dist/v16.6.1/node-v16.6.1.tar.xz"
+  sha256 "79b1ea058cc67f2a69462cd5f2467a1efe08c64299c053da70384ce1a0e3e557"
   license "MIT"
   head "https://github.com/nodejs/node.git"
 
@@ -12,11 +12,11 @@ class Node < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "463c7d2ead464efb8dec05a3758dc09651131503f2f8dde22f41fbf1a35bc19e"
-    sha256 cellar: :any,                 big_sur:       "33a05afe06472fa0c0c6d41d7f85f9d2acf2af5b14ffa452aee0b31ada887f33"
-    sha256 cellar: :any,                 catalina:      "fdf9d3435c7e5ea4bae96776d52511ef02e6e62b1bdfc89969bf12e7069f33db"
-    sha256 cellar: :any,                 mojave:        "ca03b709d90575c660c994c6abc3407cad4ff5d67cfe4c18f304111ed7d1868c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e3383ee84414bf2274d879b46fef2e150cdd7b4968f3cf008e5e11fc06a94d91" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "0002381f608fcfd476d6b0cbc4eb1d7bd313626a7e12ae7a34aef53f0337179f"
+    sha256 cellar: :any,                 big_sur:       "de750653a443ee5a75609207325c70f0c947b83c763a7c16f044b5fd0524330c"
+    sha256 cellar: :any,                 catalina:      "519e44df2cc89579148aea8108e299efe9d0017d430fc652155af776d4b98d92"
+    sha256 cellar: :any,                 mojave:        "dc68f1326b0199f6c6f65db93eb483b843af975f8682feb17cc1c8789bc86df0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1a0c90873e8d1f23eabb22e5756e671b45f5083a3913c2be9e20a2cfe8b91f5e" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build
@@ -30,11 +30,17 @@ class Node < Formula
 
   uses_from_macos "zlib"
 
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with gcc: "5"
+
   # We track major/minor from upstream Node releases.
   # We will accept *important* npm patch releases when necessary.
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-7.18.1.tgz"
-    sha256 "afc22878cdd5d63b298d62abe832ee7fe37795cd8ccb1fe689ad31d28c790b08"
+    url "https://registry.npmjs.org/npm/-/npm-7.20.3.tgz"
+    sha256 "bf73538dbcd933e5a9d9575c0c39539aee3e70b32e27837037681662d3bc2c0b"
   end
 
   def install

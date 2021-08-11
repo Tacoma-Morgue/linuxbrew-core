@@ -130,7 +130,6 @@ class Mpich < Formula
   end
 end
 
-
 __END__
 --- a/src/binding/fortran/use_mpi_f08/mpi_f08_types.f90
 +++ b/src/binding/fortran/use_mpi_f08/mpi_f08_types.f90

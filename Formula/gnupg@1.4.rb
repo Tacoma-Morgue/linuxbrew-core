@@ -22,6 +22,8 @@ class GnupgAT14 < Formula
     sha256 x86_64_linux:  "6903320fde85f5a381381d906ad3fda31ad8f036056b0f48b7a2dd9e40f1c0bf" # linuxbrew-core
   end
 
+  uses_from_macos "zlib"
+
   def install
     args = %W[
       --disable-dependency-tracking

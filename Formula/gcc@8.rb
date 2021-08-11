@@ -1,5 +1,3 @@
-require "os/linux/glibc"
-
 class GccAT8 < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
@@ -16,8 +14,6 @@ class GccAT8 < Formula
     regex(%r{href=.*?gcc[._-]v?(8(?:\.\d+)+)(?:/?["' >]|\.t)}i)
   end
 
-  # gcc is designed to be portable.
-  # reminder: always add 'cellar :any'
   bottle do
     sha256 big_sur:      "c23c342d120580e8fbd897712b6ddce67fb0f0235ca8745736f4c00d8b0f2bd5"
     sha256 catalina:     "e031d1e8b3ac06f7fb3ae54e594254dcfdfd2e84e54b15ee370f570d4353db7c"
@@ -63,8 +59,6 @@ class GccAT8 < Formula
     #  - BRIG
     languages = %w[c c++ objc obj-c++ fortran]
 
-    args = []
-
     pkgversion = "Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip
 
     args = %W[
@@ -101,7 +95,7 @@ class GccAT8 < Formula
       args << "--without-build-config" if DevelopmentTools.clang_build_version >= 1205
 
       # Ensure correct install names when linking against libgcc_s;
-      # see discussion in https://github.com/Homebrew/homebrew/pull/34303
+      # see discussion in https://github.com/Homebrew/legacy-homebrew/pull/34303
       inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
     end
 

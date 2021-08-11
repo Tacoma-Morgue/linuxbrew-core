@@ -16,13 +16,9 @@ class Glfw < Formula
 
   depends_on "cmake" => :build
 
-  unless OS.mac?
+  on_linux do
     depends_on "freeglut"
-    depends_on "libx11"
     depends_on "libxcursor"
-    depends_on "libxi"
-    depends_on "libxinerama"
-    depends_on "libxrandr"
     depends_on "mesa"
   end
 
@@ -38,9 +34,6 @@ class Glfw < Formula
   end
 
   test do
-    # glfw doesn't work in headless mode
-    return if !OS.mac? && ENV["HOMEBREW_GITHUB_ACTIONS"]
-
     (testpath/"test.c").write <<~EOS
       #define GLFW_INCLUDE_GLU
       #include <GLFW/glfw3.h>

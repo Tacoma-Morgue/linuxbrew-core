@@ -3,17 +3,17 @@ class Circleci < Formula
   homepage "https://circleci.com/docs/2.0/local-cli/"
   # Updates should be pushed no more frequently than once per week.
   url "https://github.com/CircleCI-Public/circleci-cli.git",
-      tag:      "v0.1.15410",
-      revision: "ba6fe81ece6b6d70ce4788dea3de1d8981234319"
+      tag:      "v0.1.15663",
+      revision: "6ec121d68a6b12f46c604cc0f44d1e18d8bb2b52"
   license "MIT"
   head "https://github.com/CircleCI-Public/circleci-cli.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3004e164839cc0215ed249a58f51f39250430153af7d9840677679cad3d66ade"
-    sha256 cellar: :any_skip_relocation, big_sur:       "ec696c44c1fa9a3c351f63da60b524b4801f5a8b91e8a89cec36abb6eeb49ce6"
-    sha256 cellar: :any_skip_relocation, catalina:      "6d0fc192edf2af07b559caad0188084da339629b9f5fb7d469d759be99f1d0ba"
-    sha256 cellar: :any_skip_relocation, mojave:        "783766866d1f618591b5926979f546406349bbf66f6bc0c8a4f4a2a35c0ea7ca"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "334b995c7643a311e566b7f4c5b3595f21371d4b893b91f22967ab6ccb33b497" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "72d3e0af0fb0c5ac05207196d6597df12be4907888c654ef18fc6bdf46ddd364"
+    sha256 cellar: :any_skip_relocation, big_sur:       "0b4229fb0310285908ea35be0d92a032b79cbe80908200c97bf8c18aee344676"
+    sha256 cellar: :any_skip_relocation, catalina:      "b91423449eb4d06280d7567044aaa619aab2b987f7e71231420de623e0fde334"
+    sha256 cellar: :any_skip_relocation, mojave:        "6e4eec4ecceaf35d2792d327b24062d88ae22de98fbbdc92d81025980fac2159"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8bf164d2339b8a818718da7f831467adb97780bd1a245e2e947244b94d7bd9f5" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -29,6 +29,12 @@ class Circleci < Formula
       -X github.com/CircleCI-Public/circleci-cli/version.Commit=#{Utils.git_short_head}
     ]
     system "go", "build", *std_go_args(ldflags: ldflags.join(" "))
+
+    output = Utils.safe_popen_read("#{bin}/circleci", "--skip-update-check", "completion", "bash")
+    (bash_completion/"circleck").write output
+
+    output = Utils.safe_popen_read("#{bin}/circleci", "--skip-update-check", "completion", "zsh")
+    (zsh_completion/"_circleci").write output
   end
 
   test do

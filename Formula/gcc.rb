@@ -1,5 +1,3 @@
-require "os/linux/glibc"
-
 class Gcc < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
@@ -9,30 +7,27 @@ class Gcc < Formula
     # backported with his help to gcc-11 branch. Too big for a patch.
     url "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.1.0-arm-20210504.tar.gz"
     sha256 "ce862b4a4bdc8f36c9240736d23cd625a48af82c2332d2915df0e16e1609a74c"
-    version "11.1.0"
+    version "11.2.0"
   else
-    url "https://ftp.gnu.org/gnu/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
-    mirror "https://ftpmirror.gnu.org/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
-    sha256 "4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf"
+    url "https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/gcc/gcc-11.2.0/gcc-11.2.0.tar.xz"
+    sha256 "d08edc536b54c372a1010ff6619dd274c0f1603aa49212ba20f7aa2cda36fa8b"
   end
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
-  revision 1
   head "https://gcc.gnu.org/git/gcc.git"
 
+  # We can't use `url :stable` here due to the ARM-specific branch above.
   livecheck do
-    # Should be
-    # url :stable
-    # but that does not work with the ARM-specific branch above
-    url "https://ftp.gnu.org/gnu/gcc/gcc-11.1.0"
-    regex(%r{href=.*?gcc[._-]v?(\d+(?:\.\d+)+)(?:/?["' >]|\.t)}i)
+    url "https://ftp.gnu.org/gnu/gcc/"
+    regex(%r{href=["']?gcc[._-]v?(\d+(?:\.\d+)+)(?:/?["' >]|\.t)}i)
   end
 
   bottle do
-    sha256 arm64_big_sur: "5ad4c157cf19f01c6acfed380db28ff15276f02f4b5d6a20f5a7034583b174aa"
-    sha256 big_sur:       "4ec68e83ce46f4c686a4c9a7f90a748705543826da81e4c74c78d210b6c66c81"
-    sha256 catalina:      "c8405807d9bdab853432100e8d85bf3b4c7d4a4123067f099699a492d40a430b"
-    sha256 mojave:        "cac0a37271b71e40b3df7b9fa83190c11dfcd9640d8b3d02bc2ba2bae5b964ac"
-    sha256 x86_64_linux:  "7a2f47441a55ad77374ad67674d89fca5def4f9585ada08352d6498a1771f361" # linuxbrew-core
+    sha256 arm64_big_sur: "23ec727fa684a9f65cf9f55d61d208486d5202fb6112585a01426ac636724e56"
+    sha256 big_sur:       "da675b722172d8866c8c3eed38a107ebdb7fb8c5e9a9a8589382d5537b38c925"
+    sha256 catalina:      "79ce1258429ea2a7150e3dd6e517753ecb3b53724f79143ef559f5eb9f955a88"
+    sha256 mojave:        "54a56a9e9d4e27353cfa3871048581385fd6591b63baddfaa79b57f999ffc33e"
+    sha256 x86_64_linux:  "b77106d6f2a36dd0c9a0a4396cc77a71e81880bb9984ca68a0f986253f537053" # linuxbrew-core
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -112,9 +107,6 @@ class Gcc < Formula
         args << "--with-sysroot=#{sdk}"
       end
 
-      # Avoid reference to sed shim
-      args << "SED=/usr/bin/sed"
-
       # Ensure correct install names when linking against libgcc_s;
       # see discussion in https://github.com/Homebrew/legacy-homebrew/pull/34303
       inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
@@ -149,7 +141,6 @@ class Gcc < Formula
       end
 
       bin.install_symlink bin/"gfortran-#{version_suffix}" => "gfortran"
-
       bin.install_symlink bin/"gdc-#{version_suffix}" => "gdc" if Hardware::CPU.intel?
 
       on_linux do

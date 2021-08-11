@@ -1,16 +1,17 @@
 class Jrsonnet < Formula
   desc "Rust implementation of Jsonnet language"
   homepage "https://github.com/CertainLach/jrsonnet"
-  url "https://github.com/CertainLach/jrsonnet/archive/refs/tags/v0.4.1.tar.gz"
-  sha256 "f35d4c2ed7a1efada7768deadb5c7509e71846844d14108d68334db9d10645fb"
+  url "https://github.com/CertainLach/jrsonnet/archive/refs/tags/v0.4.2.tar.gz"
+  sha256 "2396c57a49a20db99da17b8ddd1b0b283f1a6e7c5ae1dc94823e7503cbb6ce3f"
   license "MIT"
   head "https://github.com/CertainLach/jrsonnet.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "059cd2549df2910dcc08b405fe9a927057d44cad1f63ebf222304cb3489c8ff2"
-    sha256 cellar: :any_skip_relocation, big_sur:       "88dca211837dfb36ffbcb6b5b5efb0d7245f82f2885e3c537b7ca96ff856ffe6"
-    sha256 cellar: :any_skip_relocation, catalina:      "dddef69f27bd0ed421cc3d2458ee98dc236b0348b9592f8bc199e8db00100cfe"
-    sha256 cellar: :any_skip_relocation, mojave:        "2aa7a841332b726e21ea560d3b62f9c35b17e42da6b464fca0099dee0d432fb2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "583e666fb6a076a89b1d447ad9220d30409cc62e931c1f4c9dd99cfee9291252"
+    sha256 cellar: :any_skip_relocation, big_sur:       "419f0a50acd6a0cce0abbfe2131d18bdf964fe0d09a095c2c92e10b8b1fb04af"
+    sha256 cellar: :any_skip_relocation, catalina:      "08a4bac487db7433903275f05ba23d11a8a8865590a23a868aa105f49416b650"
+    sha256 cellar: :any_skip_relocation, mojave:        "d927e34108112f33bfa9bb6d004c3540d983ff789d6e5969a4fc9aa8cba92a99"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8522b75f1d392dfa4b3221baa8d6310f46645f14f8b61319074173cc46723a47" # linuxbrew-core
   end
 
   depends_on "rust" => :build
@@ -19,6 +20,13 @@ class Jrsonnet < Formula
     cd "cmds/jrsonnet" do
       system "cargo", "install", *std_cargo_args
     end
+
+    bash_output = Utils.safe_popen_read(bin/"jrsonnet", "--generate", "bash", "-")
+    (bash_completion/"jrsonnet").write bash_output
+    zsh_output = Utils.safe_popen_read(bin/"jrsonnet", "--generate", "zsh", "-")
+    (zsh_completion/"_jrsonnet").write zsh_output
+    fish_output = Utils.safe_popen_read(bin/"jrsonnet", "--generate", "fish", "-")
+    (fish_completion/"jrsonnet.fish").write fish_output
   end
 
   test do

@@ -50,13 +50,6 @@ class Ruby < Formula
   end
 
   def install
-    if OS.linux? && build.bottle?
-      # The compiler used to build Ruby is stored in the bottle.
-      # See ruby <<<'print RbConfig::CONFIG["CC"]'
-      ENV["CC"] = "cc"
-      ENV["CXX"] = "c++"
-    end
-
     # otherwise `gem` command breaks
     ENV.delete("SDKROOT")
 
@@ -72,7 +65,6 @@ class Ruby < Formula
       --with-opt-dir=#{paths.join(":")}
       --without-gmp
     ]
-
     on_macos do
       args << "--disable-dtrace" unless MacOS::CLT.installed?
     end

@@ -1,8 +1,8 @@
 class Patchelf < Formula
   desc "Modify dynamic ELF executables"
   homepage "https://github.com/NixOS/patchelf"
-  url "https://bintray.com/homebrew/mirror/download_file?file_path=patchelf-0.12.tar.gz"
-  sha256 "2848beb6bbdfbf4efd12d627bdc315b74e7a5ed94a6a7b01c62641cdf4560e51"
+  url "https://github.com/NixOS/patchelf/releases/download/0.12/patchelf-0.12.tar.bz2"
+  sha256 "699a31cf52211cf5ad6e35a8801eb637bc7f3c43117140426400d67b7babd792"
   license "GPL-3.0-or-later"
   revision 4
   head "https://github.com/NixOS/patchelf.git"
@@ -41,10 +41,8 @@ class Patchelf < Formula
     end
 
     system "./configure", "--prefix=#{prefix}",
-      "CXXFLAGS=-static-libgcc -static-libstdc++",
-      "--disable-debug",
-      "--disable-dependency-tracking",
-      "--disable-silent-rules"
+                          "--disable-dependency-tracking",
+                          "--disable-silent-rules"
     system "make", "install"
   end
 

@@ -14,7 +14,7 @@ class Kallisto < Formula
     sha256 cellar: :any, x86_64_linux:  "e156a9efff4fdd99320d9d3a5c65cdc7cbe35ae36319ff975ed97f7918390398" # linuxbrew-core
   end
 
-  depends_on "autoconf" => :build
+  depends_on "autoconf@2.69" => :build
   depends_on "automake" => :build
   depends_on "cmake" => :build
   depends_on "hdf5"

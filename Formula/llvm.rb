@@ -414,6 +414,7 @@ class Llvm < Formula
     # link against installed libc++
     # related to https://github.com/Homebrew/legacy-homebrew/issues/47149
     system "#{bin}/clang++", "-v",
+           "-isystem", "#{opt_include}/c++/v1",
            "-std=c++11", "-stdlib=libc++", "test.cpp", "-o", "testlibc++",
            "-rtlib=compiler-rt", "-L#{opt_lib}", "-Wl,-rpath,#{opt_lib}"
     assert_includes (testpath/"testlibc++").dynamically_linked_libraries,

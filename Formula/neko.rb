@@ -4,22 +4,22 @@ class Neko < Formula
   url "https://github.com/HaxeFoundation/neko/archive/v2-3-0/neko-2.3.0.tar.gz"
   sha256 "850e7e317bdaf24ed652efeff89c1cb21380ca19f20e68a296c84f6bad4ee995"
   license "MIT"
-  revision 5
+  revision 6
   head "https://github.com/HaxeFoundation/neko.git"
 
   bottle do
-    sha256                               arm64_big_sur: "af5741505f1dfa04a3b0db4c0f4597349feaf689ec71398080d390b8249bd4b7"
-    sha256                               big_sur:       "79ecc848456fd01be73b516bc07e164dd11b33a905a0d73b8f931c190d7cc12b"
-    sha256                               catalina:      "7573817ae88731e28e66548ec3986dd1406acb225a9c6a5b8747274b94b11123"
-    sha256                               mojave:        "730fdace26e12cb7d348e61ed1b2799cefa196f78ea6cff8e3acefb27c20d779"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ba1d0fd261668ff4653839e1cdbb49a61b05671775a9abab8af297edb385b57a" # linuxbrew-core
+    sha256                               arm64_big_sur: "db3b62ea32c9b528423997eb79bab7b96463f3074e5452499a1ea87f742129f0"
+    sha256                               big_sur:       "ca0a54255e775f29b6867eda77f2ff115424c77293755847eb8edf4a8d5bb142"
+    sha256                               catalina:      "f1adf8d28ac342d233f018c7263c66072969e97ff4efd7c1e0645b80083332dd"
+    sha256                               mojave:        "49ecf3a704be8b5451af12ce5ccb8bf921141e3243ac525794a61e22c987f18e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c972b7c4d8475dd266144f8b384fc835a6141c5532542dbcf1bf63ee45c305de" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "bdw-gc"
-  depends_on "mbedtls"
+  depends_on "mbedtls@2"
   depends_on "openssl@1.1"
   depends_on "pcre"
 
@@ -69,7 +69,6 @@ class Neko < Formula
   end
 
   def install
-    args = std_cmake_args
     inreplace "libs/mysql/CMakeLists.txt",
               %r{https://downloads.mariadb.org/f/},
               "https://downloads.mariadb.com/Connectors/c/"
@@ -78,24 +77,29 @@ class Neko < Formula
     # maria-connector fails to detect the location of iconv.dylib on Big Sur.
     # Also, no reason for maria-connector to compile its own version of zlib,
     # just link against the system copy.
-    inreplace "libs/mysql/CMakeLists.txt",
-              "-Wno-dev",
-              "-Wno-dev -DICONV_LIBRARIES=-liconv -DICONV_INCLUDE_DIR= -DWITH_EXTERNAL_ZLIB=1"
+    mysql_cmake_args = ["-Wno-dev", "-DWITH_EXTERNAL_ZLIB=1"]
+    on_macos do
+      mysql_cmake_args << "-DICONV_LIBRARIES=-liconv"
+      mysql_cmake_args << "-DICONV_INCLUDE_DIR="
+    end
+    inreplace "libs/mysql/CMakeLists.txt", "-Wno-dev", mysql_cmake_args.join(" ")
 
     args = std_cmake_args
     on_linux do
-      args << "-DAPR_LIBRARY=#{Formula["apr"].libexec}/lib"
-      args << "-DAPR_INCLUDE_DIR=#{Formula["apr"].libexec}/include/apr-1"
-      args << "-DAPRUTIL_LIBRARY=#{Formula["apr-util"].libexec}/lib"
-      args << "-DAPRUTIL_INCLUDE_DIR=#{Formula["apr-util"].libexec}/include/apr-1"
+      args << "-DAPR_LIBRARY=#{Formula["apr"].opt_lib}"
+      args << "-DAPR_INCLUDE_DIR=#{Formula["apr"].opt_include}/apr-1"
+      args << "-DAPRUTIL_LIBRARY=#{Formula["apr-util"].opt_lib}"
+      args << "-DAPRUTIL_INCLUDE_DIR=#{Formula["apr-util"].opt_include}/apr-1"
     end
 
     # Let cmake download its own copy of MariaDBConnector during build and statically link it.
     # It is because there is no easy way to define we just need any one of mariadb, mariadb-connector-c,
     # mysql, and mysql-client.
-    system "cmake", ".", "-G", "Ninja", "-DSTATIC_DEPS=MariaDBConnector",
-           "-DRELOCATABLE=OFF", "-DRUN_LDCONFIG=OFF", *args
-    system "ninja", "install"
+    mkdir "build" do
+      system "cmake", "..", "-G", "Ninja", "-DSTATIC_DEPS=MariaDBConnector",
+             "-DRELOCATABLE=OFF", "-DRUN_LDCONFIG=OFF", *args
+      system "ninja", "install"
+    end
   end
 
   def caveats

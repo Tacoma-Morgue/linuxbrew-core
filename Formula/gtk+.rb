@@ -37,8 +37,6 @@ class Gtkx < Formula
   depends_on "hicolor-icon-theme"
   depends_on "pango"
 
-  uses_from_macos "cups"
-
   on_linux do
     depends_on "cairo"
     depends_on "libxinerama"
@@ -109,8 +107,7 @@ class Gtkx < Formula
     libpng = Formula["libpng"]
     pango = Formula["pango"]
     pixman = Formula["pixman"]
-    flags = (ENV.cflags || "").split + (ENV.cppflags || "").split + (ENV.ldflags || "").split
-    flags += %W[
+    flags = %W[
       -I#{atk.opt_include}/atk-1.0
       -I#{cairo.opt_include}/cairo
       -I#{fontconfig.opt_include}

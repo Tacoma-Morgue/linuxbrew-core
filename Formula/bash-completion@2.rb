@@ -26,8 +26,6 @@ class BashCompletionAT2 < Formula
     depends_on "automake" => :build
   end
 
-  keg_only :versioned_formula
-
   depends_on "bash"
 
   conflicts_with "bash-completion",

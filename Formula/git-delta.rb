@@ -1,23 +1,21 @@
 class GitDelta < Formula
   desc "Syntax-highlighting pager for git and diff output"
   homepage "https://github.com/dandavison/delta"
-  url "https://github.com/dandavison/delta/archive/0.8.2.tar.gz"
-  sha256 "b29db829a22f77538ce2e291e4c1b8f9aa7e714dbe5200c6353670a888b746d3"
+  url "https://github.com/dandavison/delta/archive/0.8.3.tar.gz"
+  sha256 "cf48d52d20a12e11a3a6afd436a75550e78fc39c358e85a75caa08b39e4e75c6"
   license "MIT"
   head "https://github.com/dandavison/delta.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "be00245c46b59102dd8137e57d9a040bb19e570697968a46bccac1e40160f75b"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3d9082ceeb39d5eea1d05a3ca589aa3edfdca89bfd833b2f2d5c6fbe8a09a1bb"
-    sha256 cellar: :any_skip_relocation, catalina:      "9e613f07aeec747ed8d5af0e96c19274a4b3a1cf779bb3c96d30f17a2afc4aa0"
-    sha256 cellar: :any_skip_relocation, mojave:        "a15d0f20ba032f9e438e799347646167b9a0f4ad74c607d4ff25e204fc27ee50"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bd02491b7ac18227dc23088d7c0294e92d482de6c1f793eb4b6c89c97e800e92" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c1863678cb96ffb95451fc4677cea5ef2fb2280d61efe7061884e21fddc0c4f9"
+    sha256 cellar: :any_skip_relocation, big_sur:       "784f02aca241d3055f7932a4ebdc983955dbfa1551cf96b99a67c67da382e9e5"
+    sha256 cellar: :any_skip_relocation, catalina:      "50954d3cc47cdf353f050ca12f378779e827f724c41a48e40b3d4b6a7ebb53d6"
+    sha256 cellar: :any_skip_relocation, mojave:        "45420b913807614d341c14e715253be518ac9b77ebaa947af2b32528c3ed0382"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "26afa2df817e52c4f2ce6cfe4ba49e4312787ee00278858d0124358ee97da04a" # linuxbrew-core
   end
 
   depends_on "rust" => :build
-  depends_on "llvm" => :build unless OS.mac?
-
-  uses_from_macos "zlib"
+  uses_from_macos "llvm"
 
   conflicts_with "delta", because: "both install a `delta` binary"
 

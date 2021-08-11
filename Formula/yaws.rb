@@ -13,8 +13,11 @@ class Yaws < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "05a4889aabbc463927e6e86f7ce5ab6fdf4e041ff61b1ae063622482c022abc5" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "55f35e91696552c9e0240835f8fc02c733b2bd657733c86123ee3d472ef5e9f6"
+    sha256 cellar: :any_skip_relocation, big_sur:       "79fe292028db08b81a2f66f80cbc2fd7c52e9801692c416ea275663c61dd4533"
+    sha256 cellar: :any_skip_relocation, catalina:      "99c7e7a4fb01e682a1f1cf513ac6b4202f9f030fea64836a0b71354802fde033"
+    sha256 cellar: :any_skip_relocation, mojave:        "f8b43c32a42426bc2e0b774e8abde8c7b32206ad19c230231ba22f32a1312eb5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fc32687f3ccaa7c9f57e320ac6a0be5c26c2348bf9cb6021ce398d2366411217" # linuxbrew-core
   end
 
   depends_on "autoconf" => :build

@@ -18,10 +18,6 @@ class JsonFortran < Formula
   depends_on "ford" => :build
   depends_on "gcc" # for gfortran
 
-  on_linux do
-    depends_on "libx11"
-  end
-
   def install
     mkdir "build" do
       system "cmake", "..", *std_cmake_args,

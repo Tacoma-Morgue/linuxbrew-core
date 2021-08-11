@@ -22,11 +22,21 @@ class Sdl2Net < Formula
     sha256 cellar: :any, x86_64_linux:  "a8f5d11fec7bb5fe7ba1cbfec35ba08faaca60928271d7ea1bfd5cc77ea7665f" # linuxbrew-core
   end
 
+  head do
+    url "https://github.com/libsdl-org/SDL_net.git", branch: "main"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
+
   depends_on "pkg-config" => :build
   depends_on "sdl2"
 
   def install
     inreplace "SDL2_net.pc.in", "@prefix@", HOMEBREW_PREFIX
+
+    system "./autogen.sh" if build.head?
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}", "--disable-sdltest"

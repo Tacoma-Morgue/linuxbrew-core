@@ -1,31 +1,35 @@
 class Gitversion < Formula
   desc "Easy semantic versioning for projects using Git"
   homepage "https://gitversion.net"
-  url "https://github.com/GitTools/GitVersion/archive/5.6.10.tar.gz"
-  sha256 "5a4cdca526241f322e51fc307a5be2ef236281b6c5cca833fa04bc8eecd9f725"
+  url "https://github.com/GitTools/GitVersion/archive/5.6.11.tar.gz"
+  sha256 "019aa795201d249929a179464d7f45d4c7b62c11b39146efe58b135d27d507c0"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, big_sur:  "5e99b09d02ac3aa3074a179782ad8fcca9ca6c93a9188d83e5f6e1a05abbb985"
-    sha256 cellar: :any, catalina: "f241568286448f027878bd1f1adf1900377d6b064651a19b4632c65f295f7046"
-    sha256 cellar: :any, mojave:   "e0bb3d487d3960d9aabcd20f8a305759d5d03afb95e3e8e0e4e78c21730fd204"
+    sha256 cellar: :any,                 big_sur:      "40640f290fe8127679c87abcc704592eebaf0eae52ca55fc20cb5d5faa37c72d"
+    sha256 cellar: :any,                 catalina:     "b004bbcba66e5dbf4dca5b66974e65f5b49e9a12b97724a91a2b029e0e4406f3"
+    sha256 cellar: :any,                 mojave:       "85042a5e5f3791e1b07e9ee944c8a1217f3403836e7bac14793d1b37bb1fa906"
   end
 
+  depends_on arch: :x86_64 # dotnet does not support ARM
   depends_on "dotnet"
 
   def install
-    system "dotnet", "build",
+    os = "osx"
+    on_linux do
+      os = "linux"
+    end
+
+    system "dotnet", "publish", "src/GitVersion.App/GitVersion.App.csproj",
            "--configuration", "Release",
            "--framework", "net#{Formula["dotnet"].version.major_minor}",
-           "--output", "out",
-           "src/GitVersion.App/GitVersion.App.csproj"
+           "--output", libexec,
+           "--runtime", "#{os}-x64",
+           "--self-contained", "false",
+           "/p:PublishSingleFile=true"
 
-    libexec.install Dir["out/*"]
-
-    (bin/"gitversion").write <<~EOS
-      #!/bin/sh
-      exec "#{Formula["dotnet"].opt_bin}/dotnet" "#{libexec}/gitversion.dll" "$@"
-    EOS
+    env = { DOTNET_ROOT: "${DOTNET_ROOT:-#{Formula["dotnet"].opt_libexec}}" }
+    (bin/"gitversion").write_env_script libexec/"gitversion", env
   end
 
   test do

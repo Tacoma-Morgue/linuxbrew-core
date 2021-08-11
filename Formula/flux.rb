@@ -2,8 +2,8 @@ class Flux < Formula
   desc "Lightweight scripting language for querying databases"
   homepage "https://www.influxdata.com/products/flux/"
   url "https://github.com/influxdata/flux.git",
-      tag:      "v0.120.1",
-      revision: "53a66ff77c95cd97b32b71ae2c2b8624c7d3f7ad"
+      tag:      "v0.124.0",
+      revision: "e9849ceac023cc8015ced3ad0e8e11f7775bee6b"
   license "MIT"
   head "https://github.com/influxdata/flux.git"
 
@@ -13,19 +13,18 @@ class Flux < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1cf4e5824b5986e4cda24dd40778794cac198105ad91455c74a5e626f97dfdf4"
-    sha256 cellar: :any,                 big_sur:       "564eb1eb4444d5fe3ce52086104600eea42b9e7446ce0dc8a3007f66bb713c52"
-    sha256 cellar: :any,                 catalina:      "024f042783e160a27e6f411140cecdb2f5676576d041a7814e1d017bbf716f19"
-    sha256 cellar: :any,                 mojave:        "1e01be0b9e4f2201c712f405d0eb80789b3aa18cc183a50d255f2b2016c447ca"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "661b38233601ba5afe785729b56deb00de45ac03d8d523be727ef2a18cf75975"
+    sha256 cellar: :any,                 big_sur:       "b79be036c6bfc53b08574a4f249899bd170cf1e817f43aeb5eed677626323486"
+    sha256 cellar: :any,                 catalina:      "ff259440a60ca5c47ce97fc5ae48f0f6d5fd33a829b32605cb7594948697f803"
+    sha256 cellar: :any,                 mojave:        "db88621e5d220554a13a97c94972116b7050bd62bec339483ab3e859562529e6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fde913d9ea75b5f2f8ee88801800d8d2d212747b241ec0b8a69826393cd79713" # linuxbrew-core
   end
 
   depends_on "go" => :build
   depends_on "rust" => :build
 
   on_linux do
-    depends_on "llvm" => :build
     depends_on "pkg-config" => :build
-    depends_on "ragel" => :build
   end
 
   def install

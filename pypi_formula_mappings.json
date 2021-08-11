@@ -22,9 +22,10 @@
     "exclude_packages": ["pillow", "tabulate"]
   },
   "athenacli": {
-    "exclude_packages": ["tabulate"]
+    "exclude_packages": ["six", "tabulate"]
   },
   "black": "black[d]",
+  "bpytop": "bpytop",
   "breezy": {
     "exclude_packages": ["six"]
   },
@@ -34,6 +35,9 @@
   },
   "certbot": {
     "extra_packages": ["certbot-apache", "certbot-nginx"]
+  },
+  "cfn-lint": {
+    "exclude_packages": ["junit-xml"]
   },
   "ciphey": {
     "exclude_packages": ["six"]
@@ -98,7 +102,8 @@
     "exclude_packages": ["six"]
   },
   "molecule": {
-    "extra_packages": ["docker-py", "python-vagrant"]
+    "extra_packages": ["docker-py", "molecule-vagrant", "python-vagrant"],
+    "exclude_packages": ["six"]
   },
   "moto": {
     "package_name": "moto[all,server]",
@@ -134,9 +139,13 @@
   "poetry": {
     "extra_packages": ["importlib-metadata", "typing-extensions"]
   },
+  "principalmapper": {
+    "exclude_packages": ["six"]
+  },
   "protobuf": {
     "exclude_packages": ["six"]
   },
+  "pydocstyle": "pydocstyle[toml]",
   "pyqt-builder": {
     "exclude_packages": ["packaging", "pyparsing", "sip", "toml"]
   },
@@ -147,7 +156,8 @@
     "exclude_packages": ["six"]
   },
   "regipy": {
-    "exclude_packages": ["tabulate"]
+    "exclude_packages": ["tabulate"],
+    "extra_packages": ["click"]
   },
   "robot-framework": {
     "extra_packages": ["robotframework-archivelibrary", "robotframework-selenium2library", "robotframework-sshlibrary"]

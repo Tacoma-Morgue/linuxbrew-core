@@ -33,6 +33,7 @@ class Valgrind < Formula
     ]
 
     system "./autogen.sh" if build.head?
+
     system "./configure", *args
     system "make"
     system "make", "install"

@@ -39,13 +39,6 @@ class Libffi < Formula
     system "./autogen.sh" if build.head?
     system "./configure", *std_configure_args
     system "make", "install"
-
-    # Move lib64/* to lib/ on Linuxbrew
-    lib64 = Pathname.new "#{lib}64"
-    if lib64.directory?
-      mv Dir[lib64/"*"], lib
-      rmdir lib64
-    end
   end
 
   test do

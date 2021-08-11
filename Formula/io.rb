@@ -5,7 +5,7 @@ class Io < Formula
   sha256 "9ac5cd94bbca65c989cd254be58a3a716f4e4f16480f0dc81070457aa353c217"
   license "BSD-3-Clause"
   revision OS.mac? ? 1 : 2
-  head "https://github.com/stevedekorte/io.git"
+  head "https://github.com/IoLanguage/io.git"
 
   bottle do
     sha256 big_sur:      "fae9b76e33ac8a9f4dd4f3c2335b13b003c2bdc01b81c4a2efbf5d7435c51e15"

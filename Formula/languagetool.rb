@@ -13,9 +13,9 @@ class Languagetool < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "78da6202913ceb86d7c5e4b6f7635389b9023828c7ad403aaf239ebc86057c8c"
-    sha256 cellar: :any_skip_relocation, catalina: "6086605181e62db297f9a4e02980b3e53ff628b88818ae11ab5ba4f715c13cbf"
-    sha256 cellar: :any_skip_relocation, mojave:   "e6c0973d1338c4d57304c38559f08d9a3192193ceb1071f807640869f475e83b"
+    sha256 cellar: :any_skip_relocation, big_sur:      "78da6202913ceb86d7c5e4b6f7635389b9023828c7ad403aaf239ebc86057c8c"
+    sha256 cellar: :any_skip_relocation, catalina:     "6086605181e62db297f9a4e02980b3e53ff628b88818ae11ab5ba4f715c13cbf"
+    sha256 cellar: :any_skip_relocation, mojave:       "e6c0973d1338c4d57304c38559f08d9a3192193ceb1071f807640869f475e83b"
   end
 
   depends_on "maven" => :build
@@ -46,6 +46,7 @@ class Languagetool < Formula
     (testpath/"test.txt").write <<~EOS
       Homebrew, this is an test
     EOS
-    assert_match "Message: Use ?a? instead of ?an?", shell_output("#{bin}/languagetool -l en-US test.txt 2>&1")
+    output = shell_output("#{bin}/languagetool -l en-US test.txt 2>&1")
+    assert_match(/Message: Use \Wa\W instead of \Wan\W/, output)
   end
 end

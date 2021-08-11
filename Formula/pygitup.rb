@@ -15,6 +15,7 @@ class Pygitup < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "73f588950c094ae92b1bbc209f06a17ecdc85fc619494aceccded0dd5ed9f0e5" # linuxbrew-core
   end
 
+  depends_on "poetry" => :build
   depends_on "python@3.9"
 
   resource "click" do
@@ -48,7 +49,10 @@ class Pygitup < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_create(libexec, "python3")
+    venv.pip_install resources
+    system Formula["poetry"].opt_bin/"poetry", "build", "--format", "wheel", "--verbose", "--no-interaction"
+    venv.pip_install_and_link Dir["dist/git_up-*.whl"].first
   end
 
   test do

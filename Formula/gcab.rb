@@ -29,8 +29,6 @@ class Gcab < Formula
   depends_on "glib"
 
   def install
-    ENV.refurbish_args
-
     mkdir "build" do
       system "meson", *std_meson_args, "-Ddocs=false", ".."
       system "ninja"

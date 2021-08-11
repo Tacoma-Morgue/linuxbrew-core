@@ -10,9 +10,6 @@ class Libfuse < Formula
     sha256 x86_64_linux: "7b065c02ab46c0a6567cbccc5ecf14fa8f9c5b8735fa136ab64f958227fe7d9a" # linuxbrew-core
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "libtool" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on :linux

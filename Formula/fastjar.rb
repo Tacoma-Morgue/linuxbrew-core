@@ -20,6 +20,8 @@ class Fastjar < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "105475ad7537803166b4808b58228839264d19bb73310fc846bba85ad56b3c05" # linuxbrew-core
   end
 
+  uses_from_macos "zlib"
+
   def install
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"

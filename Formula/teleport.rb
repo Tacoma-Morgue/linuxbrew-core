@@ -1,8 +1,8 @@
 class Teleport < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://gravitational.com/teleport"
-  url "https://github.com/gravitational/teleport/archive/v6.2.7.tar.gz"
-  sha256 "cd13a2085f6f6475d37eac81a5973890c56ef410432fe84453283fde6eb79a80"
+  url "https://github.com/gravitational/teleport/archive/v6.2.8.tar.gz"
+  sha256 "bbc128d0778d253ec6e8af44286df750caec65d8c8e2616c85cf2656c267460f"
   license "Apache-2.0"
   head "https://github.com/gravitational/teleport.git"
 
@@ -12,15 +12,14 @@ class Teleport < Formula
   # to a release from the older major version.
   livecheck do
     url :stable
-    strategy :git
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "02063234d1b82f32911e02f1542732fe786ab16d576123e419b8468b06a41720"
-    sha256 cellar: :any_skip_relocation, big_sur:       "e5ba46d46053809b32eea9e695ddd4e1335c6cf84a520717b2b36c5c2e247f44"
-    sha256 cellar: :any_skip_relocation, catalina:      "8e072c6a15d16cfd667925c222a087bc5829f017f4261e1df17d5fd108887d35"
-    sha256 cellar: :any_skip_relocation, mojave:        "ef7cccb8afb6a6dfae9ef218dd01f99434f3c107001b99f1895f7e8aa55f3061"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ec2e5eec94fd29dbdd28a04f5009173d68474b5bb58ef516a2d01f3b8e31ea88"
+    sha256 cellar: :any_skip_relocation, big_sur:       "9dd6db6e7d6678249ae8f525bfce26b8af0c6bce0ed4963a608ec5718ea7e503"
+    sha256 cellar: :any_skip_relocation, catalina:      "c0e9aa81b4fdeb60cd94f78b5f0e563e43f84778ab1ba9216a5b1d04b4575e98"
+    sha256 cellar: :any_skip_relocation, mojave:        "e1e719e005e8d5afdf67889bac8d550352d0e4a7f69c2a3e3514c197a8920a85"
   end
 
   depends_on "go" => :build
@@ -33,8 +32,8 @@ class Teleport < Formula
 
   # Keep this in sync with https://github.com/gravitational/teleport/tree/v#{version}
   resource "webassets" do
-    url "https://github.com/gravitational/webassets/archive/5adea0140c19514f77b1327c4315f99ee77e8261.tar.gz"
-    sha256 "97e253e414430b6a3493502639640c76f272a931d3fcaf55d0a91fc77e3367dd"
+    url "https://github.com/gravitational/webassets/archive/c63397375632f1a4323918dde78334472f3ffbb9.tar.gz"
+    sha256 "0510b757f259aee6ff1d43611132050ef5bf2d798c12c6e2e5c36d7fda58c104"
   end
 
   def install

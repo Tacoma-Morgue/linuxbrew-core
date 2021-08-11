@@ -29,10 +29,6 @@ class Libewf < Formula
   uses_from_macos "zlib"
 
   def install
-    # Workaround bug in gcc-5 that causes the following error:
-    # undefined reference to `libuna_ ...
-    ENV.append_to_cflags "-std=gnu89" if ENV.cc == "gcc-5"
-
     if build.head?
       system "./synclibs.sh"
       system "./autogen.sh"

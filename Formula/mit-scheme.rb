@@ -71,6 +71,7 @@ class MitScheme < Formula
 
     inreplace "microcode/configure" do |s|
       s.gsub! "/usr/local", prefix
+
       on_macos do
         # Fixes "configure: error: No MacOSX SDK for version: 10.10"
         # Reported 23rd Apr 2016: https://savannah.gnu.org/bugs/index.php?47769

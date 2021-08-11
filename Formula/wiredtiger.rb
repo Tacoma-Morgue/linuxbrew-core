@@ -11,10 +11,10 @@ class Wiredtiger < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "2e2b170afa925805d7f94e127dc6c66f7ae5d042a37860e736e9c6cbf1696acb"
-    sha256 cellar: :any, big_sur:       "73dec56cf3779376bb1e111c6d96900bfd73e5df072dfce752defaf06d98b167"
-    sha256 cellar: :any, catalina:      "16d0323167834b745163edf87b88693a7b49ace3f901042c0d78fbfbe5afa8a8"
-    sha256 cellar: :any, mojave:        "0c2bbb142e29427648f66455b69028d1650b3d420700d31e952a70e58cc361f8"
+    sha256 cellar: :any,                 arm64_big_sur: "2e2b170afa925805d7f94e127dc6c66f7ae5d042a37860e736e9c6cbf1696acb"
+    sha256 cellar: :any,                 big_sur:       "73dec56cf3779376bb1e111c6d96900bfd73e5df072dfce752defaf06d98b167"
+    sha256 cellar: :any,                 catalina:      "16d0323167834b745163edf87b88693a7b49ace3f901042c0d78fbfbe5afa8a8"
+    sha256 cellar: :any,                 mojave:        "0c2bbb142e29427648f66455b69028d1650b3d420700d31e952a70e58cc361f8"
   end
 
   depends_on "snappy"

@@ -1,8 +1,8 @@
 class Armadillo < Formula
   desc "C++ linear algebra library"
   homepage "https://arma.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/arma/armadillo-10.5.3.tar.xz"
-  sha256 "e6c51d8d52a6f78b9c6459f6986135093e0ee705a674307110f6175f2cd5ee37"
+  url "https://downloads.sourceforge.net/project/arma/armadillo-10.6.2.tar.xz"
+  sha256 "2a803d6f8f76d407db9c15edc3894965238c8e589f94cc907a8373ee945728a8"
   license "Apache-2.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class Armadillo < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "ffc251baf898ec461394c0b3684a79a1134cbb7c5f085eb1327d15881ca50e8d"
-    sha256 cellar: :any,                 big_sur:       "947fedf6c1e9072ca0737ac4b6027ff32e50fc520432c570eb4508e95870864b"
-    sha256 cellar: :any,                 catalina:      "ffcc5e38f5a31570a59a50880be323bfbed0d651d7b3301739e22037272ac00d"
-    sha256 cellar: :any,                 mojave:        "e66c9b43ba17c118a0343910a07f9ec8c3db0ac870b1034bef96c64cecd4e59f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b7896cef5352298624f783f674e1519f10ca46bcccdd731b4f4da2f352ce6c0b" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "0344bd993165cf6b05e8d697eeb5a6956e73e4a5f2b4b3e2d9f4c80b7480ce1f"
+    sha256 cellar: :any,                 big_sur:       "11c8cb78e7a99befa9d57153ba4e51844ccbb9dc471f2b4df55bb915466ada31"
+    sha256 cellar: :any,                 catalina:      "672039181b0d20615d10c18860df2e2187c7c00a48f16d9420edbcf5c8cf086d"
+    sha256 cellar: :any,                 mojave:        "64110329e7400b96adba49a08be247019d2b861e592338e1768fe48df26e536e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d179b1e2367cc872dad0366463619d805b8b464d09151f77c0411c38cda0f79" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -31,6 +31,10 @@ class Armadillo < Formula
 
     system "cmake", ".", "-DDETECT_HDF5=ON", "-DALLOW_OPENBLAS_MACOS=ON", *std_cmake_args
     system "make", "install"
+
+    # Avoid cellar path references that are invalidated by version/revision bumps
+    hdf5 = Formula["hdf5"]
+    inreplace include/"armadillo_bits/config.hpp", hdf5.prefix.realpath, hdf5.opt_prefix
   end
 
   test do

@@ -38,15 +38,6 @@ class Nettle < Formula
     system "make"
     system "make", "install"
     system "make", "check"
-
-    # Move lib64/* to lib/ on Linux
-    lib64 = Pathname.new "#{lib}64"
-    if lib64.directory?
-      mkdir_p lib
-      system "mv #{lib64}/* #{lib}/"
-      rmdir lib64
-      inreplace Dir[lib/"pkgconfig/*"], "/lib64", "/lib"
-    end
   end
 
   test do

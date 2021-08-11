@@ -15,7 +15,6 @@ class Pillow < Formula
   end
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.7" => [:build, :test] if OS.mac? && !Hardware::CPU.arm?
   depends_on "python@3.8" => [:build, :test]
   depends_on "python@3.9" => [:build, :test]
   depends_on "jpeg"
@@ -28,6 +27,10 @@ class Pillow < Formula
   depends_on "webp"
 
   uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "python@3.7" => [:build, :test] unless Hardware::CPU.arm?
+  end
 
   def pythons
     deps.map(&:to_formula)

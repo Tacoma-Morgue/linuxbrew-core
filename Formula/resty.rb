@@ -1,4 +1,6 @@
 class Resty < Formula
+  include Language::Python::Shebang
+
   desc "Command-line REST client that can be used in pipelines"
   homepage "https://github.com/micha/resty"
   url "https://github.com/micha/resty/archive/v3.0.tar.gz"
@@ -18,6 +20,10 @@ class Resty < Formula
   end
 
   uses_from_macos "perl"
+
+  on_linux do
+    depends_on "python@3.9"
+  end
 
   conflicts_with "nss", because: "both install `pp` binaries"
 
@@ -41,6 +47,9 @@ class Resty < Formula
     bin.env_script_all_files(libexec/"bin", PERL5LIB: ENV["PERL5LIB"])
 
     bin.install "pypp"
+    on_linux do
+      rewrite_shebang detected_python_shebang, bin/"pypp"
+    end
   end
 
   def caveats
@@ -51,7 +60,7 @@ class Resty < Formula
   end
 
   test do
-    cmd = "zsh -c '. #{pkgshare}/resty && resty https://api.github.com' 2>&1"
+    cmd = "bash -c '. #{pkgshare}/resty && resty https://api.github.com' 2>&1"
     assert_equal "https://api.github.com*", shell_output(cmd).chomp
     json_pretty_pypp=<<~EOS
       {

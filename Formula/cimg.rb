@@ -1,17 +1,13 @@
 class Cimg < Formula
   desc "C++ toolkit for image processing"
   homepage "https://cimg.eu/"
-  url "https://cimg.eu/files/CImg_2.9.7.zip"
-  sha256 "595dda9718431a123b418fa0db88e248c44590d47d9b1646970fa0503e27fa5c"
+  url "https://cimg.eu/files/CImg_2.9.8.zip"
+  sha256 "1bbb2091498a46cff0e8aa75cb77be80fef0d6b9b386eb021c9515895f13b171"
   license "CECILL-2.0"
 
   livecheck do
     url "https://cimg.eu/files/"
     regex(/href=.*?CImg[._-]v?(\d+(?:\.\d+)+)\.zip/i)
-  end
-
-  bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "00665e094498209f99bce51093d12ea584e38823b5627aac2407d1a6a0d09038" # linuxbrew-core
   end
 
   def install

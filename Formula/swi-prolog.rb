@@ -12,8 +12,11 @@ class SwiProlog < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 x86_64_linux: "12ecb163975e72690071c6011e3c7e50b6460ddc493a8c6ae8900aa96969b985" # linuxbrew-core
+    sha256 arm64_big_sur: "3a899873b22a6e4e380498ec855d2c0c7919c848872087da676d385745e39179"
+    sha256 big_sur:       "1a5384ec31ca1088eff1e16d1977a4120f12e8c15e3703ef3c80c564848e2e5c"
+    sha256 catalina:      "06c31b007436027785e73cdbf16d82dd6356766b821580a4fceda8db5eb4c86c"
+    sha256 mojave:        "1deeaab4064bf3da632a28e539f46790252cfec839ae932bc729ecc239e347c3"
+    sha256 x86_64_linux:  "e6e69b8d32e9cb03ce72e76cd1e96f99fc2b5b1401ff64acdb94c9a4aba458ff" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -29,6 +32,14 @@ class SwiProlog < Formula
   depends_on "unixodbc"
 
   def install
+    # Remove shim paths from binary files `swipl-ld` and `libswipl.so.*`
+    on_linux do
+      inreplace "cmake/Params.cmake" do |s|
+        s.gsub! "${CMAKE_C_COMPILER}", "\"gcc\""
+        s.gsub! "${CMAKE_CXX_COMPILER}", "\"g++\""
+      end
+    end
+
     mkdir "build" do
       system "cmake", "..", *std_cmake_args,
                       "-DSWIPL_PACKAGES_JAVA=OFF",
@@ -38,13 +49,6 @@ class SwiProlog < Formula
     end
 
     bin.write_exec_script Dir["#{libexec}/bin/*"]
-
-    on_linux do
-      inreplace "libexec/lib/swipl/bin/x86_64-linux/swipl-ld",
-        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
-      inreplace "libexec/lib/swipl/lib/x86_64-linux/libswipl.so.#{version}",
-        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
-    end
   end
 
   test do

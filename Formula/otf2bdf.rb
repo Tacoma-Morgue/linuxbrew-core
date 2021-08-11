@@ -16,16 +16,16 @@ class Otf2bdf < Formula
 
   depends_on "freetype"
 
-  resource "mkinstalldirs" do
-    url "http://sofia.nmsu.edu/~mleisher/Software/otf2bdf/mkinstalldirs"
-    sha256 "e7b13759bd5caac0976facbd1672312fe624dd172bbfd989ffcc5918ab21bfc1"
-  end
-
-  unless OS.mac?
+  on_linux do
     resource "test-font" do
       url "https://raw.githubusercontent.com/paddykontschak/finder/master/fonts/LucidaGrande.ttc"
       sha256 "e188b3f32f5b2d15dbf01e9b4480fed899605e287516d7c0de6809d8e7368934"
     end
+  end
+
+  resource "mkinstalldirs" do
+    url "http://sofia.nmsu.edu/~mleisher/Software/otf2bdf/mkinstalldirs"
+    sha256 "e7b13759bd5caac0976facbd1672312fe624dd172bbfd989ffcc5918ab21bfc1"
   end
 
   def install
@@ -36,9 +36,10 @@ class Otf2bdf < Formula
   end
 
   test do
-    if OS.mac?
+    on_macos do
       assert_match "MacRoman", shell_output("#{bin}/otf2bdf -et /System/Library/Fonts/LucidaGrande.ttc")
-    else
+    end
+    on_linux do
       resource("test-font").stage do
         assert_match "MacRoman", shell_output("#{bin}/otf2bdf -et LucidaGrande.ttc")
       end

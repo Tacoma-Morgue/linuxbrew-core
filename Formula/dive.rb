@@ -15,8 +15,6 @@ class Dive < Formula
   end
 
   depends_on "go" => :build
-  depends_on "gpgme" => :build
-  depends_on "pkg-config" => :build
 
   on_linux do
     depends_on "gpgme" => :build

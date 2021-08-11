@@ -1,6 +1,6 @@
 class Muparser < Formula
   desc "C++ math expression parser library"
-  homepage "https://beltoforion.de/en/muparser/"
+  homepage "https://github.com/beltoforion/muparser"
   url "https://github.com/beltoforion/muparser/archive/v2.3.2.tar.gz"
   sha256 "b35fc84e3667d432e3414c8667d5764dfa450ed24a99eeef7ee3f6647d44f301"
   license "BSD-2-Clause"
@@ -19,7 +19,7 @@ class Muparser < Formula
   depends_on "cmake" => :build
 
   def install
-    ENV.cxx11 unless OS.mac?
+    on_linux { ENV.cxx11 }
     mkdir "build" do
       system "cmake", "..", *std_cmake_args, "-DENABLE_OPENMP=OFF"
       system "make", "install"
@@ -60,14 +60,9 @@ class Muparser < Formula
         return 0;
       }
     EOS
-    if OS.mac?
-      system ENV.cxx, "-std=c++11", "-I#{include}", "-L#{lib}", "-lmuparser",
-             testpath/"test.cpp", "-o", testpath/"test"
-    else
-      system ENV.cxx, "-std=c++11", "-I#{include}",
-             testpath/"test.cpp", "-L#{lib}", "-lmuparser",
-             "-o", testpath/"test"
-    end
+    system ENV.cxx, "-std=c++11", "-I#{include}",
+           testpath/"test.cpp", "-L#{lib}", "-lmuparser",
+           "-o", testpath/"test"
     system "./test"
   end
 end
