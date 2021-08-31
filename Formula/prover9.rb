@@ -4,7 +4,7 @@ class Prover9 < Formula
   url "https://www.cs.unm.edu/~mccune/prover9/download/LADR-2009-11A.tar.gz"
   version "2009-11A"
   sha256 "c32bed5807000c0b7161c276e50d9ca0af0cb248df2c1affb2f6fc02471b51d0"
-  license "GPL-2.0"
+  license "GPL-2.0-only"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "3d5bf0492b97661c22bc8077463c7f577971e1a6f2db5a70f0bb86337c8de02f"
@@ -15,8 +15,13 @@ class Prover9 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "53992499680447c0b9c964b08b1df4af419832f4473de27e1966f9bbd052ee36" # linuxbrew-core
   end
 
-  # Order of parameters passed to gcc matters
-  patch :DATA unless OS.mac?
+  on_linux do
+    # Order of parameters passed to gcc matters
+    # This patch is needed for Ubuntu 16.04 LTS, which uses
+    # --as-needed with ld.  It should no longer
+    # be needed on Ubuntu 18.04 LTS.
+    patch :DATA
+  end
 
   def install
     ENV.deparallelize
@@ -52,6 +57,7 @@ class Prover9 < Formula
     system bin/"mace4", "-f", testpath/"group2.in"
   end
 end
+
 __END__
 diff --git a/provers.src/Makefile b/provers.src/Makefile
 index 78c2543..9c91b4e 100644

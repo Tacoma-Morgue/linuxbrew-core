@@ -1,10 +1,10 @@
 class Cmake < Formula
   desc "Cross-platform make"
   homepage "https://www.cmake.org/"
-  url "https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1.tar.gz"
-  sha256 "fac3915171d4dff25913975d712f76e69aef44bf738ba7b976793a458b4cfed4"
+  url "https://github.com/Kitware/CMake/releases/download/v3.21.2/cmake-3.21.2.tar.gz"
+  sha256 "94275e0b61c84bb42710f5320a23c6dcb2c6ee032ae7d2a616f53f68b3d21659"
   license "BSD-3-Clause"
-  head "https://gitlab.kitware.com/cmake/cmake.git"
+  head "https://gitlab.kitware.com/cmake/cmake.git", branch: "master"
 
   # The "latest" release on GitHub has been an unstable version before, so we
   # check the Git tags instead.
@@ -14,12 +14,11 @@ class Cmake < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d0adf9e1c020361a6f7a2e02d88b6b7d59f23c6487a54240a5ca1ac677501bb4"
-    sha256 cellar: :any_skip_relocation, big_sur:       "4ffc49c18cfc6e55a1f61fd62657de2aed1c7debec7e676e5c0160849f391287"
-    sha256 cellar: :any_skip_relocation, catalina:      "57dc1f490dd0b29f486d6cfabcd5aafdfc68dc9cc4f093bf1120761aa7d85ae7"
-    sha256 cellar: :any_skip_relocation, mojave:        "a7f593d9424c66ed3c2f6a7654c14176bc0ca913d7c676499a74835130cdc6c7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "44f9ca49408825250703282671b6e3ac3026f726eb122622ff9fb77b29d2e235" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8c0a200641e3737b09d61f20850d2dfe6379533cbdefcd6c512bd8e7c1d20872"
+    sha256 cellar: :any_skip_relocation, big_sur:       "dbece5192774308bf40ee7df06fdd4bba9ee6671e4e2e740072ec04cb9bef0c2"
+    sha256 cellar: :any_skip_relocation, catalina:      "a039c944e143dd97b05b87759d78cc491bc294336798ff4e141feec878303200"
+    sha256 cellar: :any_skip_relocation, mojave:        "878c2ea16ed5b0adefb421f62f22036179c340854a33d2b6a340c0c3f35e7932"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6cd50bc07072c5c899d2baf0ed4b98029826d707520e9af603148058cee4cb09" # linuxbrew-core
   end
 
   depends_on "sphinx-doc" => :build

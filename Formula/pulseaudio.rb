@@ -35,21 +35,16 @@ class Pulseaudio < Formula
   depends_on "libtool"
   depends_on "openssl@1.1"
   depends_on "speexdsp"
-  unless OS.mac?
-    depends_on "dbus"
-    depends_on "glib"
-    depends_on "libcap"
-  end
 
   uses_from_macos "perl" => :build
   uses_from_macos "expat"
   uses_from_macos "m4"
 
-  unless OS.mac?
-    # Depends on XML::Parser
-    # Using the host's Perl interpreter to install XML::Parser fails when using brew's glibc.
-    # Use brew's Perl interpreter instead.
-    # See Linuxbrew/homebrew-core#8148
+  on_linux do
+    depends_on "dbus"
+    depends_on "glib"
+    depends_on "libcap"
+
     resource "XML::Parser" do
       url "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz"
       sha256 "1ae9d07ee9c35326b3d9aad56eae71a6730a73a116b9fe9e8a4758b7cc033216"
@@ -57,14 +52,12 @@ class Pulseaudio < Formula
   end
 
   def install
-    unless OS.mac?
-      ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
-      resources.each do |res|
-        res.stage do
-          system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}"
-          system "make", "PERL5LIB=#{ENV["PERL5LIB"]}", *("CC=#{ENV.cc}" unless OS.mac?)
-          system "make", "install"
-        end
+    on_linux do
+      ENV.prepend_create_path "PERL5LIB", buildpath/"lib/perl5"
+      resource("XML::Parser").stage do
+        system "perl", "Makefile.PL", "INSTALL_BASE=#{buildpath}"
+        system "make", "PERL5LIB=#{ENV["PERL5LIB"]}", "CC=#{ENV.cc}"
+        system "make", "install"
       end
     end
 
@@ -77,12 +70,13 @@ class Pulseaudio < Formula
       --disable-x11
     ]
 
-    if OS.mac?
-      args << "--with-mac-sysroot=#{MacOS.sdk_path})"
+    on_macos do
+      args << "--enable-coreaudio-output"
+      args << "--with-mac-sysroot=#{MacOS.sdk_path}"
       args << "--with-mac-version-min=#{MacOS.version}"
     end
 
-    unless OS.mac?
+    on_linux do
       # Perl depends on gdbm.
       # If the dependency of pulseaudio on perl is build-time only,
       # pulseaudio detects and links gdbm at build-time, but cannot locate it at run-time.
@@ -105,8 +99,10 @@ class Pulseaudio < Formula
     end
     system "make", "install"
 
-    # https://stackoverflow.com/questions/56309056/is-gschemas-compiled-architecture-specific-can-i-ship-it-with-my-python-library
-    rm "#{share}/glib-2.0/schemas/gschemas.compiled" unless OS.mac?
+    on_linux do
+      # https://stackoverflow.com/questions/56309056/is-gschemas-compiled-architecture-specific-can-i-ship-it-with-my-python-library
+      rm "#{share}/glib-2.0/schemas/gschemas.compiled"
+    end
   end
 
   service do

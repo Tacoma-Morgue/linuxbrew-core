@@ -29,11 +29,15 @@ class Libelf < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "7bf880eee47f3426bf118683c699ef1b533e8a1d2f76908e481c53e6c93bb5eb" # linuxbrew-core
   end
 
+  deprecate! date: "2019-05-17", because: :unmaintained # and upstream site is gone
+
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
 
-  conflicts_with "elfutils", because: "both install `libelf.a` library"
+  on_linux do
+    keg_only "it conflicts with elfutils, which installs a maintained libelf.a"
+  end
 
   def install
     # Workaround for ancient config files not recognising aarch64 macos.

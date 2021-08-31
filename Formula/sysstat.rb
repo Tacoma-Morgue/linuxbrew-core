@@ -4,7 +4,7 @@ class Sysstat < Formula
   url "https://github.com/sysstat/sysstat/archive/v12.5.4.tar.gz"
   sha256 "8f6dcb186a0b75e0c6c59f134fdb56dd814d6ee676ccde9bd04640c3099c9746"
   license "GPL-2.0-or-later"
-  head "https://github.com/sysstat/sysstat.git"
+  head "https://github.com/sysstat/sysstat.git", branch: "master"
 
   bottle do
     sha256 x86_64_linux: "fe5d410938c3db2a269966073a71bdafd599afd15ccc2a53f9c3cb88a41b3f06" # linuxbrew-core

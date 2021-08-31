@@ -7,21 +7,20 @@ class OpenjdkAT8 < Formula
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any,                 big_sur:      "13706fb4f8d0f693d14c250a97ec8b70b353018e197412165352c73954892c62"
-    sha256 cellar: :any,                 catalina:     "94c61774bdb17d7b8807974aea64c570776eb43dbf269c59767d9c35f4b86318"
-    sha256 cellar: :any,                 mojave:       "97022886f017f84800a97b5da48d8e268c5a3fcba498528fd7d24cd3e72d7a34"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "505bc7f8113f9f90d981d4e76a441cfec4e97bd08c0df4aa9d6436429a2a9845" # linuxbrew-core
+    rebuild 1
+    sha256 cellar: :any,                 big_sur:      "b13d2fe2ec9a4fe98ffcfb9c7b4e7a9307b12d8e999d08b88dac35eed211e459"
+    sha256 cellar: :any,                 catalina:     "2268eefc71327f9784a1a5a7ddbf17e14e50485d78bce0a856763d91dcff4ce0"
+    sha256 cellar: :any,                 mojave:       "c45c00f59218eca6e8ba55a082be6048ac30d7b13236debbc3787d3ca947b55c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "767b9ec455e9625878208d203971490f67432d9f9a518d8464a23dfa92fe0418" # linuxbrew-core
   end
 
   keg_only :versioned_formula
-
-  ignore_missing_libraries %w[libjvm.so libawt_xawt.so] unless OS.mac?
 
   depends_on "autoconf" => :build
   depends_on "pkg-config" => :build
   depends_on "freetype"
 
-  unless OS.mac?
+  on_linux do
     depends_on "alsa-lib"
     depends_on "cups"
     depends_on "fontconfig"
@@ -33,6 +32,8 @@ class OpenjdkAT8 < Formula
     depends_on "libxtst"
     depends_on "unzip"
     depends_on "zip"
+
+    ignore_missing_libraries %w[libjvm.so libawt_xawt.so]
   end
 
   # Oracle doesn't serve JDK 7 downloads anymore, so use Zulu JDK 7 for bootstrapping.
@@ -63,31 +64,39 @@ class OpenjdkAT8 < Formula
     inreplace "hotspot/make/bsd/makefiles/saproc.make",
               '-isysroot "$(SDKPATH)" -iframework"$(SDKPATH)/System/Library/Frameworks"', ""
 
-    # Fix linker error with position-independent code with brewed GCC.
-    inreplace "common/autoconf/flags.m4", "-pie", "-fno-pie -no-pie"
-    # Fix unknown linker hash style on GCC toolchains.
-    inreplace "common/autoconf/flags.m4", "-Xlinker --hash-style=both", ""
-    inreplace "hotspot/make/linux/makefiles/gcc.make" do |s|
-      s.gsub! "-Xlinker -O1", ""
-      s.gsub! "-Wl,--hash-style=both", ""
+    on_macos do
+      # Fix macOS version detection. After 10.10 this was changed to a 6 digit number,
+      # but this Makefile was written in the era of 4 digit numbers.
+      inreplace "hotspot/make/bsd/makefiles/gcc.make" do |s|
+        s.gsub! "$(subst .,,$(MACOSX_VERSION_MIN))", ENV["HOMEBREW_MACOS_VERSION_NUMERIC"]
+        s.gsub! "MACOSX_VERSION_MIN=10.7.0", "MACOSX_VERSION_MIN=#{MacOS.version}"
+      end
     end
 
-    # Fix macOS version detection. After 10.10 this was changed to a 6 digit number,
-    # but this Makefile was written in the era of 4 digit numbers.
-    inreplace "hotspot/make/bsd/makefiles/gcc.make" do |s|
-      s.gsub! "$(subst .,,$(MACOSX_VERSION_MIN))", ENV["HOMEBREW_MACOS_VERSION_NUMERIC"].to_s
-      s.gsub! "MACOSX_VERSION_MIN=10.7.0", "MACOSX_VERSION_MIN=#{MacOS.version}"
+    on_linux do
+      # Fix linker errors on brewed GCC
+      inreplace "common/autoconf/flags.m4", "-Xlinker -O1", ""
+      inreplace "hotspot/make/linux/makefiles/gcc.make", "-Xlinker -O1", ""
     end
 
-    args = %W[--with-boot-jdk-jvmargs=#{java_options}
-              --with-boot-jdk=#{boot_jdk}
-              --with-debug-level=release
-              --with-jvm-variants=server
-              --with-milestone=fcs
-              --with-native-debug-symbols=none
-              --with-update-version=#{update}]
+    args = %W[
+      --with-boot-jdk-jvmargs=#{java_options}
+      --with-boot-jdk=#{boot_jdk}
+      --with-debug-level=release
+      --with-conf-name=release
+      --with-jvm-variants=server
+      --with-milestone=fcs
+      --with-native-debug-symbols=none
+      --with-update-version=#{update}
+      --with-vendor-bug-url=#{tap.issues_url}
+      --with-vendor-name=#{tap.user}
+      --with-vendor-url=#{tap.issues_url}
+      --with-vendor-vm-bug-url=#{tap.issues_url}
+    ]
 
-    if OS.mac?
+    on_macos do
+      args << "--with-toolchain-type=clang"
+
       # Work around SDK issues with JavaVM framework.
       if MacOS.version <= :catalina
         sdk_path = MacOS::CLT.sdk_path(MacOS.version)
@@ -97,12 +106,10 @@ class OpenjdkAT8 < Formula
                    --with-extra-cxxflags=-F#{javavm_framework_path}
                    --with-extra-ldflags=-F#{javavm_framework_path}]
       end
+    end
 
-      args << "--with-toolchain-type=clang"
-    else
-      args += %W[CC=/usr/bin/gcc
-                 CXX=/usr/bin/g++
-                 --with-toolchain-type=gcc
+    on_linux do
+      args += %W[--with-toolchain-type=gcc
                  --x-includes=#{HOMEBREW_PREFIX}/include
                  --x-libraries=#{HOMEBREW_PREFIX}/lib
                  --with-cups=#{HOMEBREW_PREFIX}
@@ -115,29 +122,32 @@ class OpenjdkAT8 < Formula
     system "./configure", *args
 
     ENV["MAKEFLAGS"] = "JOBS=#{ENV.make_jobs}"
-    system "make", "images"
+    system "make", "bootcycle-images", "CONF=release"
 
-    if OS.mac?
-      jdk = Dir["build/*/images/j2sdk-bundle/*"].first
-      libexec.install jdk => "openjdk.jdk"
-      bin.install_symlink Dir["#{libexec}/openjdk.jdk/Contents/Home/bin/*"]
-      include.install_symlink Dir["#{libexec}/openjdk.jdk/Contents/Home/include/*.h"]
-      include.install_symlink Dir["#{libexec}/openjdk.jdk/Contents/Home/include/darwin/*.h"]
-    else
-      libexec.install Dir["build/*/images/j2sdk-image/*"]
-      bin.install_symlink Dir["#{libexec}/bin/*"]
-      include.install_symlink Dir["#{libexec}/include/*.h"]
-      include.install_symlink Dir["#{libexec}/include/linux/*.h"]
+    cd "build/release/images" do
+      jdk = libexec
+
+      on_macos do
+        libexec.install Dir["j2sdk-bundle/*"].first => "openjdk.jdk"
+        jdk /= "openjdk.jdk/Contents/Home"
+      end
+
+      on_linux { libexec.install Dir["j2sdk-image/*"] }
+
+      bin.install_symlink Dir[jdk/"bin/*"]
+      include.install_symlink Dir[jdk/"include/*.h"]
+      include.install_symlink Dir[jdk/"include/*/*.h"]
+      man1.install_symlink Dir[jdk/"man/man1/*"]
     end
   end
 
   def caveats
-    return unless OS.mac?
-
-    <<~EOS
-      For the system Java wrappers to find this JDK, symlink it with
-        sudo ln -sfn #{opt_libexec}/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-8.jdk
-    EOS
+    on_macos do
+      <<~EOS
+        For the system Java wrappers to find this JDK, symlink it with
+          sudo ln -sfn #{opt_libexec}/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-8.jdk
+      EOS
+    end
   end
 
   test do

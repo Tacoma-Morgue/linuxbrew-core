@@ -21,6 +21,8 @@ class Szip < Formula
     sha256 cellar: :any, x86_64_linux:  "607f95722c26f88e12ca47db91b334cd2b8447c2710c4452dca8fbdce2081c98" # linuxbrew-core
   end
 
+  conflicts_with "libaec", because: "libaec provides a replacement for szip"
+
   def install
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"

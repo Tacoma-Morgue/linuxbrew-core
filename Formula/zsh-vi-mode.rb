@@ -4,7 +4,7 @@ class ZshViMode < Formula
   url "https://github.com/jeffreytse/zsh-vi-mode/archive/refs/tags/v0.8.4.tar.gz"
   sha256 "d16814693099dcc6f47afe3e5575af539a7aee1071f3f532c233800918722398"
   license "MIT"
-  head "https://github.com/jeffreytse/zsh-vi-mode.git"
+  head "https://github.com/jeffreytse/zsh-vi-mode.git", branch: "master"
 
   def install
     pkgshare.install "zsh-vi-mode.zsh"

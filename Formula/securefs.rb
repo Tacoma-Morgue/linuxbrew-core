@@ -6,7 +6,7 @@ class Securefs < Formula
       revision: "dfeebf8406871d020848edde668234715356158c"
   license "MIT"
   revision 1 unless OS.mac?
-  head "https://github.com/netheril96/securefs.git"
+  head "https://github.com/netheril96/securefs.git", branch: "master"
 
   bottle do
     sha256 cellar: :any, catalina:     "8a8c7dd74f9b3082b2b128cc058714a27206d910273e4148959a25b7d30c51b5"

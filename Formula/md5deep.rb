@@ -51,11 +51,11 @@ index cc726cd..37d7e9d 100755
 +++ b/config.guess
 @@ -1130,6 +1130,9 @@ EOF
      *:Rhapsody:*:*)
-   echo ${UNAME_MACHINE}-apple-rhapsody${UNAME_RELEASE}
-   exit 0 ;;
-+  arm64:Darwin:*:*)
-+  echo arm-apple-darwin"$UNAME_RELEASE"
-+  exit ;;
+ 	echo ${UNAME_MACHINE}-apple-rhapsody${UNAME_RELEASE}
+ 	exit 0 ;;
++	arm64:Darwin:*:*)
++	echo arm-apple-darwin"$UNAME_RELEASE"
++	exit ;;
      *:Darwin:*:*)
-   case `uname -p` in
-       *86) UNAME_PROCESSOR=i686 ;;
+ 	case `uname -p` in
+ 	    *86) UNAME_PROCESSOR=i686 ;;

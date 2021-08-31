@@ -6,6 +6,10 @@ class Solr < Formula
   sha256 "c9c970e0603318eac1ca5bae24e9a85e917d012266159237e572e636c5a3da62"
   license "Apache-2.0"
 
+  bottle do
+    rebuild 1
+  end
+
   depends_on "openjdk"
 
   def install
@@ -30,33 +34,9 @@ class Solr < Formula
     (var/"log/solr").mkpath
   end
 
-  plist_options manual: "solr start"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/solr</string>
-            <string>start</string>
-            <string>-f</string>
-            <string>-s</string>
-            <string>#{HOMEBREW_PREFIX}/var/lib/solr</string>
-          </array>
-          <key>ServiceDescription</key>
-          <string>#{name}</string>
-          <key>WorkingDirectory</key>
-          <string>#{HOMEBREW_PREFIX}</string>
-          <key>RunAtLoad</key>
-          <true/>
-      </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"solr", "start", "-f", "-s", HOMEBREW_PREFIX/"var/lib/solr"]
+    working_dir HOMEBREW_PREFIX
   end
 
   test do

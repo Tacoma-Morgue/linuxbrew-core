@@ -7,8 +7,8 @@ class GccAT49 < Formula
   revision 2
 
   bottle do
-    sha256 cellar: :any, high_sierra:  "cb153d98245bcbe4809dc19adf688f642285154b19fe907c7de3cb71652b0ec6"
-    sha256 cellar: :any, x86_64_linux: "9d6f97e68f4bf869afcdc773a5ddcc705e14bb6742e0f2932c5b2c3d4bdb5548" # linuxbrew-core
+    rebuild 1
+    sha256 x86_64_linux: "69da4727205f69158982959779c3d5819f516e3395313c8f35130e31e8047898" # linuxbrew-core
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -66,7 +66,7 @@ class GccAT49 < Formula
   end
 
   def version_suffix
-    version.major.to_s
+    version.major_minor.to_s
   end
 
   # Fix build with Xcode 9

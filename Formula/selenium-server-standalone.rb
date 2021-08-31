@@ -11,6 +11,11 @@ class SeleniumServerStandalone < Formula
     regex(/href=.*?selenium-server-standalone[._-]v?(\d+(?:\.\d+)+)\.jar/i)
   end
 
+  bottle do
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "8fc1e1b18186d116b44d749fbe73aeb7736cb94c51071013aad19095904f9e29" # linuxbrew-core
+  end
+
   depends_on "openjdk"
 
   def install
@@ -18,37 +23,11 @@ class SeleniumServerStandalone < Formula
     bin.write_jar_script libexec/"selenium-server-standalone-#{version}.jar", "selenium-server"
   end
 
-  plist_options manual: "selenium-server -port 4444"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>Label</key>
-        <string>#{plist_name}</string>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>KeepAlive</key>
-        <false/>
-        <key>ProgramArguments</key>
-        <array>
-          <string>#{Formula["openjdk"].opt_bin}/java</string>
-          <string>-jar</string>
-          <string>#{libexec}/selenium-server-standalone-#{version}.jar</string>
-          <string>-port</string>
-          <string>4444</string>
-        </array>
-        <key>ServiceDescription</key>
-        <string>Selenium Server</string>
-        <key>StandardErrorPath</key>
-        <string>#{var}/log/selenium-error.log</string>
-        <key>StandardOutPath</key>
-        <string>#{var}/log/selenium-output.log</string>
-      </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"selenium-server", "-port", "4444"]
+    keep_alive false
+    log_path var/"log/selenium-output.log"
+    error_log_path var/"log/selenium-error.log"
   end
 
   test do

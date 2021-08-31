@@ -11,14 +11,9 @@ class Pow < Formula
     sha256 cellar: :any_skip_relocation, mojave:        "148533a078c8f6675c9994a2118fc27e5e4f60882844f9dfed2f756c2a26e926"
   end
 
-  # Linux is not supported and the DNS handling rules only work on macOS
-  # see https://github.com/basecamp/pow/wiki/FAQ#is-linux-supported
-  deprecate! date: "2021-04-21", because: :repo_archived
-
-  depends_on :macos
-
   # The related GitHub repository (basecamp/pow) was archived sometime between
   # 2018-06-11 and 2019-04-10 (referencing Wayback Machine snapshots)
+  deprecate! date: "2021-04-21", because: :repo_archived
 
   depends_on :macos
   depends_on "node"

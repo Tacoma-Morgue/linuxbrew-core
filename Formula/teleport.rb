@@ -1,10 +1,10 @@
 class Teleport < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://gravitational.com/teleport"
-  url "https://github.com/gravitational/teleport/archive/v6.2.8.tar.gz"
-  sha256 "bbc128d0778d253ec6e8af44286df750caec65d8c8e2616c85cf2656c267460f"
+  url "https://github.com/gravitational/teleport/archive/v7.1.0.tar.gz"
+  sha256 "0b716eb1cd02b1d41c017954c5a173ab5372ab4698276faab6c45e3f2aedaeae"
   license "Apache-2.0"
-  head "https://github.com/gravitational/teleport.git"
+  head "https://github.com/gravitational/teleport.git", branch: "master"
 
   # We check the Git tags instead of using the `GithubLatest` strategy, as the
   # "latest" version can be incorrect. As of writing, two major versions of
@@ -16,10 +16,11 @@ class Teleport < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ec2e5eec94fd29dbdd28a04f5009173d68474b5bb58ef516a2d01f3b8e31ea88"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9dd6db6e7d6678249ae8f525bfce26b8af0c6bce0ed4963a608ec5718ea7e503"
-    sha256 cellar: :any_skip_relocation, catalina:      "c0e9aa81b4fdeb60cd94f78b5f0e563e43f84778ab1ba9216a5b1d04b4575e98"
-    sha256 cellar: :any_skip_relocation, mojave:        "e1e719e005e8d5afdf67889bac8d550352d0e4a7f69c2a3e3514c197a8920a85"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ce54e05c99feceedb10e92e20be56e4d54c3800d7814a8dec04843219bbaddcf"
+    sha256 cellar: :any_skip_relocation, big_sur:       "0d5f384bc8b6aae44448810509948bd0c16015e9a7c3c8d075db26b04f134967"
+    sha256 cellar: :any_skip_relocation, catalina:      "b1437b41e39c3de655941fdcadf96fdbed05ad15ca19012baab60f68a8599269"
+    sha256 cellar: :any_skip_relocation, mojave:        "1c47d87520dba62e93784e125ccbcc0fa75dc9c990fcd416e7209d4875797b5d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b94d1636336e3289c30495efac5aa59ed1b71d27b61e9e01b3c86690c0adb448" # linuxbrew-core
   end
 
   depends_on "go" => :build
@@ -32,8 +33,8 @@ class Teleport < Formula
 
   # Keep this in sync with https://github.com/gravitational/teleport/tree/v#{version}
   resource "webassets" do
-    url "https://github.com/gravitational/webassets/archive/c63397375632f1a4323918dde78334472f3ffbb9.tar.gz"
-    sha256 "0510b757f259aee6ff1d43611132050ef5bf2d798c12c6e2e5c36d7fda58c104"
+    url "https://github.com/gravitational/webassets/archive/07493a5e78677de448b0e35bd72bf1dc6498b5ea.tar.gz"
+    sha256 "2074ee7e50720f20ff1b4da923434c05f6e1664e13694adde9522bf9ab09e0fd"
   end
 
   def install
@@ -49,27 +50,15 @@ class Teleport < Formula
       .gsub("/var/lib/teleport", testpath)
       .gsub("/var/run", testpath)
       .gsub(/https_(.*)/, "")
-    unless OS.mac?
-      inreplace testpath/"config.yml", "/usr/bin/hostname", "/bin/hostname"
-      inreplace testpath/"config.yml", "/usr/bin/uname", "/bin/uname"
+
+    fork do
+      exec "#{bin}/teleport start -c #{testpath}/config.yml --debug"
     end
-    begin
-      debug = OS.mac? ? "" : "DEBUG=1 "
-      pid = spawn("#{debug}#{bin}/teleport start -c #{testpath}/config.yml")
-      if OS.mac?
-        sleep 5
-        path = OS.mac? ? "/usr/bin/" : ""
-        system "#{path}curl", "--insecure", "https://localhost:3080"
-        # Fails on Linux:
-        # Failed to update cache: \nERROR REPORT:\nOriginal Error:
-        # *trace.NotFoundError open /tmp/teleport-test-20190120-15973-1hx2ui3/cache/auth/localCluster:
-        # no such file or directory
-        system "#{path}nc", "-z", "localhost", "3022"
-        system "#{path}nc", "-z", "localhost", "3023"
-        system "#{path}nc", "-z", "localhost", "3025"
-      end
-    ensure
-      Process.kill(9, pid)
-    end
+
+    sleep 10
+    system "curl", "--insecure", "https://localhost:3080"
+    system "nc", "-z", "localhost", "3022"
+    system "nc", "-z", "localhost", "3023"
+    system "nc", "-z", "localhost", "3025"
   end
 end

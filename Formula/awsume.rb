@@ -6,7 +6,7 @@ class Awsume < Formula
   url "https://files.pythonhosted.org/packages/2f/d4/2f9621851aa22e06b0242d1c5dc2fbeb6267d5beca92c0adf875438793c2/awsume-4.5.3.tar.gz"
   sha256 "e94cc4c1d0f3cc0db8270572e2880c0641ce14cf226355bf42440b726bf453ef"
   license "MIT"
-  head "https://github.com/trek10inc/awsume.git"
+  head "https://github.com/trek10inc/awsume.git", branch: "master"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "4aabc67dc8a89b21b22e87f5daaed8098c0d8d088593588cf2877348e78e02c6"
@@ -17,6 +17,7 @@ class Awsume < Formula
 
   depends_on "openssl@1.1"
   depends_on "python@3.9"
+
   uses_from_macos "sqlite"
 
   resource "boto3" do
@@ -79,11 +80,12 @@ class Awsume < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output(". #{bin}/awsume -v 2>&1")
+    assert_match version.to_s, shell_output("bash -c '. #{bin}/awsume -v 2>&1'")
 
     file_path = File.expand_path("~/.awsume/config.yaml")
     shell_output(File.exist?(file_path))
 
-    assert_match "PROFILE  TYPE  SOURCE  MFA?  REGION  ACCOUNT", shell_output(". #{bin}/awsume --list-profiles 2>&1")
+    assert_match "PROFILE  TYPE  SOURCE  MFA?  REGION  ACCOUNT",
+                 shell_output("bash -c '. #{bin}/awsume --list-profiles 2>&1'")
   end
 end

@@ -16,11 +16,12 @@ class LlvmAT11 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "03e8229453959ce44cc4aa3d04aae599d644a0cd611e96ef0978c331cdb75556"
-    sha256 cellar: :any,                 big_sur:       "a4ba9bdae23b82c7125ca0ab2c538ea9e590e61c3af0e0927912ff46d27f5bed"
-    sha256 cellar: :any,                 catalina:      "a214eaa69c3f978987c281497cdbd98eb7d81372da793a3ae34b11f8910c9288"
-    sha256 cellar: :any,                 mojave:        "6a2a325871e43bcf8a01e0d93d38aaf3ce2bc0977aeb93ef3d3d43fd0dbde4ae"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7a4fd4d37eb7569740e7cde3e19e74cf5a2fb002e9eb0793ab978f5f7ba8158a" # linuxbrew-core
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "ef355c7412f279413c8ef0874405288c98b7cfe7c617d9e4decf1496abe7ca07"
+    sha256 cellar: :any,                 big_sur:       "28be37f5fc663e1916c230b9b94e63f11166dcc4f172e649c37fd3477bd725e5"
+    sha256 cellar: :any,                 catalina:      "d74e57328f28889026d6c480b82146d3e101a3671b8570ec54da008640f15f46"
+    sha256 cellar: :any,                 mojave:        "11e70193c46e3daac701cb4cd3b63234af30c61c8d8af7eb090c3610a73948f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e9d53fc141ad7e5d6481776932a00bb0c4f78cb312aa92616444f807ddb93725" # linuxbrew-core
   end
 
   # Clang cannot find system headers if Xcode CLT is not installed
@@ -45,7 +46,7 @@ class LlvmAT11 < Formula
     depends_on "glibc" if Formula["glibc"].any_version_installed?
     depends_on "pkg-config" => :build
     depends_on "binutils" # needed for gold
-    depends_on "libelf" # openmp requires <gelf.h>
+    depends_on "elfutils" # openmp requires <gelf.h>
   end
 
   patch do
@@ -195,7 +196,7 @@ class LlvmAT11 < Formula
     mkdir llvmpath/"build" do
       system "cmake", "-G", "Unix Makefiles", "..", *(std_cmake_args + args)
       system "cmake", "--build", "."
-      system "cmake", "--build", ".", "--target", "install/strip"
+      system "cmake", "--build", ".", "--target", "install"
       system "cmake", "--build", ".", "--target", "install-xcode-toolchain" if MacOS::Xcode.installed?
     end
 

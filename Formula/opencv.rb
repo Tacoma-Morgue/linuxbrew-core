@@ -92,12 +92,12 @@ class Opencv < Formula
     ]
 
     # Disable precompiled headers and force opencv to use brewed libraries on Linux
-    unless OS.mac?
+    on_linux do
       args << "-DENABLE_PRECOMPILED_HEADERS=OFF"
       args << "-DJPEG_LIBRARY=#{Formula["libjpeg"].opt_lib}/libjpeg.so"
       args << "-DOpenBLAS_LIB=#{Formula["openblas"].opt_lib}/libopenblas.so"
       args << "-DOPENEXR_ILMIMF_LIBRARY=#{Formula["openexr"].opt_lib}/libIlmImf.so"
-      args << "-DOPENEXR_ILMTHREAD_LIBRARY=#{Formula["ilmbase"].opt_lib}/libIlmThread.so"
+      args << "-DOPENEXR_ILMTHREAD_LIBRARY=#{Formula["openexr"].opt_lib}/libIlmThread.so"
       args << "-DPNG_LIBRARY=#{Formula["libpng"].opt_lib}/libpng.so"
       args << "-DPROTOBUF_LIBRARY=#{Formula["protobuf"].opt_lib}/libprotobuf.so"
       args << "-DTIFF_LIBRARY=#{Formula["libtiff"].opt_lib}/libtiff.so"

@@ -91,6 +91,9 @@ class LuaAT53 < Formula
   end
 
   def pc_file
+    libs = %W[-llua#{version.major_minor} -lm]
+    on_linux { libs << "-ldl" }
+
     <<~EOS
       V= #{version.major_minor}
       R= #{version}
@@ -109,7 +112,7 @@ class LuaAT53 < Formula
       Description: An Extensible Extension Language
       Version: #{version}
       Requires:
-      Libs: -L${libdir} -llua.#{version.major_minor} -lm -ldl
+      Libs: -L${libdir} #{libs.join(" ")}
       Cflags: -I${includedir}
     EOS
   end

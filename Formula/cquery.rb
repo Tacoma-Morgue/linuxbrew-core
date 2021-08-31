@@ -6,8 +6,8 @@ class Cquery < Formula
       tag:      "v20180718",
       revision: "b523aa928acf8ffb3de6b22c79db7366a9672489"
   license "MIT"
-  head "https://github.com/cquery-project/cquery.git"
   revision 2 unless OS.mac?
+  head "https://github.com/cquery-project/cquery.git", branch: "master"
 
   bottle do
     rebuild 1

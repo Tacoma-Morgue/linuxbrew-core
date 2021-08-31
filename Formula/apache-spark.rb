@@ -6,7 +6,7 @@ class ApacheSpark < Formula
   version "3.1.2"
   sha256 "0d9cf9dbbb3b4215afebe7fa4748b012e406dd1f1ad2a61b993ac04adcb94eaa"
   license "Apache-2.0"
-  head "https://github.com/apache/spark.git"
+  head "https://github.com/apache/spark.git", branch: "master"
 
   depends_on "openjdk@11"
 

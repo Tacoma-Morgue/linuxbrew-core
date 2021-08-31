@@ -6,7 +6,7 @@ class ApacheFlink < Formula
   version "1.13.2"
   sha256 "b1da0ca78ca669c206b7e5755fbab1eb9d997694cfc34acd549215d60c978e18"
   license "Apache-2.0"
-  head "https://github.com/apache/flink.git"
+  head "https://github.com/apache/flink.git", branch: "master"
 
   bottle do
     sha256 cellar: :any_skip_relocation, x86_64_linux: "80a09548c1d956b59459fc5d31479ff7eae5ee8c28c3da944dc374740def7605" # linuxbrew-core

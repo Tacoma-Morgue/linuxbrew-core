@@ -13,7 +13,7 @@ class Gnuplot < Formula
   end
 
   head do
-    url "https://git.code.sf.net/p/gnuplot/gnuplot-main.git"
+    url "https://git.code.sf.net/p/gnuplot/gnuplot-main.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
@@ -27,6 +27,12 @@ class Gnuplot < Formula
   depends_on "pango"
   depends_on "qt@5"
   depends_on "readline"
+
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with gcc: "5"
 
   def install
     # Qt5 requires c++11 (and the other backends do not care)

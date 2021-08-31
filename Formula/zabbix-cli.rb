@@ -6,8 +6,8 @@ class ZabbixCli < Formula
   url "https://github.com/unioslo/zabbix-cli/archive/2.2.1.tar.gz"
   sha256 "884ecd2a4a4c7f68a080bb7e0936dd208c813284ec3ed60b948ce90a1be7c828"
   license "GPL-3.0-or-later"
-  revision OS.mac? ? 2 : 3
-  head "https://github.com/unioslo/zabbix-cli.git"
+  revision OS.mac? ? 1 : 3
+  head "https://github.com/unioslo/zabbix-cli.git", branch: "master"
 
   livecheck do
     url :stable
